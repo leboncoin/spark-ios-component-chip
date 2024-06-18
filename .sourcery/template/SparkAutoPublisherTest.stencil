@@ -8,6 +8,9 @@ import XCTest
 {% for import in argument.autoMockableImports %}
 import {{ import }}
 {% endfor %}
+{% for import in argument.autoMockableSPIImports %}
+@_spi(SI_SPI) import {{ import }}
+{% endfor %}
 {% for import in argument.autoMockableTestableImports %}
 @testable import {{ import }}
 {% endfor %}
@@ -16,7 +19,7 @@ import {{ import }}
 {% macro existentialVariableTypeName typeName %}{% if typeName|contains:"any" and typeName|contains:"!" %}{{ typeName | replace:"any","(any" | replace:"!",")!" }}{% elif typeName|contains:"any" and typeName.isOptional %}{{ typeName | replace:"any","(any" | replace:"?",")?" }}{% elif typeName|contains:"any" and typeName.isClosure %}({{ typeName | replace:"any","(any" | replace:"?",")?" }}){%else%}{{ typeName }}{%endif%}{% endmacro %}
 
 {% for class in types.classes where class|annotated:"AutoPublisherTest" %}{% if class.name != "AutoPublisherTest" %}
-public final class {{ class.name }}PublisherTest {
+@_spi(SI_SPI) public final class {{ class.name }}PublisherTest {
 
     {% for key, value in class.annotations where key|contains: "<" and key|contains: ">" %}{% if forloop.first %}// MARK: - Type Alias
 
@@ -31,7 +34,7 @@ public final class {{ class.name }}PublisherTest {
 
     // MARK: - Tests
 
-    {% for variable in class.allVariables|!definedInExtension where variable.readAccess != "private" and variable.attributes["Published"] != nil %}
+    {% for variable in class.allVariables|!definedInExtension where variable.readAccess != "private" and variable.definedInTypeName|contains: class.name and variable.attributes["Published"] != nil %}
         
     public static func XCTSinksCount(
         {{ variable.name }} mock: PublisherMock<Published<{% call existentialVariableTypeName variable.typeName %}>.Publisher>,

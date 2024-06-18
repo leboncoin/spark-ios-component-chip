@@ -8,6 +8,9 @@ import XCTest
 {% for import in argument.autoMockableImports %}
 import {{ import }}
 {% endfor %}
+{% for import in argument.autoMockableSPIImports %}
+@_spi(SI_SPI) import {{ import }}
+{% endfor %}
 {% for import in argument.autoMockableTestableImports %}
 @testable import {{ import }}
 {% endfor %}
@@ -19,7 +22,7 @@ import {{ import }}
 {% macro givenParameter name %}given{{ param.name | snakeToCamelCase }}{% endmacro %}
 
 {% for protocol in types.protocols where protocol|annotated:"AutoMockTest" %}{% if protocol.name != "AutoMockTest" %}
-public final class {{ protocol.name }}MockTest {
+@_spi(SI_SPI) public final class {{ protocol.name }}MockTest {
 
     // MARK: - Initialization
 
