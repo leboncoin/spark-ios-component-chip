@@ -6,7 +6,7 @@ configurations:
         - Sources/SparkChipTesting/
         - Sources/SparkChipSnapshotTesting/
     templates:
-      - .sourcery/template/SparkAutoMockable.stencil
+      - ../spark-ios-common/.sourcery/template/SparkAutoMockable.stencil
     output: Sources/SparkChipTesting/Generated/AutoMockable.generated.swift
     args:
       autoMockableImports: [Combine, SparkTheming]
@@ -19,7 +19,7 @@ configurations:
         - Sources/SparkChipTesting/
         - Sources/SparkChipSnapshotTesting/
     templates:
-      - .sourcery/template/SparkAutoMockTest.stencil
+      - ../spark-ios-common/.sourcery/template/SparkAutoMockTest.stencil
     output: Sources/SparkChipTesting/Generated/AutoMockTest.generated.swift
     args:
       autoMockableImports: [Combine, SparkTheming]
@@ -32,7 +32,7 @@ configurations:
         - Sources/SparkChipTesting/
         - Sources/SparkChipSnapshotTesting/
     templates:
-      - .sourcery/template/SparkAutoPublisherTest.stencil
+      - ../spark-ios-common/.sourcery/template/SparkAutoPublisherTest.stencil
     output: Sources/SparkChipTesting/Generated/AutoPublisherTest.generated.swift
     args:
       autoMockableImports: [Combine, SparkTheming]
@@ -45,7 +45,7 @@ configurations:
         - Sources/SparkChipTesting/
         - Sources/SparkChipSnapshotTesting/
     templates:
-      - .sourcery/template/SparkAutoViewModelStub.stencil
+      - ../spark-ios-common/.sourcery/template/SparkAutoViewModelStub.stencil
     output: Sources/SparkChipTesting/Generated/AutoViewModelStub.generated.swift
     args:
       autoMockableImports: [Combine, SparkTheming]
