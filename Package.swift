@@ -48,7 +48,8 @@ let package = Package(
                     name: "SparkTheming",
                     package: "spark-ios-theming"
                 )
-            ]
+            ],
+            path: "Sources/Core"
         ),
         .target(
             name: "SparkChipTesting",
@@ -70,7 +71,8 @@ let package = Package(
                     name: "SparkTheme",
                     package: "spark-ios-theming"
                 )
-            ]
+            ],
+            path: "Sources/Testing"
         ),
         .testTarget(
             name: "SparkChipUnitTests",
@@ -85,7 +87,8 @@ let package = Package(
                     name: "SparkThemingTesting",
                     package: "spark-ios-theming"
                 )
-            ]
+            ],
+            path: "Tests/UnitTests"
         ),
         .testTarget(
             name: "SparkChipSnapshotTests",
@@ -100,7 +103,8 @@ let package = Package(
                     name: "SparkBadge",
                     package: "spark-ios-component-badge"
                 ),
-            ]
+            ],
+            path: "Tests/SnapshotTests"
         ),
     ]
 )
