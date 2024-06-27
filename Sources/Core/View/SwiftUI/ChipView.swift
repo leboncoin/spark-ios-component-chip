@@ -133,10 +133,11 @@ public struct ChipView: View {
     @ViewBuilder
     private func borderedChipView() -> some View {
         if self.viewModel.isBordered {
-            self.chipView().chipBorder(width: self.borderWidth,
-                                       radius: self.borderRadius,
-                                       dashLength: self.borderDashLength(),
-                                       colorToken: self.viewModel.colors.border)
+            self.chipView().chipBorder(
+                width: self.borderWidth,
+                radius: self.borderRadius,
+                dashLength: self.borderDashLength(),
+                colorToken: self.viewModel.colors.border)
         } else {
             self.chipView()
         }
