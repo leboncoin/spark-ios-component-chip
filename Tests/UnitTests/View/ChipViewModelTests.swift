@@ -52,9 +52,9 @@ final class ChipViewModelTests: XCTestCase {
         let updateExpectation = expectation(description: "Colors and border status updated")
         updateExpectation.expectedFulfillmentCount = 2
 
-        self.sut.$colors.sink { _ in
+        self.sut.$colors.sink(receiveValue: { _ in
             updateExpectation.fulfill()
-        }
+        })
         .store(in: &self.subscriptions)
 
         // When
@@ -75,10 +75,10 @@ final class ChipViewModelTests: XCTestCase {
                                          self.sut.$font)
 
         Publishers.Zip(self.sut.$colors, publishers)
-            .sink { _ in
-            updateExpectation.fulfill()
-        }
-        .store(in: &self.subscriptions)
+            .sink(receiveValue: { _ in
+                updateExpectation.fulfill()
+            })
+            .store(in: &self.subscriptions)
 
         // When
         self.sut.set(theme: ThemeGeneratedMock.mocked())
@@ -92,9 +92,9 @@ final class ChipViewModelTests: XCTestCase {
         let updateExpectation = expectation(description: "Colors updated")
         updateExpectation.expectedFulfillmentCount = 2
 
-        self.sut.$colors.sink { _ in
+        self.sut.$colors.sink(receiveValue: { _ in
             updateExpectation.fulfill()
-        }
+        })
         .store(in: &self.subscriptions)
 
         // When
@@ -111,10 +111,10 @@ final class ChipViewModelTests: XCTestCase {
 
         var spacings = [CGFloat]()
 
-        self.sut.$spacing.sink { spacing in
+        self.sut.$spacing.sink(receiveValue: { spacing in
             updateExpectation.fulfill()
             spacings.append(spacing)
-        }
+        })
         .store(in: &self.subscriptions)
 
         // When
@@ -140,10 +140,10 @@ final class ChipViewModelTests: XCTestCase {
 
         var paddings = [CGFloat]()
 
-        self.sut.$padding.sink { padding in
+        self.sut.$padding.sink(receiveValue: { padding in
             updateExpectation.fulfill()
             paddings.append(padding)
-        }
+        })
         .store(in: &self.subscriptions)
 
         // When
@@ -169,10 +169,10 @@ final class ChipViewModelTests: XCTestCase {
 
         var borderRadii = [CGFloat]()
 
-        self.sut.$borderRadius.sink { radius in
+        self.sut.$borderRadius.sink(receiveValue: { radius in
             updateExpectation.fulfill()
             borderRadii.append(radius)
-        }
+        })
         .store(in: &self.subscriptions)
 
         // When
@@ -198,10 +198,10 @@ final class ChipViewModelTests: XCTestCase {
 
         var fonts = [TypographyFontToken]()
 
-        self.sut.$font.sink { font in
+        self.sut.$font.sink(receiveValue: { font in
             updateExpectation.fulfill()
             fonts.append(font)
-        }
+        })
         .store(in: &self.subscriptions)
 
         // When
@@ -223,9 +223,9 @@ final class ChipViewModelTests: XCTestCase {
         let updateExpectation = expectation(description: "Colors updated")
         updateExpectation.expectedFulfillmentCount = 2
 
-        self.sut.$colors.sink { font in
+        self.sut.$colors.sink(receiveValue: { font in
             updateExpectation.fulfill()
-        }
+        })
         .store(in: &self.subscriptions)
 
         // When
@@ -265,5 +265,4 @@ final class ChipViewModelTests: XCTestCase {
             XCTAssertEqual(self.sut.isBordered, true)
         }
     }
-
 }
