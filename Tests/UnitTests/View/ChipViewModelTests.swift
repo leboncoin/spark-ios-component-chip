@@ -11,7 +11,7 @@ import SwiftUI
 import XCTest
 @testable import SparkChip
 @_spi(SI_SPI) @testable import SparkChipTesting
-import SparkThemingTesting
+@_spi(SI_SPI) import SparkThemingTesting
 import SparkTheming
 import SparkTheme
 
