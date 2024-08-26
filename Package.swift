@@ -32,7 +32,7 @@ let package = Package(
        ),
        .package(
            url: "https://github.com/adevinta/spark-ios-component-badge.git",
-           // path: "../spark-ios-theming"
+           // path: "../spark-ios-component-badge"
            /*version*/ "0.0.1"..."999.999.999"
        )
     ],
