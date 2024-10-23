@@ -375,7 +375,7 @@ public final class ChipUIView: UIControl {
             self.addDashedBorder(borderColor: chipColors.border)
         } else if viewModel.isBordered {
             self.stackView.layer.borderWidth = self.borderWidth
-            self.stackView.layer.borderColor = chipColors.border.uiColor.cgColor
+            self.stackView.setBorderColor(from: chipColors.border)
         } else {
             self.stackView.layer.borderWidth = 0
             self.stackView.layer.borderColor = nil
@@ -433,7 +433,7 @@ public final class ChipUIView: UIControl {
             self.addDashedBorder(borderColor: self.viewModel.colors.border)
         } else if self.viewModel.isBordered {
             self.stackView.layer.borderWidth = self.borderWidth
-            self.stackView.layer.borderColor = self.viewModel.colors.border.uiColor.cgColor
+            self.stackView.setBorderColor(from: self.viewModel.colors.border)
         }
     }
 
@@ -519,7 +519,7 @@ public final class ChipUIView: UIControl {
         let dashBorder = CAShapeLayer()
         let bounds = self.stackView.bounds
         dashBorder.lineWidth = self.borderWidth
-        dashBorder.strokeColor = borderColor.uiColor.cgColor
+        dashBorder.strokeColor = borderColor.uiColor.resolvedColor(with: self.traitCollection).cgColor
         dashBorder.lineDashPattern = [self.dashLength, self.dashLength] as [NSNumber]
         dashBorder.frame = bounds
         dashBorder.fillColor = nil
