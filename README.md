@@ -1,76 +1,67 @@
 # Chip
-Chips help users quickly recognize an important information that has been entered by them, trigger actions, make selections, or filter content.
+
+**Spark** is the [Leboncoin](https://www.leboncoin.fr/)'s _Design System_.
+
+The repository here contains only the **iOS Chip** for _SwiftUI_ and _UIKit_.
+
+You can also see all of our Spark iOS repositories on [Github](https://github.com/orgs/leboncoin/repositories?q=spark-ios+sort%3Aname-asc).
 
 ## Specifications
-The chip specifications on Zeroheight is [here](https://spark.adevinta.com/1186e1705/p/17568d-chip).
 
-![Figma anatomy](https://github.com/adevinta/spark-ios-component-chip/blob/main/.github/assets/anatomy.png)
+The chip specifications on Zeroheight is [here](https://spark.adevinta.com/1186e1705/p/295e88-chip).
 
-## Usage
-Chip is available in UIKit only for now. 
+![Figma anatomy](https://github.com/leboncoin/spark-ios-component-chip/blob/main/.github/assets/anatomy.png)
 
-### ChipUIView
-Parameters:
-* `theme`: The current Spark-Theme. [You can always define your own theme.](https://github.com/adevinta/spark-ios/wiki/Theming#your-own-theming)
-* `intentColor`: The intent of the chip, e.g. main, support
-* `variant`: The chip variant, e.g. outlined, filled.
-* `text`: The text label.
-* `iconImage`: An icon used in chip.
+## Technical Documentation
 
-**Note**: you can use Chip with text and/or icon.
+You are a developer ? A technical documentation in _DocC_ is available [here](https://leboncoin.github.io/spark-ios-component-chip/).
 
-## Examples
-### ChipUIView
+### Swift Package Manager
+
+_Note: Instructions below are for using **SPM** without the Xcode UI. It's the easiest to go to your Project Settings -> Swift Packages and add SparkChip from there._
+
+To integrate using Apple's Swift package manager, without Xcode integration, add the following as a dependency to your `Package.swift`:
 
 ```swift
-let chip: ChipUIView = .init(
-   theme: theme,
-   intentColor: intent,
-   variant: variant,
-   label: "Only label"
-)
-chip.action = {}
-
-view.addSubview(chip)
-chip.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-chip.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-chip.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-chip.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor).isActive = true
+.package(url: "https://github.com/leboncoin/spark-ios-component-chip.git", .upToNextMajor(from: "1.0.0"))
 ```
 
-### ChipUIView with component
-Chip has an optional action. If the action is given, the Chip will act like a button and have a pressed state.
-Component is also optional and not required for action to work.
+and then specify `SparkChip` as a dependency of the Target in which you wish to use the SparkChip.
+
+Here's an example `Package.swift`:
 
 ```swift
-let icon = UIImage(imageLiteralResourceName: "alert")
+// swift-tools-version:5.9
+import PackageDescription
 
-let chip = ChipUIView(theme: theme,
-              intentColor: .main,
-              variant: .filled,
-                  label: "Not selected",
-                  iconImage: icon)
-let component = UIImageView(image: UIImage.strokedCheckmark)
-
-var selected = false
-chip.action = {
-    selected.toggle()
-    if selected {
-        chip.text = "Selected"
-        chip.component = component
-        chip.variant = .tinted
-    } else {
-        chip.component = nil
-        chip.text = "Not selected"
-        chip.variant = .filled
-    }
-}
-
-view.addSubview(chip)
-chip.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-chip.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-chip.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-chip.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor).isActive = true
+let package = Package(
+    name: "MyPackage",
+    platforms: [
+        .iOS(.v16)
+    ],
+    products: [
+        .library(
+            name: "MyPackage",
+            targets: ["MyPackage"]),
+    ],
+    dependencies: [
+        .package(
+            url: "https://github.com/leboncoin/spark-ios-component-chip.git",
+            .upToNextMajor(from: "1.0.0")
+        )
+    ],
+    targets: [
+        .target(
+            name: "MyPackage",
+            dependencies: [
+                .product(
+                    name: "SparkChip",
+                    package: "spark-ios-component-chip"
+                ),
+            ]
+        )
+    ]
+)
 ```
 
 ## License
@@ -78,7 +69,7 @@ chip.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor).isActive = tr
 ```
 MIT License
 
-Copyright (c) 2024 Adevinta
+Copyright (c) 2024 Leboncoin
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

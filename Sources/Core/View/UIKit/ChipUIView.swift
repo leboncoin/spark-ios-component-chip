@@ -3,7 +3,7 @@
 //  SparkChip
 //
 //  Created by michael.zimmermann on 02.05.23.
-//  Copyright © 2023 Adevinta. All rights reserved.
+//  Copyright © 2023 Leboncoin. All rights reserved.
 //
 
 import Combine
@@ -146,7 +146,6 @@ public final class ChipUIView: UIControl {
     }
 
     public override var intrinsicContentSize: CGSize {
-
         let width: CGFloat = {
             if let component = self.component, component.intrinsicContentSize.width == UIView.noIntrinsicMetric {
                 return UIView.noIntrinsicMetric
