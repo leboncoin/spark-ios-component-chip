@@ -8,7 +8,7 @@
 
 import SwiftUI
 import XCTest
-@testable import SparkChip
+@testable import SparkComponentChip
 @_spi(SI_SPI) @testable import SparkChipTesting
 @_spi(SI_SPI) import SparkThemingTesting
 

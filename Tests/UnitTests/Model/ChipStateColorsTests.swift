@@ -8,7 +8,7 @@
 
 import XCTest
 
-@testable import SparkChip
+@testable import SparkComponentChip
 import SparkTheme
 
 final class ChipStateColorsTests: XCTestCase {

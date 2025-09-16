@@ -1,6 +1,6 @@
 //
 //  ChipGetIntentColorsUseCase.swift
-//  SparkChip
+//  SparkComponentChip
 //
 //  Created by michael.zimmermann on 04.05.23.
 //  Copyright © 2023 Leboncoin. All rights reserved.
@@ -11,7 +11,7 @@ import SparkTheming
 
 // sourcery: AutoMockable
 protocol ChipGetIntentColorsUseCasable {
-    func execute(theme: Theme, intent: ChipIntent) -> ChipIntentColors
+    func execute(theme: any Theme, intent: ChipIntent) -> ChipIntentColors
 }
 
 /// ChipGetIntentColorsUseCase: A use case to calculate the colors that are needed by a chip
@@ -24,7 +24,7 @@ struct ChipGetOutlinedIntentColorsUseCase: ChipGetIntentColorsUseCasable {
     /// - intent: The intent of the chip
     ///
     /// Returns: ChipIntentColors
-    func execute(theme: Theme, intent: ChipIntent) -> ChipIntentColors {
+    func execute(theme: any Theme, intent: ChipIntent) -> ChipIntentColors {
         let colors = theme.colors
         let opacity = theme.dims.dim5
 

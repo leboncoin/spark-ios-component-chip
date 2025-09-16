@@ -1,6 +1,6 @@
 //
 //  ChipGetTintedIntentColorsUseCase.swift
-//  SparkChip
+//  SparkComponentChip
 //
 //  Created by michael.zimmermann on 10.10.23.
 //  Copyright © 2023 Leboncoin. All rights reserved.
@@ -18,7 +18,7 @@ struct ChipGetTintedIntentColorsUseCase: ChipGetIntentColorsUseCasable {
     /// - intent: The intent of the chip
     ///
     /// Returns: ChipIntentColors
-    func execute(theme: Theme, intent: ChipIntent) -> ChipIntentColors {
+    func execute(theme: any Theme, intent: ChipIntent) -> ChipIntentColors {
         let colors = theme.colors
 
         switch intent {

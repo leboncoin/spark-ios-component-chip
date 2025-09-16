@@ -11,7 +11,7 @@ import SwiftUI
 import SnapshotTesting
 @_spi(SI_SPI) import SparkCommon
 @_spi(SI_SPI) import SparkCommonSnapshotTesting
-@testable import SparkChip
+@testable import SparkComponentChip
 import SparkTheming
 import SparkTheme
 
@@ -19,7 +19,7 @@ final class ChipViewSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
     // MARK: - Properties
 
-    private let theme: Theme = SparkTheme.shared
+    private let theme: any Theme = SparkTheme.shared
 
     // MARK: - Tests
 

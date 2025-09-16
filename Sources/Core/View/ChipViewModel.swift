@@ -1,6 +1,6 @@
 //
 //  ChipViewModel.swift
-//  SparkChip
+//  SparkComponentChip
 //
 //  Created by michael.zimmermann on 02.05.23.
 //  Copyright © 2023 Leboncoin. All rights reserved.
@@ -12,10 +12,10 @@ import SparkTheming
 class ChipViewModel<Content>: ObservableObject {
 
     // MARK: - Properties Injected
-    private (set) var theme: Theme
-    private (set) var variant: ChipVariant
-    private (set) var intent: ChipIntent
-    private (set) var alignment: ChipAlignment
+    private(set) var theme: any Theme
+    private(set) var variant: ChipVariant
+    private(set) var intent: ChipIntent
+    private(set) var alignment: ChipAlignment
     private let useCase: ChipGetColorsUseCasable
 
     // MARK: - State Properties
@@ -44,7 +44,7 @@ class ChipViewModel<Content>: ObservableObject {
     @Published var spacing: CGFloat
     @Published var padding: CGFloat
     @Published var borderRadius: CGFloat
-    @Published var font: TypographyFontToken
+    @Published var font: any TypographyFontToken
     @Published var colors: ChipStateColors
     @Published var isIconLeading: Bool
     @Published var content: Content
@@ -61,7 +61,7 @@ class ChipViewModel<Content>: ObservableObject {
     }
 
     // MARK: - Initializers
-    convenience init(theme: Theme,
+    convenience init(theme: any Theme,
                      variant: ChipVariant,
                      intent: ChipIntent,
                      alignment: ChipAlignment,
@@ -75,12 +75,12 @@ class ChipViewModel<Content>: ObservableObject {
                   useCase: ChipGetColorsUseCase())
     }
 
-    init(theme: Theme,
+    init(theme: any Theme,
          variant: ChipVariant,
          intent: ChipIntent,
          alignment: ChipAlignment,
          content: Content,
-         useCase: ChipGetColorsUseCasable) {
+         useCase: any ChipGetColorsUseCasable) {
         self.theme = theme
         self.variant = variant
         self.intent = intent
@@ -95,7 +95,7 @@ class ChipViewModel<Content>: ObservableObject {
         self.isIconLeading = alignment.isIconLeading
     }
 
-    func set(theme: Theme) {
+    func set(theme: any Theme) {
         self.theme = theme
         self.themeDidUpdate()
     }
@@ -146,7 +146,7 @@ class ChipViewModel<Content>: ObservableObject {
 }
 
 private extension Theme {
-    var bodyFont: TypographyFontToken {
+    var bodyFont: any TypographyFontToken {
         return self.typography.body1
     }
 }
