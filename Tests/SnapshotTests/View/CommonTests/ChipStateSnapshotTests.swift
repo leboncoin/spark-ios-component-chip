@@ -8,7 +8,7 @@
 
 import Foundation
 
-@testable import SparkChip
+@testable import SparkComponentChip
 
 extension ChipState {
     static let all: [ChipState] =

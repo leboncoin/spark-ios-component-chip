@@ -6,7 +6,7 @@
 //  Copyright © 2023 Leboncoin. All rights reserved.
 //
 
-@testable import SparkChip
+@testable import SparkComponentChip
 import XCTest
 
 final class ChipStateTests: XCTestCase {

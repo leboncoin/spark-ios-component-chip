@@ -1,6 +1,6 @@
 //
 //  ChipConstants.swift
-//  SparkChip
+//  SparkComponentChip
 //
 //  Created by michael.zimmermann on 17.07.23.
 //  Copyright © 2023 Leboncoin. All rights reserved.

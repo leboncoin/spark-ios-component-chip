@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SparkChip
+@testable import SparkComponentChip
 @_spi(SI_SPI) import SparkCommon
 @_spi(SI_SPI) import SparkThemingTesting
 import SparkTheming

@@ -1,6 +1,6 @@
 //
 //  ChipView.swift
-//  SparkChip
+//  SparkComponentChip
 //
 //  Created by michael.zimmermann on 17.07.23.
 //  Copyright © 2023 Leboncoin. All rights reserved.
@@ -41,7 +41,7 @@ public struct ChipView: View {
     /// - variant: The chip variant, e.g. outlined, filled
     /// - icon: An icon
     /// - action: An optional action. If the chip has an action, it will be treated like a button
-    public init(theme: Theme,
+    public init(theme: any Theme,
                 intent: ChipIntent,
                 variant: ChipVariant,
                 alignment: ChipAlignment = .leadingIcon,
@@ -65,7 +65,7 @@ public struct ChipView: View {
     /// - variant: The chip variant, e.g. outlined, filled
     /// - icon: An icon
     /// - action: An optional action. If the chip has an action, it will be treated like a button
-    public init(theme: Theme,
+    public init(theme: any Theme,
                 intent: ChipIntent,
                 variant: ChipVariant,
                 alignment: ChipAlignment = .leadingIcon,
@@ -90,7 +90,7 @@ public struct ChipView: View {
     /// - icon: An optional icon
     /// - title: An optional title
     /// - action: An optional action. If the chip has an action, it will be treated like a button
-    public init(theme: Theme,
+    public init(theme: any Theme,
                 intent: ChipIntent,
                 variant: ChipVariant,
                 alignment: ChipAlignment = .leadingIcon,

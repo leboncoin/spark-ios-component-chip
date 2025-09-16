@@ -23,7 +23,7 @@ protocol ChipGetColorsUseCasable {
     ///   - state: The current state of the chip
     /// Returns:
     ///       ChipColors: all the colors used for the chip
-    func execute(theme: Theme,
+    func execute(theme: any Theme,
                  variant: ChipVariant,
                  intent: ChipIntent,
                  state: ChipState
@@ -33,8 +33,8 @@ protocol ChipGetColorsUseCasable {
 /// ChipGetColorsUseCase: A use case to calculate the colors of a chip depending on the theme, variand and intent
 struct ChipGetColorsUseCase: ChipGetColorsUseCasable {
     // MARK: - Properties
-    private let outlinedIntentColorsUseCase: ChipGetIntentColorsUseCasable
-    private let tintedIntentColorsUseCase: ChipGetIntentColorsUseCasable
+    private let outlinedIntentColorsUseCase: any ChipGetIntentColorsUseCasable
+    private let tintedIntentColorsUseCase: any ChipGetIntentColorsUseCasable
 
     // MARK: - Initializer
     /// Initializer
@@ -42,8 +42,8 @@ struct ChipGetColorsUseCase: ChipGetColorsUseCasable {
     /// Parameters:
     /// - outlinedIntentColorsUseCase: A use case to calculate the intent colors of outlined chips.
     /// - tintedIntentColorsUseCase: A use case to calculate the intent colors of tinted chips.
-    init(outlinedIntentColorsUseCase: ChipGetIntentColorsUseCasable = ChipGetOutlinedIntentColorsUseCase(),
-         tintedIntentColorsUseCase: ChipGetIntentColorsUseCasable = ChipGetTintedIntentColorsUseCase()
+    init(outlinedIntentColorsUseCase: any ChipGetIntentColorsUseCasable = ChipGetOutlinedIntentColorsUseCase(),
+         tintedIntentColorsUseCase: any ChipGetIntentColorsUseCasable = ChipGetTintedIntentColorsUseCase()
     ) {
         self.outlinedIntentColorsUseCase = outlinedIntentColorsUseCase
         self.tintedIntentColorsUseCase = tintedIntentColorsUseCase
@@ -59,7 +59,7 @@ struct ChipGetColorsUseCase: ChipGetColorsUseCasable {
     /// - variant: The variant of the chip, whether it's filled, outlined, etc.
     /// - intent: The intent color of the chip, e.g. main, support
     /// - state: The current state of the chip, e.g. selected, enabled, pressed
-    func execute(theme: Theme,
+    func execute(theme: any Theme,
                  variant: ChipVariant,
                  intent: ChipIntent,
                  state: ChipState) -> ChipStateColors {

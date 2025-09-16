@@ -9,7 +9,7 @@
 import Combine
 import SwiftUI
 import XCTest
-@testable import SparkChip
+@testable import SparkComponentChip
 @_spi(SI_SPI) @testable import SparkChipTesting
 @_spi(SI_SPI) import SparkThemingTesting
 import SparkTheming
@@ -196,7 +196,7 @@ final class ChipViewModelTests: XCTestCase {
         let updateExpectation = expectation(description: "Font updated")
         updateExpectation.expectedFulfillmentCount = 2
 
-        var fonts = [TypographyFontToken]()
+        var fonts = [any TypographyFontToken]()
 
         self.sut.$font.sink(receiveValue: { font in
             updateExpectation.fulfill()
