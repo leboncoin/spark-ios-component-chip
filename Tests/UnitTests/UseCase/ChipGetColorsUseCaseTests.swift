@@ -1,6 +1,6 @@
 //
 //  ChipGetColorsUseCaseTests.swift
-//  SparkChipTests
+//  SparkComponentChipTests
 //
 //  Created by michael.zimmermann on 08.05.23.
 //  Copyright © 2023 Leboncoin. All rights reserved.
@@ -9,7 +9,7 @@
 import SwiftUI
 import XCTest
 @testable import SparkComponentChip
-@_spi(SI_SPI) @testable import SparkChipTesting
+@_spi(SI_SPI) @testable import SparkComponentChipTesting
 @_spi(SI_SPI) import SparkThemingTesting
 
 final class ChipGetColorsUseCaseTests: XCTestCase {
