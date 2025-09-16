@@ -15,8 +15,8 @@ let package = Package(
             targets: ["SparkComponentChip"]
         ),
         .library(
-            name: "SparkChipTesting",
-            targets: ["SparkChipTesting"]
+            name: "SparkComponentChipTesting",
+            targets: ["SparkComponentChipTesting"]
         )
     ],
     dependencies: [
@@ -52,7 +52,7 @@ let package = Package(
             path: "Sources/Core"
         ),
         .target(
-            name: "SparkChipTesting",
+            name: "SparkComponentChipTesting",
             dependencies: [
                 "SparkComponentChip",
                 .product(
@@ -75,10 +75,10 @@ let package = Package(
             path: "Sources/Testing"
         ),
         .testTarget(
-            name: "SparkChipUnitTests",
+            name: "SparkComponentChipUnitTests",
             dependencies: [
                 "SparkComponentChip",
-                "SparkChipTesting",
+                "SparkComponentChipTesting",
                 .product(
                     name: "SparkCommonTesting",
                     package: "spark-ios-common"
@@ -91,10 +91,10 @@ let package = Package(
             path: "Tests/UnitTests"
         ),
         .testTarget(
-            name: "SparkChipSnapshotTests",
+            name: "SparkComponentChipSnapshotTests",
             dependencies: [
                 "SparkComponentChip",
-                "SparkChipTesting",
+                "SparkComponentChipTesting",
                 .product(
                     name: "SparkCommonSnapshotTesting",
                     package: "spark-ios-common"
