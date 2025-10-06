@@ -14,7 +14,10 @@ public enum ChipAccessibilityIdentifier {
     // MARK: - Properties
 
     /// The accessibility identifier.
+    @available(*, deprecated, message: "Use view instead")
     public static let identifier = "spark-chip"
+    /// The accessibility identifier.
+    public static let view = "spark-chip"
     /// The text label accessibility identifier.
     public static let text = "spark-chip-text"
     /// The icon  accessibility identifier.

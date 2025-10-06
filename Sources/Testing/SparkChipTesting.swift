@@ -1,5 +1,5 @@
 //
-//  ChipViewModel.swift
+//  ChipViewModelDeprecated.swift
 //  SparkComponentChipTesting
 //
 //  Created by robin.lemaire on 31/05/2024.

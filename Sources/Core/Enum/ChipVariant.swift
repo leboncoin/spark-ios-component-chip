@@ -10,7 +10,12 @@ import Foundation
 
 /// The different variants of a chip
 public enum ChipVariant: CaseIterable {
+    case dashed
     case outlined
     case tinted
-    case dashed
+
+    // MARK: - Properties
+
+    /// The default case. Equals to **.tinted**.
+    static var `default`: Self = .tinted
 }

@@ -2,47 +2,87 @@
 //  ChipStateColorsTests.swift
 //  SparkComponentChipTests
 //
-//  Created by michael.zimmermann on 24.07.23.
-//  Copyright © 2023 Leboncoin. All rights reserved.
+//  Created by robin.lemaire on 23/09/2025.
+//  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
+import SwiftUI
 import XCTest
-
 @testable import SparkComponentChip
-import SparkTheme
+@_spi(SI_SPI) import SparkThemingTesting
 
 final class ChipStateColorsTests: XCTestCase {
 
-    func testEqual() {
-        let colors = SparkTheme.shared.colors
+    // MARK: - Tests
 
-        let colors1 = ChipStateColors(
-            background: colors.base.background,
-            border: colors.base.onBackgroundVariant,
-            foreground: colors.feedback.alert)
+    func test_initialization() {
+        // GIVEN
+        let border = ColorTokenGeneratedMock.random()
+        let pressedBorder = ColorTokenGeneratedMock.random()
+        let selectedBorder = ColorTokenGeneratedMock.random()
+        let content = ColorTokenGeneratedMock.random()
+        let selectedContent = ColorTokenGeneratedMock.random()
+        let background = ColorTokenGeneratedMock.random()
+        let pressedBackground = ColorTokenGeneratedMock.random()
+        let selectedBackground = ColorTokenGeneratedMock.random()
 
-        let colors2 = ChipStateColors(
-            background: colors.base.background,
-            border: colors.base.onBackgroundVariant,
-            foreground: colors.feedback.alert)
+        // WHEN
+        let stateColors = ChipStateColors(
+            border: border,
+            pressedBorder: pressedBorder,
+            selectedBorder: selectedBorder,
+            content: content,
+            selectedContent: selectedContent,
+            background: background,
+            pressedBackground: pressedBackground,
+            selectedBackground: selectedBackground
+        )
 
-        XCTAssertEqual(colors1, colors2)
+        // THEN
+        XCTAssertTrue(stateColors.border.equals(border))
+        XCTAssertTrue(stateColors.pressedBorder.equals(pressedBorder))
+        XCTAssertTrue(stateColors.selectedBorder.equals(selectedBorder))
+        XCTAssertTrue(stateColors.content.equals(content))
+        XCTAssertTrue(stateColors.selectedContent.equals(selectedContent))
+        XCTAssertTrue(stateColors.background.equals(background))
+        XCTAssertTrue(stateColors.pressedBackground.equals(pressedBackground))
+        XCTAssertTrue(stateColors.selectedBackground.equals(selectedBackground))
     }
 
-    func testNotEqual() {
-        let colors = SparkTheme.shared.colors
+    func test_equality_when_same_colors() {
+        // GIVEN
+        let border = ColorTokenGeneratedMock.random()
+        let pressedBorder = ColorTokenGeneratedMock.random()
+        let selectedBorder = ColorTokenGeneratedMock.random()
+        let content = ColorTokenGeneratedMock.random()
+        let selectedContent = ColorTokenGeneratedMock.random()
+        let background = ColorTokenGeneratedMock.random()
+        let pressedBackground = ColorTokenGeneratedMock.random()
+        let selectedBackground = ColorTokenGeneratedMock.random()
 
-        let colors1 = ChipStateColors(
-            background: colors.base.background,
-            border: colors.base.onBackgroundVariant,
-            foreground: colors.feedback.alert)
+        let stateColors1 = ChipStateColors(
+            border: border,
+            pressedBorder: pressedBorder,
+            selectedBorder: selectedBorder,
+            content: content,
+            selectedContent: selectedContent,
+            background: background,
+            pressedBackground: pressedBackground,
+            selectedBackground: selectedBackground
+        )
 
-        let colors2 = ChipStateColors(
-            background: colors.base.backgroundVariant,
-            border: colors.base.onBackgroundVariant,
-            foreground: colors.feedback.alert)
+        let stateColors2 = ChipStateColors(
+            border: border,
+            pressedBorder: pressedBorder,
+            selectedBorder: selectedBorder,
+            content: content,
+            selectedContent: selectedContent,
+            background: background,
+            pressedBackground: pressedBackground,
+            selectedBackground: selectedBackground
+        )
 
-        XCTAssertNotEqual(colors1, colors2)
+        // THEN
+        XCTAssertEqual(stateColors1, stateColors2)
     }
-
 }

@@ -8,3 +8,7 @@ DerivedData/
 *Generated/
 Package.resolved
 .swiftlint/
+Tests/SnapshotTests/.__snapshots__/*/documentation-*
+
+# SwiftLint Remote Config Cache
+.swiftlint/RemoteConfigCache
