@@ -17,28 +17,61 @@ struct ChipConfigurationSnapshotTests {
 
     let scenario: ChipScenarioSnapshotTests
 
-    let intent: ChipIntent
-    let variant: ChipVariant
-    let icon: ImageEither?
-    let text: String?
-    let badge: ViewEither?
-    let state: ChipState
+    var alignment: ChipAlignment = .default
+    var intent: ChipIntent = .default
+    var variant: ChipVariant = .default
+    var label: ChipLabel = .default
+    var isIcon: Bool = false
+    var isBadge: Bool = false
+    var isSelected: Bool = false
+    var isDisabled: Bool = false
 
-    let modes: [ComponentSnapshotTestMode]
-    let sizes: [UIContentSizeCategory]
+    var modes: [ComponentSnapshotTestMode] = ComponentSnapshotTestConstants.Modes.default
+    var sizes: [UIContentSizeCategory] = ComponentSnapshotTestConstants.Sizes.default
+
+    var documentationName: String?
 
     // MARK: - Getter
 
     func testName() -> String {
         return [
             "\(self.scenario.rawValue)",
-            "\(self.intent)",
-            "\(self.variant)",
-            self.icon != nil ? "withImage" : "withoutImage",
-            self.text != nil ? "withText" : "withoutText",
-            self.badge != nil ? "withBadge" : "withoutBadge",
-            self.state.isDisabled ? "disabled" : "enabled",
-            self.state.isSelected ? "selected" : "notSelected"
-        ].joined(separator: "-")
+            "\(self.alignment)" + "Alignment",
+            "\(self.intent)" + "Intent",
+            "\(self.variant)" + "Variant",
+            "\(self.label)" + "Content",
+            self.isIcon ? "withIcon" : nil,
+            self.isBadge ? "withBadge" : nil,
+            self.isDisabled ? "disabled" : nil,
+            self.isSelected ? "selected" : nil
+        ]
+            .compactMap { $0 }
+            .joined(separator: "-")
+    }
+}
+
+// MARK: - Enum
+
+enum ChipLabel: String, CaseIterable {
+    case withoutText
+    case text
+    case other
+
+    static var `default` = Self.text
+
+    var text: String? {
+        switch self {
+        case .withoutText: nil
+        case .text: "My component"
+        case .other: nil
+        }
+    }
+
+    var documentationName: String {
+        switch self {
+        case .withoutText: ""
+        case .text: "text"
+        case .other: "label"
+        }
     }
 }

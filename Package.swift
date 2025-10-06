@@ -21,18 +21,13 @@ let package = Package(
     ],
     dependencies: [
        .package(
-           url: "https://github.com/leboncoin/spark-ios-common.git",
-           // path: "../spark-ios-common"
-           /*version*/ "0.1.0"..."999.999.999"
+           // url: "https://github.com/leboncoin/spark-ios-common.git",
+           path: "../spark-ios-common"
+           // /*version*/ "0.1.0"..."999.999.999"
        ),
        .package(
            url: "https://github.com/leboncoin/spark-ios-theming.git",
            // path: "../spark-ios-theming"
-           /*version*/ "0.0.1"..."999.999.999"
-       ),
-       .package(
-           url: "https://github.com/leboncoin/spark-ios-component-badge.git",
-           // path: "../spark-ios-component-badge"
            /*version*/ "0.0.1"..."999.999.999"
        )
     ],
@@ -98,11 +93,7 @@ let package = Package(
                 .product(
                     name: "SparkCommonSnapshotTesting",
                     package: "spark-ios-common"
-                ),
-                .product(
-                    name: "SparkComponentBadge",
-                    package: "spark-ios-component-badge"
-                ),
+                )
             ],
             path: "Tests/SnapshotTests"
         ),
