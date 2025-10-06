@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// The various alignment a chip may have.
 public enum ChipAlignment: CaseIterable {
     /// Icon on the leading edge of the chip.
     /// Text on the trailing edge of the chip.
@@ -17,4 +18,9 @@ public enum ChipAlignment: CaseIterable {
     /// Text on the leading edge of the chip
     /// Not interpreted if the chip contains just an icon or just text.
     case trailingIcon
+
+    // MARK: - Properties
+
+    /// The default case. Equals to **.leadingIcon**.
+    static var `default`: Self = .leadingIcon
 }

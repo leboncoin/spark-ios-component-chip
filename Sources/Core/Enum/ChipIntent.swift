@@ -10,14 +10,19 @@ import Foundation
 
 /// The various intent color a chip may have.
 public enum ChipIntent: CaseIterable {
+    case accent
+    case alert
+    case basic
+    case danger
+    case info
     case main
+    case neutral
+    case success
     case support
     case surface
-    case success
-    case danger
-    case alert
-    case neutral
-    case info
-    case accent
-    case basic
+
+    // MARK: - Properties
+
+    /// The default case. Equals to **.basic**.
+    static var `default`: Self = .basic
 }

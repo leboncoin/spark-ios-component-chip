@@ -9,30 +9,29 @@
 import Foundation
 import SparkTheming
 
-/// The colors definie a chip
-struct ChipStateColors {
-    var background: any ColorToken
+struct ChipStateColors: Equatable {
+
+    // MARK: - Properties
+
     let border: any ColorToken
-    var foreground: any ColorToken
-    var opacity: CGFloat
+    let pressedBorder: any ColorToken
+    let selectedBorder: any ColorToken
+    let content: any ColorToken
+    let selectedContent: any ColorToken
+    let background: any ColorToken
+    let pressedBackground: any ColorToken
+    let selectedBackground: any ColorToken
 
-    init(background: any ColorToken = ColorTokenDefault.clear,
-         border: any ColorToken,
-         foreground: any ColorToken,
-         opacity: CGFloat = 1.0) {
-        self.background = background
-        self.border = border
-        self.foreground = foreground
-        self.opacity = opacity
-    }
+    // MARK: - Equatable
 
-}
-
-extension ChipStateColors: Equatable {
-    static func == (lhs: ChipStateColors, rhs: ChipStateColors) -> Bool {
-        return lhs.background.equals(rhs.background) &&
-        lhs.border.equals(rhs.border) &&
-        lhs.foreground.equals(rhs.foreground) &&
-        lhs.opacity == rhs.opacity
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.border.equals(rhs.border) &&
+        lhs.pressedBorder.equals(rhs.pressedBorder) &&
+        lhs.selectedBorder.equals(rhs.selectedBorder) &&
+        lhs.content.equals(rhs.content) &&
+        lhs.selectedContent.equals(rhs.selectedContent) &&
+        lhs.background.equals(rhs.background) &&
+        lhs.pressedBackground.equals(rhs.pressedBackground) &&
+        lhs.selectedBackground.equals(rhs.selectedBackground)
     }
 }
