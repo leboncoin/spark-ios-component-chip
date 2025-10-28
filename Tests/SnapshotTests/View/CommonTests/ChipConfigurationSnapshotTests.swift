@@ -2,8 +2,8 @@
 //  ChipConfigurationSnapshotTests.swift
 //  SparkComponentChipSnapshotTests
 //
-//  Created by michael.zimmermann on 26.10.23.
-//  Copyright © 2023 Leboncoin. All rights reserved.
+//  Created by robin.lemaire on 02/09/2025.
+//  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
 import UIKit

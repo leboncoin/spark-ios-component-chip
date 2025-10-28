@@ -23,7 +23,7 @@ final class ChipGetBorderUseCase: ChipGetBorderUseCaseable {
         return .init(
             width: theme.border.width.small,
             radius: theme.border.radius.medium,
-            dash: variant == .dashed ? ChipConstants.dashLength : 0
+            dash: variant == .dashed ? ChipConstants.dashLength : .zero
         )
     }
 }
