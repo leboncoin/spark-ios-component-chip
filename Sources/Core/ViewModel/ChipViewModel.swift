@@ -10,7 +10,6 @@ import SwiftUI
 @_spi(SI_SPI) import SparkCommon
 @_spi(SI_SPI) import SparkTheming
 
-/// ViewModel only used by **SwiftUI** View.
 // sourcery: AutoPublisherTest, AutoViewModelStub
 // sourcery: titleFont = "Identical"
 final internal class ChipViewModel: ObservableObject {
