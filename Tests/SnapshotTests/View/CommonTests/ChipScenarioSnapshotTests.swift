@@ -212,7 +212,7 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
             ChipConfigurationSnapshotTests(
                 scenario: self,
                 label: label,
-                documentationName: "component_with_\(label.documentationName)"
+                documentationName: "with_\(label.documentationName)"
             )
         })
 
@@ -221,7 +221,7 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
             scenario: self,
             label: .withoutText,
             isIcon: true,
-            documentationName: "component_with_icon"
+            documentationName: "with_icon"
         ))
 
         // Icon & Badge
@@ -230,7 +230,7 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
             label: .withoutText,
             isIcon: true,
             isBadge: true,
-            documentationName: "component_with_icon_and_extra_content"
+            documentationName: "with_icon_and_extra_content"
         ))
 
         // Text & Icons
@@ -238,7 +238,7 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
             scenario: self,
             label: .text,
             isIcon: true,
-            documentationName: "component_with_text_and_icon"
+            documentationName: "with_text_and_icon"
         ))
 
         // All contents
@@ -246,7 +246,7 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
             scenario: self,
             isIcon: true,
             isBadge: true,
-            documentationName: "component_with_text_and_icon_and_extra_content"
+            documentationName: "with_text_and_icon_and_extra_content"
         ))
 
         // Selected
@@ -255,7 +255,7 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
             isIcon: true,
             isBadge: true,
             isSelected: true,
-            documentationName: "component_selected"
+            documentationName: "selected"
         ))
 
         // Disabled
@@ -264,7 +264,7 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
             isIcon: true,
             isBadge: true,
             isDisabled: true,
-            documentationName: "component_disabled"
+            documentationName: "disabled"
         ))
 
         return items

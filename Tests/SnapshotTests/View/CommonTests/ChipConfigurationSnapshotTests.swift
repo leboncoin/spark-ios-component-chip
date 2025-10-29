@@ -29,13 +29,14 @@ struct ChipConfigurationSnapshotTests {
     var modes: [ComponentSnapshotTestMode] = ComponentSnapshotTestConstants.Modes.default
     var sizes: [UIContentSizeCategory] = ComponentSnapshotTestConstants.Sizes.default
 
-    var documentationName: String?
+    // MARK: - Name
 
-    // MARK: - Getter
+    var name: String {
+        guard self.documentationName == nil else {
+            return ""
+        }
 
-    func testName() -> String {
         return [
-            "\(self.scenario.rawValue)",
             "\(self.alignment)" + "Alignment",
             "\(self.intent)" + "Intent",
             "\(self.variant)" + "Variant",
@@ -48,6 +49,16 @@ struct ChipConfigurationSnapshotTests {
             .compactMap { $0 }
             .joined(separator: "-")
     }
+
+    var testName: String {
+        return if let documentationName {
+            "chip_" + documentationName
+        } else {
+            self.scenario.rawValue
+        }
+    }
+
+    var documentationName: String?
 }
 
 // MARK: - Enum

@@ -81,9 +81,10 @@ final class SparkUIChipSnapshotTests: UIKitComponentSnapshotTestCase {
 
                 self.assertSnapshot(
                     matching: backgroundView,
+                    named: configuration.name,
                     modes: configuration.modes,
                     sizes: configuration.sizes,
-                    testName: configuration.testName()
+                    testName: configuration.testName
                 )
             }
         }
