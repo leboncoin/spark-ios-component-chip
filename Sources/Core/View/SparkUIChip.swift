@@ -52,25 +52,25 @@ import SparkTheming
 /// ## Rendering
 ///
 /// With a icon
-/// ![Component rendering.](component_with_icon.png)
+/// ![Component rendering.](chip_with_icon.png)
 ///
 /// With a text
-/// ![Component rendering.](component_with_text.png)
+/// ![Component rendering.](chip_with_text.png)
 ///
 /// With a text and an icon
-/// ![Component rendering.](component_with_text_and_icon.png)
+/// ![Component rendering.](chip_with_text_and_icon.png)
 ///
 /// With a text and an extra content
-/// ![Component rendering.](component_with_text_and_icon_and_extra_content.png)
+/// ![Component rendering.](chip_with_text_and_icon_and_extra_content.png)
 ///
 /// With a icon and an extra content
-/// ![Component rendering.](component_with_icon_and_extra_content.png)
+/// ![Component rendering.](chip_with_icon_and_extra_content.png)
 ///
 /// When selected is true
-/// ![Component rendering.](component_selected.png)
+/// ![Component rendering.](chip_selected.png)
 ///
 /// With disabled is true
-/// ![Component rendering.](component_disabled.png)
+/// ![Component rendering.](chip_disabled.png)
 ///
 public final class SparkUIChip: UIControl {
 
@@ -84,25 +84,28 @@ public final class SparkUIChip: UIControl {
     private lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(
             arrangedSubviews: [
-                self.reversibleContentStackView,
-                self.extraContentStackView
-            ]
-        )
-        stackView.axis = .horizontal
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.isUserInteractionEnabled = false
-        return stackView
-    }()
-
-    private lazy var reversibleContentStackView: UIStackView = {
-        let stackView = UIStackView(
-            arrangedSubviews: [
-                self.textLabel,
+                self.labelContentStackView,
                 self.iconImageView
             ]
         )
         stackView.axis = .horizontal
         stackView.alignment = .center
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.isUserInteractionEnabled = false
+        return stackView
+    }()
+
+    private lazy var labelContentStackView: UIStackView = {
+        let stackView = UIStackView(
+            arrangedSubviews: [
+                self.textLabel,
+                self.extraContentStackView
+            ]
+        )
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.isHidden = true
         return stackView
     }()
 
@@ -157,6 +160,7 @@ public final class SparkUIChip: UIControl {
             if let extraContent = self.extraContent {
                 self.extraContentStackView.addArrangedSubview(extraContent)
             }
+            self.updateLabelContentStackViewVisibility()
         }
     }
 
@@ -199,7 +203,6 @@ public final class SparkUIChip: UIControl {
             self.iconImageView.image = newValue
             self.iconImageView.isHidden = newValue == nil
             self.largeContentImage = newValue
-            self.updateReversibleContentStackViewVisibility()
         }
     }
 
@@ -211,7 +214,7 @@ public final class SparkUIChip: UIControl {
         set {
             self.textLabel.text(newValue)
             self.updateAccessibilityLabel(newValue)
-            self.updateReversibleContentStackViewVisibility()
+            self.updateLabelContentStackViewVisibility()
         }
     }
 
@@ -223,12 +226,12 @@ public final class SparkUIChip: UIControl {
         set {
             self.textLabel.attributedText(newValue)
             self.updateAccessibilityLabel(newValue?.string)
-            self.updateReversibleContentStackViewVisibility()
+            self.updateLabelContentStackViewVisibility()
         }
     }
 
     /// The chip is selected or not.
-    /// ![Chip rendering with when it's selected.](component_selected.png)
+    /// ![Chip rendering with when it's selected.](chip_selected.png)
     public override var isSelected: Bool {
         didSet {
             self.viewModel.isSelected = self.isSelected
@@ -247,7 +250,7 @@ public final class SparkUIChip: UIControl {
     }
 
     /// The state of the chip: enabled or not.
-    /// ![Chip rendering with when it's disabled.](component_disabled.png)
+    /// ![Chip rendering with when it's disabled.](chip_disabled.png)
     public override var isEnabled: Bool {
         didSet {
             self.viewModel.isEnabled = self.isEnabled
@@ -263,7 +266,7 @@ public final class SparkUIChip: UIControl {
     private var iconWidthConstraint: NSLayoutConstraint?
 
     @LimitedScaledUIMetric private var padding: CGFloat = 0
-    @LimitedScaledUIMetric private var subSpacing: CGFloat = 0
+    @LimitedScaledUIMetric private var extraContentSpacing: CGFloat = 0
     @LimitedScaledUIMetric private var spacing: CGFloat = 0
 
     @LimitedScaledUIMetric private var borderDash: CGFloat = 0
@@ -306,7 +309,7 @@ public final class SparkUIChip: UIControl {
     /// chip.isSelected = false
     /// ```
     ///
-    /// ![Chip rendering.](component_with_text_and_icon_and_extra_content.png)
+    /// ![Chip rendering.](chip_with_text_and_icon_and_extra_content.png)
     public init(theme: any Theme) {
         self.theme = theme
 
@@ -341,7 +344,6 @@ public final class SparkUIChip: UIControl {
         self.updateIconSize()
         self.updateLayout()
         self.updateReversibleArrangedSubviews()
-        self.updateReversibleContentStackViewVisibility()
 
         // Load view model
         self.viewModel.setup(
@@ -393,6 +395,10 @@ public final class SparkUIChip: UIControl {
 
     // MARK: - Update UI
 
+    private func updateLabelContentStackViewVisibility() {
+        self.labelContentStackView.isHidden = !self.labelContentStackView.arrangedSubviews.contains { !$0.isHidden }
+    }
+
     private func updateBorderRadius(
         _ colors: ChipColors? = nil
     ) {
@@ -427,29 +433,25 @@ public final class SparkUIChip: UIControl {
 
     private func updateLayout() {
         self.contentStackView.spacing = self.spacing
-        self.reversibleContentStackView.spacing = self.subSpacing
+        self.labelContentStackView.spacing = self.extraContentSpacing
 
         self.contentStackView.layoutMargins = UIEdgeInsets(
             vertical: 0,
-            horizontal: self.spacing
+            horizontal: self.padding
         )
     }
 
     private func updateReversibleArrangedSubviews(_ isReversed: Bool? = nil) {
         let isReversed = isReversed ?? self.viewModel.isReversed
 
-        self.reversibleContentStackView.removeArrangedSubviews()
+        self.contentStackView.removeArrangedSubviews()
 
-        var subviews = [self.textLabel, self.iconImageView]
+        var subviews = [self.labelContentStackView, self.iconImageView]
         if isReversed {
             subviews.reverse()
         }
 
-        self.reversibleContentStackView.addArrangedSubviews(subviews)
-    }
-
-    private func updateReversibleContentStackViewVisibility() {
-        self.reversibleContentStackView.isHidden = self.textLabel.text == nil && self.iconImageView.image == nil
+        self.contentStackView.addArrangedSubviews(subviews)
     }
 
     // MARK: - Accessibility
@@ -575,8 +577,8 @@ public final class SparkUIChip: UIControl {
                 wrappedValue: layout.padding,
                 traitCollection: self.traitCollection
             )
-            self._subSpacing = .init(
-                wrappedValue: layout.subSpacing,
+            self._extraContentSpacing = .init(
+                wrappedValue: layout.extraContentSpacing,
                 traitCollection: self.traitCollection
             )
             self._spacing = .init(
@@ -606,7 +608,7 @@ public final class SparkUIChip: UIControl {
         // **
         // Update sizes
         self._padding.update(traitCollection: self.traitCollection)
-        self._subSpacing.update(traitCollection: self.traitCollection)
+        self._extraContentSpacing.update(traitCollection: self.traitCollection)
         self._spacing.update(traitCollection: self.traitCollection)
         self.updateLayout()
 

@@ -105,28 +105,28 @@ import SparkTheming
 /// ## Rendering
 ///
 /// With a icon
-/// ![Component rendering.](component_with_icon.png)
+/// ![Component rendering.](chip_with_icon.png)
 ///
 /// With a text
-/// ![Component rendering.](component_with_text.png)
+/// ![Component rendering.](chip_with_text.png)
 ///
 /// With a label
-/// ![Component rendering.](component_with_label.png)
+/// ![Component rendering.](chip_with_label.png)
 ///
 /// With a text and an icon
-/// ![Component rendering.](component_with_text_and_icon.png)
+/// ![Component rendering.](chip_with_text_and_icon.png)
 ///
 /// With a text and an extra content
-/// ![Component rendering.](component_with_text_and_icon_and_extra_content.png)
+/// ![Component rendering.](chip_with_text_and_icon_and_extra_content.png)
 ///
 /// With a icon and an extra content
-/// ![Component rendering.](component_with_icon_and_extra_content.png)
+/// ![Component rendering.](chip_with_icon_and_extra_content.png)
 ///
 /// When selected is true
-/// ![Component rendering.](component_selected.png)
+/// ![Component rendering.](chip_selected.png)
 ///
 /// With disabled is true
-/// ![Component rendering.](component_disabled.png)
+/// ![Component rendering.](chip_disabled.png)
 ///
 public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraContent: View {
 
@@ -179,7 +179,7 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
     /// ## Rendering
     ///
     /// With a icon
-    /// ![Component rendering.](component_with_icon.png)
+    /// ![Component rendering.](chip_with_icon.png)
     ///
     public init(
         icon: Image,
@@ -221,7 +221,7 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
     ///
     /// ## Rendering
     ///
-    /// ![Component rendering.](component_with_text.png)
+    /// ![Component rendering.](chip_with_text.png)
     ///
     public init(
         _ textKey: LocalizedStringKey,
@@ -264,7 +264,7 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
     ///
     /// ## Rendering
     ///
-    /// ![Component rendering.](component_with_text.png)
+    /// ![Component rendering.](chip_with_text.png)
     ///
     public init(
         _ text: String,
@@ -313,7 +313,7 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
     ///
     /// ## Rendering
     ///
-    /// ![Component rendering.](component_with_label.png)
+    /// ![Component rendering.](chip_with_label.png)
     ///
     public init(
         icon: Image? = nil,
@@ -366,7 +366,7 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
     ///
     /// ## Rendering
     ///
-    /// ![Component rendering.](component_with_icon_and_extra_content.png)
+    /// ![Component rendering.](chip_with_icon_and_extra_content.png)
     ///
     public init(
         icon: Image? = nil,
@@ -416,7 +416,7 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
     ///
     /// ## Rendering
     ///
-    /// ![Component rendering.](component_with_text_and_icon_and_extra_content.png)
+    /// ![Component rendering.](chip_with_text_and_icon_and_extra_content.png)
     ///
     public init(
         _ textKey: LocalizedStringKey,
@@ -472,7 +472,7 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
     ///
     /// ## Rendering
     ///
-    /// ![Component rendering.](component_with_text_and_icon_and_extra_content.png)
+    /// ![Component rendering.](chip_with_text_and_icon_and_extra_content.png)
     ///
     public init(
         _ text: String,
@@ -532,7 +532,7 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
     ///
     /// ## Rendering
     ///
-    /// ![Component rendering.](component_with_text_and_icon_and_extra_content.png)
+    /// ![Component rendering.](chip_with_text_and_icon_and_extra_content.png)
     ///
     public init(
         icon: Image? = nil,
@@ -561,37 +561,27 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
     }
 
     private func content() -> some View {
-        SparkHStack(spacing: self.viewModel.layout.spacing) {
-            if let icon {
-                ReversibleHStack(
-                    spacing: self.viewModel.layout.subSpacing,
-                    content1: {
-                        self.label()
-                    },
-                    content2: {
-                        icon
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .accessibilityIdentifier(ChipAccessibilityIdentifier.icon)
-                            .sparkFrame(
-                                width: ChipConstants.iconSize,
-                                height: ChipConstants.iconSize,
-                                relativeTo: .title2
-                            )
-                            .accessibilityHidden(true)
-                    }
-                )
-                .isReversed(self.viewModel.isReversed)
-                .labelStyle(viewModel: self.viewModel)
-            } else {
-                self.label()
-                    .labelStyle(viewModel: self.viewModel)
+        ReversibleHStack(
+            spacing: self.viewModel.layout.spacing,
+            content1: {
+                self.labelContent()
+            },
+            content2: {
+                self.icon?
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .accessibilityIdentifier(ChipAccessibilityIdentifier.icon)
+                    .sparkFrame(
+                        width: ChipConstants.iconSize,
+                        height: ChipConstants.iconSize,
+                        relativeTo: .title2
+                    )
+                    .foregroundStyle(self.viewModel.colors.content)
+                    .accessibilityHidden(true)
             }
-
-            self.extraContent()
-                .dynamicTypeSize(...DynamicTypeSize.accessibility1)
-        }
-        .sparkPadding(self.viewModel.layout.padding)
+        )
+        .isReversed(self.viewModel.isReversed)
+        .sparkPadding(.horizontal, self.viewModel.layout.padding)
         .sparkFrame(height: ChipConstants.height)
         .background(self.viewModel.colors.background)
         .sparkBorder(
@@ -641,12 +631,20 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
             self.viewModel.isEnabled = isEnabled
         }
     }
-}
 
-private extension View {
+    @ViewBuilder
+    private func labelContent() -> some View {
+        if !(self.label() is EmptyView && self.extraContent() is EmptyView) {
+            SparkHStack(spacing: self.viewModel.layout.extraContentSpacing) {
+                self.label()
+                    .foregroundStyle(self.viewModel.colors.content)
+                    .font(self.viewModel.titleFont)
 
-    func labelStyle(viewModel: ChipViewModel) -> some View {
-        self.foregroundStyle(viewModel.colors.content)
-            .font(viewModel.titleFont)
+                self.extraContent()
+                    .dynamicTypeSize(...DynamicTypeSize.accessibility1)
+            }
+        } else {
+            EmptyView()
+        }
     }
 }
