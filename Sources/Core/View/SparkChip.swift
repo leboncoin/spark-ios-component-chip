@@ -10,6 +10,8 @@ import SwiftUI
 @_spi(SI_SPI) import SparkCommon
 import SparkTheming
 
+// TODO: The badge must be on the left of the right image
+
 /// A Spark Chip help users quickly recognize an important
 /// information that has been entered by them, trigger actions,
 /// make selections, or filter content.
