@@ -13,6 +13,6 @@ struct ChipLayout: Equatable {
     // MARK: - Properties
 
     var spacing: CGFloat = 0
-    var subSpacing: CGFloat = 0
+    var extraContentSpacing: CGFloat = 0
     var padding: CGFloat = 0
 }

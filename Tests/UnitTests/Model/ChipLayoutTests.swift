@@ -20,7 +20,7 @@ final class ChipLayoutTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(layout.spacing, 0)
-        XCTAssertEqual(layout.subSpacing, 0)
+        XCTAssertEqual(layout.extraContentSpacing, 0)
         XCTAssertEqual(layout.padding, 0)
     }
 
@@ -28,13 +28,13 @@ final class ChipLayoutTests: XCTestCase {
         // GIVEN / WHEN
         let layout1 = ChipLayout(
             spacing: 6.0,
-            subSpacing: 8.0,
+            extraContentSpacing: 8.0,
             padding: 12.0
         )
 
         let layout2 = ChipLayout(
             spacing: 6.0,
-            subSpacing: 8.0,
+            extraContentSpacing: 8.0,
             padding: 12.0
         )
 

@@ -12,18 +12,25 @@ import SparkTheming
 // sourcery: AutoMockable, AutoMockTest
 protocol ChipGetLayoutUseCaseable {
     // sourcery: theme = "Identical"
-    func execute(theme: any Theme) -> ChipLayout
+    func execute(theme: any Theme, alignment: ChipAlignment) -> ChipLayout
 }
 
 final class ChipGetLayoutUseCase: ChipGetLayoutUseCaseable {
 
     // MARK: - Methods
 
-    func execute(theme: any Theme) -> ChipLayout {
+    func execute(theme: any Theme, alignment: ChipAlignment) -> ChipLayout {
+        let spacings = theme.layout.spacing
+
+        let spacing = switch alignment {
+        case .leadingIcon: spacings.small
+        case .trailingIcon: spacings.medium
+        }
+
         return .init(
-            spacing: theme.layout.spacing.medium,
-            subSpacing: theme.layout.spacing.small,
-            padding: theme.layout.spacing.medium
+            spacing: spacing,
+            extraContentSpacing: spacings.medium,
+            padding: spacings.medium
         )
     }
 }
