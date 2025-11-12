@@ -97,6 +97,7 @@ final class ChipViewModelTests: XCTestCase {
             stub.getLayoutUseCaseMock,
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
+            givenAlignment: stub.givenAlignment,
             expectedReturnValue: stub.expectedLayout
         )
 
@@ -163,6 +164,7 @@ final class ChipViewModelTests: XCTestCase {
             stub.getLayoutUseCaseMock,
             expectedNumberOfCalls: 1,
             givenTheme: givenTheme,
+            givenAlignment: stub.givenAlignment,
             expectedReturnValue: stub.expectedLayout
         )
 
@@ -198,13 +200,20 @@ final class ChipViewModelTests: XCTestCase {
             expectedReturnValue: stub.expectedIsReversed
         )
 
+        ChipGetLayoutUseCaseableMockTest.XCTAssert(
+            stub.getLayoutUseCaseMock,
+            expectedNumberOfCalls: 1,
+            givenTheme: stub.givenTheme,
+            givenAlignment: givenAlignment,
+            expectedReturnValue: stub.expectedLayout
+        )
+
         // UseCase Calls Count
         XCTAssertNotCalled(
             on: stub,
             getBorderUseCase: true,
             getColorsUseCase: true,
             getDimUseCase: true,
-            getLayoutUseCase: true,
             getTitleFontUseCase: true
         )
     }
@@ -521,7 +530,7 @@ private final class Stub: ChipViewModelStub {
         getIsReversedUseCaseMock.executeWithAlignmentReturnValue = self.expectedIsReversed
 
         let getLayoutUseCaseMock = ChipGetLayoutUseCaseableGeneratedMock()
-        getLayoutUseCaseMock.executeWithThemeReturnValue = self.expectedLayout
+        getLayoutUseCaseMock.executeWithThemeAndAlignmentReturnValue = self.expectedLayout
 
         let getTitleFontUseCaseMock = ChipGetTitleFontUseCaseableGeneratedMock()
         getTitleFontUseCaseMock.executeWithThemeReturnValue = self.expectedTitleFont
@@ -596,7 +605,7 @@ private func XCTAssertNotCalled(
 
     ChipGetLayoutUseCaseableMockTest.XCTCalled(
         stub.getLayoutUseCaseMock,
-        executeWithThemeCalled: !getLayoutUseCaseNotCalled
+        executeWithThemeAndAlignmentCalled: !getLayoutUseCaseNotCalled
     )
 
     ChipGetTitleFontUseCaseableMockTest.XCTCalled(

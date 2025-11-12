@@ -14,19 +14,45 @@ import XCTest
 
 final class ChipGetLayoutUseCaseTests: XCTestCase {
 
+    // MARK: - Properties
+
+    private var sut: ChipGetLayoutUseCase!
+    private var theme: ThemeGeneratedMock!
+
+    // MARK: - Setup
+
+    override func setUp() {
+        super.setUp()
+
+        self.sut = ChipGetLayoutUseCase()
+        self.theme = ThemeGeneratedMock.mocked()
+    }
+
     // MARK: - Tests
 
-    func test_execute_returns_correct_layout() {
-        // GIVEN
-        let theme = ThemeGeneratedMock.mocked()
-        let useCase = ChipGetLayoutUseCase()
-
-        // WHEN
-        let result = useCase.execute(theme: theme)
+    func test_execute_with_leading_icon_alignment() {
+        // GIVEN / WHEN
+        let result = self.sut.execute(
+            theme: self.theme,
+            alignment: .leadingIcon
+        )
 
         // THEN
-        XCTAssertEqual(result.spacing, theme.layout.spacing.medium)
-        XCTAssertEqual(result.subSpacing, theme.layout.spacing.small)
-        XCTAssertEqual(result.padding, theme.layout.spacing.medium)
+        XCTAssertEqual(result.spacing, self.theme.layout.spacing.small)
+        XCTAssertEqual(result.extraContentSpacing, self.theme.layout.spacing.medium)
+        XCTAssertEqual(result.padding, self.theme.layout.spacing.medium)
+    }
+
+    func test_execute_with_trailing_icon_alignment() {
+        // GIVEN / WHEN
+        let result = self.sut.execute(
+            theme: self.theme,
+            alignment: .trailingIcon
+        )
+
+        // THEN
+        XCTAssertEqual(result.spacing, self.theme.layout.spacing.medium)
+        XCTAssertEqual(result.extraContentSpacing, self.theme.layout.spacing.medium)
+        XCTAssertEqual(result.padding, self.theme.layout.spacing.medium)
     }
 }

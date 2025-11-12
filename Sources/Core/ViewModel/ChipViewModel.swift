@@ -25,8 +25,6 @@ final internal class ChipViewModel: ObservableObject {
 
     // MARK: - Properties
 
-    private var alreadyUpdateAll = false
-
     var theme: (any Theme)? {
         didSet {
             guard !oldValue.equals(self.theme), self.alreadyUpdateAll else { return }
@@ -43,6 +41,7 @@ final internal class ChipViewModel: ObservableObject {
         didSet {
             guard oldValue != self.alignment, self.alreadyUpdateAll else { return }
 
+            self.setSpacing()
             self.setIsReversed()
         }
     }
@@ -87,6 +86,10 @@ final internal class ChipViewModel: ObservableObject {
             self.setDim()
         }
     }
+
+    // MARK: - Private Properties
+
+    private var alreadyUpdateAll = false
 
     // MARK: - Use Case Properties
 
@@ -188,10 +191,11 @@ final internal class ChipViewModel: ObservableObject {
     }
 
     private func setSpacing() {
-        guard let theme else { return }
+        guard let theme, let alignment else { return }
 
         self.layout = getLayoutUseCase.execute(
-            theme: theme
+            theme: theme,
+            alignment: alignment
         )
     }
 
