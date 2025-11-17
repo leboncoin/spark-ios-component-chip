@@ -81,6 +81,19 @@ public final class SparkUIChip: UIControl {
 
     // MARK: - Components
 
+//    private lazy var contentStackView: UIStackView = {
+//        let stackView = UIStackView(
+//            arrangedSubviews: [
+//                self.reversibleContentStackView,
+//                self.extraContentStackView
+//            ]
+//        )
+//        stackView.axis = .horizontal
+//        stackView.isLayoutMarginsRelativeArrangement = true
+//        stackView.isUserInteractionEnabled = false
+//        return stackView
+//    }()
+
     private lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(
             arrangedSubviews: [

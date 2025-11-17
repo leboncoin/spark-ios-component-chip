@@ -21,25 +21,25 @@ Even if we can put all types of view in the **extra content**, we recommend usin
 ### Rendering
 
 With a icon
-![Component rendering.](component_with_icon.png)
+![Component rendering.](chip_with_icon.png)
 
 With a text
-![Component rendering.](component_with_text.png)
+![Component rendering.](chip_with_text.png)
 
 With a text and an icon 
-![Component rendering.](component_with_text_and_icon.png)
+![Component rendering.](chip_with_text_and_icon.png)
 
 With a text and an extra content 
-![Component rendering.](component_with_text_and_icon_and_extra_content.png)
+![Component rendering.](chip_with_text_and_icon_and_extra_content.png)
 
 With a icon and an extra content 
-![Component rendering.](component_with_icon_and_extra_content.png)
+![Component rendering.](chip_with_icon_and_extra_content.png)
 
 When selected is true 
-![Component rendering.](component_selected.png)
+![Component rendering.](chip_selected.png)
 
 With disabled is true 
-![Component rendering.](component_disabled.png)
+![Component rendering.](chip_disabled.png)
 
 ## A11y
 
