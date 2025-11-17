@@ -1,13 +1,12 @@
 //
 //  ChipScenarioSnapshotTests.swift
-//  Spark
+//  SparkComponentChipSnapshotTests
 //
-//  Created by michael.zimmermann on 26.10.23.
-//  Copyright © 2023 Leboncoin. All rights reserved.
+//  Created by robin.lemaire on 02/09/2025.
+//  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
 @testable import SparkComponentChip
-import SparkComponentBadge
 @_spi(SI_SPI) import SparkCommon
 @_spi(SI_SPI) import SparkCommonSnapshotTesting
 @_spi(SI_SPI) import SparkCommonTesting
@@ -21,25 +20,34 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
     case test3
     case test4
     case test5
+    case documentation
 
     // MARK: - Type Alias
 
     typealias Constants = ComponentSnapshotTestConstants
 
+    // MARK: - Properties
+
+    var isDocumentation: Bool {
+        self == .documentation
+    }
+
     // MARK: - Configurations
 
-    func configuration(isSwiftUIComponent: Bool) -> [ChipConfigurationSnapshotTests] {
+    func configuration() -> [ChipConfigurationSnapshotTests] {
         switch self {
         case .test1:
-            return self.test1(isSwiftUIComponent: isSwiftUIComponent)
+            return self.test1()
         case .test2:
-            return self.test2(isSwiftUIComponent: isSwiftUIComponent)
+            return self.test2()
         case .test3:
-            return self.test3(isSwiftUIComponent: isSwiftUIComponent)
+            return self.test3()
         case .test4:
-            return self.test4(isSwiftUIComponent: isSwiftUIComponent)
+            return self.test4()
         case .test5:
-            return self.test5(isSwiftUIComponent: isSwiftUIComponent)
+            return self.test5()
+        case .documentation:
+            return self.documentation()
         }
     }
 
@@ -47,181 +55,218 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
 
     /// Test 1
     ///
-    /// Description: To test all intents
+    /// Description: To test all intents & variants & isSelected
     ///
     /// Content:
     ///  - intents: all
-    ///  - variant: outlined
+    ///  - variant: all
+    ///  - alignment: default
     ///  - content: icon + text
-    ///  - state: default
+    ///  - isSelected: all
+    ///  - isDisabled: default
     ///  - mode: all
     ///  - size: default
-    private func test1(isSwiftUIComponent: Bool) -> [ChipConfigurationSnapshotTests] {
+    private func test1() -> [ChipConfigurationSnapshotTests] {
         let intents = ChipIntent.allCases
+        let variants = ChipVariant.allCases
+        let areSelected = Bool.allCases
 
-        return intents.map {
-            .init(
-                scenario: self,
-                intent: $0,
-                variant: .outlined,
-                icon: .mock(isSwiftUIComponent: isSwiftUIComponent),
-                text: "Label",
-                badge: nil,
-                state: .default,
-                modes: Constants.Modes.all,
-                sizes: Constants.Sizes.default
-            )
+        return intents.flatMap { intent in
+            variants.flatMap { variant in
+                areSelected.map { isSelected in
+                        .init(
+                            scenario: self,
+                            intent: intent,
+                            variant: variant,
+                            isIcon: true,
+                            isSelected: isSelected,
+                            modes: Constants.Modes.all
+                        )
+                }
+            }
         }
     }
 
     /// Test 2
     ///
-    /// Description: To test all variants
+    /// Description: To test all alignments
     ///
     /// Content:
-    ///  - intent: basic
-    ///  - variant: all
-    ///  - content: text only
-    ///  - state: default
-    ///  - mode: all
+    ///  - intents: default
+    ///  - variant: default
+    ///  - alignment: default
+    ///  - content: icon + text + badge
+    ///  - isSelected: default
+    ///  - isDisabled: default
+    ///  - mode: default
     ///  - size: default
-    private func test2(isSwiftUIComponent: Bool) -> [ChipConfigurationSnapshotTests] {
-        let variants = ChipVariant.allCases
+    private func test2() -> [ChipConfigurationSnapshotTests] {
+        let alignments = ChipAlignment.allCases
+        let areBadge = Bool.allCases
 
-        return variants.map {
-            .init(
-                scenario: self,
-                intent: .basic,
-                variant: $0,
-                icon: nil,
-                text: "Label",
-                badge: nil,
-                state: .default,
-                modes: Constants.Modes.all,
-                sizes: Constants.Sizes.default
-            )
+        return alignments.flatMap { alignment in
+            areBadge.map { isBadge in
+                    .init(
+                        scenario: self,
+                        alignment: alignment,
+                        isIcon: true,
+                        isBadge: isBadge
+                    )
+            }
         }
     }
 
     /// Test 3
     ///
-    /// Description: To test all states
+    /// Description: To test content
     ///
     /// Content:
-    ///  - intents: all
-    ///  - variant: all
-    ///  - content: icon + text
-    ///  - state: all
+    ///  - intents: default
+    ///  - variant: default
+    ///  - alignment: default
+    ///  - content: all
+    ///  - isSelected: all
+    ///  - isDisabled: false
     ///  - mode: default
     ///  - size: default
-    private func test3(isSwiftUIComponent: Bool) -> [ChipConfigurationSnapshotTests] {
-        let variants = ChipVariant.allCases
-        let states = ChipState.all
+    private func test3() -> [ChipConfigurationSnapshotTests] {
+        let labels = ChipLabel.allCases
+        let areIcon = Bool.allCases
+        let areBadge = Bool.allCases
 
-        return all(variants, states).map { variant, state in
-                .init(
-                    scenario: self,
-                    intent: .main,
-                    variant: variant,
-                    icon: .mock(isSwiftUIComponent: isSwiftUIComponent),
-                    text: "Label",
-                    badge: nil,
-                    state: state,
-                    modes: Constants.Modes.default,
-                    sizes: Constants.Sizes.default
-                )
+        return labels.flatMap { label in
+            areIcon.flatMap { isIcon in
+                areBadge.compactMap { isBadge in
+
+                    if label == .withoutText && !isIcon && !isBadge {
+                        nil
+                    } else {
+                        .init(
+                            scenario: self,
+                            label: label,
+                            isIcon: isIcon,
+                            isBadge: isBadge
+                        )
+                    }
+                }
+            }
         }
     }
 
     /// Test 4
     ///
-    /// Description: To test content resilience
+    /// Description: To test is disabled
     ///
     /// Content:
-    ///  - intent: neutral
-    ///  - variant: tinted
-    ///  - content: text + icon + in different combinations
+    ///  - intents: default
+    ///  - variant: default
+    ///  - alignment: default
+    ///  - content: icon + text + badge
+    ///  - isSelected: default
+    ///  - isDisabled: true
     ///  - mode: default
     ///  - size: default
-    private func test4(isSwiftUIComponent: Bool) -> [ChipConfigurationSnapshotTests] {
-        let contents: [(hasIcon: Bool, hasText: Bool, hasBadge: Bool)] =
-        [
-            (true, false, false),
-            (true, false, true),
-            (false, true, true),
-            (true, true, true)
-        ]
-
-        return contents.map { content in
+    private func test4() -> [ChipConfigurationSnapshotTests] {
+        return [
             .init(
                 scenario: self,
-                intent: .neutral,
-                variant: .tinted,
-                icon: content.hasIcon ? .mock(isSwiftUIComponent: isSwiftUIComponent) : nil,
-                text: content.hasText ? "A Very Long Label" : nil,
-                badge: content.hasBadge ? .mock(isSwiftUIComponent) : nil,
-                state: .default,
-                modes: Constants.Modes.default,
-                sizes: Constants.Sizes.default
+                isIcon: true,
+                isBadge: true,
+                isDisabled: true
             )
-        }
+        ]
     }
 
-    /// Test 6
+    /// Test 5
     ///
     /// Description: To test a11y sizes
     ///
     /// Content:
-    ///  - intent: main
-    ///  - variant: tinted
+    ///  - intents: default
+    ///  - variant: default
+    ///  - alignment: default
     ///  - content: icon + text
+    ///  - isSelected: default
+    ///  - isDisabled: default
     ///  - mode: default
-    ///  - size:  all
-    private func test5(isSwiftUIComponent: Bool) -> [ChipConfigurationSnapshotTests] {
+    ///  - size: all
+    private func test5() -> [ChipConfigurationSnapshotTests] {
         return [
             .init(
                 scenario: self,
-                intent: .accent,
-                variant: .tinted,
-                icon: .mock(isSwiftUIComponent: isSwiftUIComponent),
-                text: "Label",
-                badge: nil,
-                state: .default,
-                modes: Constants.Modes.default,
+                isIcon: true,
                 sizes: Constants.Sizes.all
             )
         ]
     }
-}
 
-// MARK: - Private Extensions
+    // MARK: - Documentation
 
-private extension ViewEither {
-    static func mock(_ isSwiftUIComponent: Bool) -> Self {
-        if isSwiftUIComponent {
-            let view = BadgeView(
-                theme: SparkTheme.shared,
-                intent: .danger,
-                value: 99
-            ).borderVisible(false)
+    // Used to generate screenshot for Documentation
+    private func documentation() -> [ChipConfigurationSnapshotTests] {
+        var items: [ChipConfigurationSnapshotTests] = []
 
-            return .right(AnyView(view))
-        } else {
-            let view = BadgeUIView(
-                theme: SparkTheme.shared,
-                intent: .danger,
-                value: 99,
-                isBorderVisible: false
+        // Text only
+        let labels = ChipLabel.allCases.filter { $0 != .withoutText }
+        items.append(contentsOf: labels.map { label in
+            ChipConfigurationSnapshotTests(
+                scenario: self,
+                label: label,
+                documentationName: "with_\(label.documentationName)"
             )
-            return .left(view)
-        }
-    }
-}
+        })
 
-private func all<U, V>(_ lhs: [U], _ rhs: [V]) -> [(U, V)] {
-    lhs.flatMap { left in
-        rhs.map { right in
-            (left, right)
-        }
+        // Icon
+        items.append(.init(
+            scenario: self,
+            label: .withoutText,
+            isIcon: true,
+            documentationName: "with_icon"
+        ))
+
+        // Icon & Badge
+        items.append(.init(
+            scenario: self,
+            label: .withoutText,
+            isIcon: true,
+            isBadge: true,
+            documentationName: "with_icon_and_extra_content"
+        ))
+
+        // Text & Icons
+        items.append(.init(
+            scenario: self,
+            label: .text,
+            isIcon: true,
+            documentationName: "with_text_and_icon"
+        ))
+
+        // All contents
+        items.append(.init(
+            scenario: self,
+            isIcon: true,
+            isBadge: true,
+            documentationName: "with_text_and_icon_and_extra_content"
+        ))
+
+        // Selected
+        items.append(.init(
+            scenario: self,
+            isIcon: true,
+            isBadge: true,
+            isSelected: true,
+            documentationName: "selected"
+        ))
+
+        // Disabled
+        items.append(.init(
+            scenario: self,
+            isIcon: true,
+            isBadge: true,
+            isDisabled: true,
+            documentationName: "disabled"
+        ))
+
+        return items
     }
 }
