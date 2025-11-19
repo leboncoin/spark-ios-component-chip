@@ -17,5 +17,5 @@ public enum ChipVariant: CaseIterable {
     // MARK: - Properties
 
     /// The default case. Equals to **.tinted**.
-    public static var `default`: Self = .tinted
+    public static let `default`: Self = .tinted
 }
