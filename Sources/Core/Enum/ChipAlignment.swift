@@ -22,5 +22,5 @@ public enum ChipAlignment: CaseIterable {
     // MARK: - Properties
 
     /// The default case. Equals to **.leadingIcon**.
-    public static var `default`: Self = .leadingIcon
+    public static let `default`: Self = .leadingIcon
 }
