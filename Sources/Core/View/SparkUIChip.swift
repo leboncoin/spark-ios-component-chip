@@ -81,19 +81,6 @@ public final class SparkUIChip: UIControl {
 
     // MARK: - Components
 
-//    private lazy var contentStackView: UIStackView = {
-//        let stackView = UIStackView(
-//            arrangedSubviews: [
-//                self.reversibleContentStackView,
-//                self.extraContentStackView
-//            ]
-//        )
-//        stackView.axis = .horizontal
-//        stackView.isLayoutMarginsRelativeArrangement = true
-//        stackView.isUserInteractionEnabled = false
-//        return stackView
-//    }()
-
     private lazy var contentStackView: UIStackView = {
         let stackView = UIStackView(
             arrangedSubviews: [
@@ -611,6 +598,21 @@ public final class SparkUIChip: UIControl {
             self.textLabel.font(titleFont)
         }
         // **
+    }
+
+    // MARK: - Touches
+
+    public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+
+        if self.hasAction,
+           let touch = touches.first,
+           touch.view == self,
+           self.bounds.contains(touch.location(in: self)) {
+            // Haptic
+            let generator = UIImpactFeedbackGenerator(style: .light)
+            generator.impactOccurred()
+        }
     }
 
     // MARK: - Trait Collection
