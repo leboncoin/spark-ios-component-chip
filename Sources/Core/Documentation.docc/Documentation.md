@@ -49,4 +49,4 @@ With disabled is true
 ## Resources
 
 - Specification on [ZeroHeight](https://zeroheight.com/1186e1705/p/17568d-chip)
-- Desing on [Figma](https://www.figma.com/design/0QchRdipAVuvVoDfTjLrgQ/Spark-Component-Specs?node-id=643-21226)
+- Design on [Figma](https://www.figma.com/design/0QchRdipAVuvVoDfTjLrgQ/Spark-Component-Specs?node-id=643-21226)
