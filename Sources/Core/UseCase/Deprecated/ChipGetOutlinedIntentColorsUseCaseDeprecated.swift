@@ -110,13 +110,13 @@ struct ChipGetOutlinedIntentColorsUseCaseDeprecated: ChipGetIntentColorsUseCasea
             selectedBackground: colors.accent.accentContainer
         )
 
-        case .basic: return .init(
-            border: colors.basic.basic,
-            text: colors.basic.basic,
-            selectedText: colors.basic.onBasicContainer,
+        case .support: return .init(
+            border: colors.support.support,
+            text: colors.support.support,
+            selectedText: colors.support.onSupportContainer,
             background: ColorTokenDefault.clear,
-            pressedBackground: colors.basic.basic.opacity(opacity),
-            selectedBackground: colors.basic.basicContainer
+            pressedBackground: colors.support.support.opacity(opacity),
+            selectedBackground: colors.support.supportContainer
         )
         }
     }

@@ -52,7 +52,7 @@ final class ChipGetColorsUseCaseTests: XCTestCase {
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
-            intent: .basic,
+            intent: .support,
             variant: .outlined,
             isSelected: false,
             isPressed: false
@@ -63,7 +63,7 @@ final class ChipGetColorsUseCaseTests: XCTestCase {
             self.getStateOutlinedColorsUseCase,
             expectedNumberOfCalls: 1,
             givenTheme: self.theme,
-            givenIntent: .basic,
+            givenIntent: .support,
             expectedReturnValue: mockStateColors
         )
         ChipGetStateColorsUseCaseableMockTest.XCTCalled(
@@ -88,7 +88,7 @@ final class ChipGetColorsUseCaseTests: XCTestCase {
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
-            intent: .basic,
+            intent: .support,
             variant: .dashed,
             isSelected: false,
             isPressed: false
@@ -99,7 +99,7 @@ final class ChipGetColorsUseCaseTests: XCTestCase {
             self.getStateOutlinedColorsUseCase,
             expectedNumberOfCalls: 1,
             givenTheme: self.theme,
-            givenIntent: .basic,
+            givenIntent: .support,
             expectedReturnValue: mockStateColors
         )
         ChipGetStateColorsUseCaseableMockTest.XCTCalled(
@@ -124,7 +124,7 @@ final class ChipGetColorsUseCaseTests: XCTestCase {
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
-            intent: .basic,
+            intent: .support,
             variant: .tinted,
             isSelected: false,
             isPressed: false
@@ -135,7 +135,7 @@ final class ChipGetColorsUseCaseTests: XCTestCase {
             self.getStateTintedColorsUseCase,
             expectedNumberOfCalls: 1,
             givenTheme: self.theme,
-            givenIntent: .basic,
+            givenIntent: .support,
             expectedReturnValue: mockStateColors
         )
 
@@ -161,7 +161,7 @@ final class ChipGetColorsUseCaseTests: XCTestCase {
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
-            intent: .basic,
+            intent: .support,
             variant: .tinted,
             isSelected: false,
             isPressed: true
@@ -185,7 +185,7 @@ final class ChipGetColorsUseCaseTests: XCTestCase {
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
-            intent: .basic,
+            intent: .support,
             variant: .tinted,
             isSelected: true,
             isPressed: false
@@ -209,7 +209,7 @@ final class ChipGetColorsUseCaseTests: XCTestCase {
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
-            intent: .basic,
+            intent: .support,
             variant: .tinted,
             isSelected: true,
             isPressed: true

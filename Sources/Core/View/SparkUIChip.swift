@@ -31,7 +31,7 @@ import SparkTheming
 /// chip.text = "Moon"
 /// chip.icon = UIImage(systemName: "moon")
 /// chip.extraContent = extraContent
-/// chip.intent = .basic
+/// chip.intent = .support
 /// chip.variant = .filled
 /// chip.alignment = .trailingIcon
 /// chip.isSelected = false
@@ -303,7 +303,7 @@ public final class SparkUIChip: UIControl {
     /// chip.text = "Moon"
     /// chip.icon = UIImage(systemName: "moon")
     /// chip.extraContent = extraContent
-    /// chip.intent = .basic
+    /// chip.intent = .support
     /// chip.variant = .filled
     /// chip.alignment = .trailingIcon
     /// chip.isSelected = false

@@ -90,13 +90,13 @@ final class ChipGetOutlinedIntentColorsUseCaseDeprecatedTests: XCTestCase {
             ].map(\.uiColor))
     }
 
-    func test_basic_color() {
+    func test_support_color() {
         // Given
-        self.setupBasicColors()
+        self.setupSupportColors()
         let colors = self.theme.colors
 
         // When
-        let chipIntentColors = self.sut.execute(theme: self.theme, intent: .basic)
+        let chipIntentColors = self.sut.execute(theme: self.theme, intent: .support)
 
         // Then
         XCTAssertEqual(
@@ -110,12 +110,12 @@ final class ChipGetOutlinedIntentColorsUseCaseDeprecatedTests: XCTestCase {
                 chipIntentColors.disabledBackground
             ].compacted().map(\.uiColor),
             [
-                colors.basic.basic,
-                colors.basic.basic,
-                colors.basic.onBasicContainer,
+                colors.support.support,
+                colors.support.support,
+                colors.support.onSupportContainer,
                 ColorTokenDefault.clear,
-                colors.basic.basic.opacity(theme.dims.dim5),
-                colors.basic.basicContainer
+                colors.support.support.opacity(theme.dims.dim5),
+                colors.support.supportContainer
             ].map(\.uiColor))
     }
 
@@ -289,15 +289,15 @@ final class ChipGetOutlinedIntentColorsUseCaseDeprecatedTests: XCTestCase {
         self.theme.colors = colors
     }
 
-    private func setupBasicColors() {
-        let basic = ColorsBasicGeneratedMock()
-        basic.basic = ColorTokenGeneratedMock.random()
-        basic.onBasic = ColorTokenGeneratedMock.random()
-        basic.basicContainer = ColorTokenGeneratedMock.random()
-        basic.onBasicContainer = ColorTokenGeneratedMock.random()
+    private func setupSupportColors() {
+        let support = ColorsSupportGeneratedMock()
+        support.support = ColorTokenGeneratedMock.random()
+        support.onSupport = ColorTokenGeneratedMock.random()
+        support.supportContainer = ColorTokenGeneratedMock.random()
+        support.onSupportContainer = ColorTokenGeneratedMock.random()
 
         let colors = ColorsGeneratedMock()
-        colors.basic = basic
+        colors.support = support
         self.theme.colors = colors
     }
 

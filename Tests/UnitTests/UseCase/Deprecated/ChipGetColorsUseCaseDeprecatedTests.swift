@@ -51,7 +51,7 @@ final class ChipGetColorsUseCaseDeprecatedTests: XCTestCase {
             opacity: 1.0)
 
         // When
-        let colors = self.sut.execute(theme: self.theme, variant: .outlined, intent: .basic, state: .default)
+        let colors = self.sut.execute(theme: self.theme, variant: .outlined, intent: .support, state: .default)
 
         XCTAssertEqual(colors, expectedColors)
     }
@@ -69,7 +69,7 @@ final class ChipGetColorsUseCaseDeprecatedTests: XCTestCase {
             opacity: 1.0)
 
         // When
-        let colors = self.sut.execute(theme: self.theme, variant: .tinted, intent: .basic, state: .default)
+        let colors = self.sut.execute(theme: self.theme, variant: .tinted, intent: .support, state: .default)
 
         XCTAssertEqual(colors, expectedColors)
     }
@@ -87,7 +87,7 @@ final class ChipGetColorsUseCaseDeprecatedTests: XCTestCase {
             opacity: 1.0)
 
         // When
-        let colors = self.sut.execute(theme: self.theme, variant: .tinted, intent: .basic, state: .pressed)
+        let colors = self.sut.execute(theme: self.theme, variant: .tinted, intent: .support, state: .pressed)
 
         XCTAssertEqual(colors, expectedColors)
     }
@@ -105,7 +105,7 @@ final class ChipGetColorsUseCaseDeprecatedTests: XCTestCase {
             opacity: 1.0)
 
         // When
-        let colors = self.sut.execute(theme: self.theme, variant: .tinted, intent: .basic, state: .selected)
+        let colors = self.sut.execute(theme: self.theme, variant: .tinted, intent: .support, state: .selected)
 
         XCTAssertEqual(colors, expectedColors)
     }
@@ -123,7 +123,7 @@ final class ChipGetColorsUseCaseDeprecatedTests: XCTestCase {
             opacity: self.theme.dims.dim3)
 
         // When
-        let colors = self.sut.execute(theme: self.theme, variant: .tinted, intent: .basic, state: .disabled)
+        let colors = self.sut.execute(theme: self.theme, variant: .tinted, intent: .support, state: .disabled)
 
         XCTAssertEqual(colors, expectedColors)
     }
@@ -141,7 +141,7 @@ final class ChipGetColorsUseCaseDeprecatedTests: XCTestCase {
             opacity: self.theme.dims.dim3)
 
         // When
-        let colors = self.sut.execute(theme: self.theme, variant: .tinted, intent: .basic, state: .selectedDisabled)
+        let colors = self.sut.execute(theme: self.theme, variant: .tinted, intent: .support, state: .selectedDisabled)
 
         XCTAssertEqual(colors, expectedColors)
     }

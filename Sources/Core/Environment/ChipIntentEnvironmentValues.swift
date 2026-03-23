@@ -16,7 +16,7 @@ public extension View {
 
     /// Set the **intent** on the ``SparkChip``.
     ///
-    /// The default value for this property is *ChipIntent.basic*.
+    /// The default value for this property is *ChipIntent.support*.
     func sparkChipIntent(_ intent: ChipIntent) -> some View {
         self.environment(\.chipIntent, intent)
     }
