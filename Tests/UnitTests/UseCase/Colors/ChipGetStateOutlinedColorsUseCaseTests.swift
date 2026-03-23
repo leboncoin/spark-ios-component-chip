@@ -68,25 +68,6 @@ final class ChipGetStateOutlinedColorsUseCaseTests: XCTestCase {
         XCTAssertEqual(result, expectedColors)
     }
 
-    func test_execute_with_basic_intent() {
-        // GIVEN / WHEN
-        let result = self.sut.execute(theme: self.theme, intent: .basic)
-
-        let expectedColors = ChipStateColors(
-            border: self.theme.colors.basic.basic,
-            pressedBorder: self.theme.colors.basic.basic,
-            selectedBorder: self.theme.colors.basic.basic,
-            content: self.theme.colors.basic.basic,
-            selectedContent: self.theme.colors.basic.basic,
-            background: ColorTokenDefault.clear,
-            pressedBackground: self.theme.colors.basic.basic.opacity(self.theme.dims.dim5),
-            selectedBackground: self.theme.colors.basic.basicContainer
-        )
-
-        // THEN
-        XCTAssertEqual(result, expectedColors)
-    }
-
     func test_execute_with_danger_intent() {
         // GIVEN / WHEN
         let result = self.sut.execute(theme: self.theme, intent: .danger)

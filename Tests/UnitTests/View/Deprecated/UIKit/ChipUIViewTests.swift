@@ -19,7 +19,7 @@ final class ChipUIViewTests: TestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         self.sut = ChipUIView(theme: SparkTheme.shared,
-                              intent: .basic,
+                              intent: .support,
                               variant: .outlined,
                               label: "Title")
     }

@@ -31,15 +31,6 @@ struct ChipGetTintedIntentColorsUseCaseDeprecated: ChipGetIntentColorsUseCaseabl
             selectedBackground: colors.main.main
         )
 
-        case .support: return .init(
-            border: colors.support.supportContainer,
-            text: colors.support.onSupportContainer,
-            selectedText: colors.support.onSupport,
-            background: colors.support.supportContainer,
-            pressedBackground: colors.states.supportContainerPressed,
-            selectedBackground: colors.support.support
-        )
-
         case .surface: return .init(
             border: ColorTokenDefault.clear,
             text: colors.base.surfaceInverse,
@@ -104,13 +95,13 @@ struct ChipGetTintedIntentColorsUseCaseDeprecated: ChipGetIntentColorsUseCaseabl
             selectedBackground: colors.accent.accent
         )
 
-        case .basic: return .init(
-            border: colors.basic.basicContainer,
-            text: colors.basic.onBasicContainer,
-            selectedText: colors.basic.onBasic,
-            background: colors.basic.basicContainer,
-            pressedBackground: colors.states.basicContainerPressed,
-            selectedBackground: colors.basic.basic
+        case .support: return .init(
+            border: colors.support.supportContainer,
+            text: colors.support.onSupportContainer,
+            selectedText: colors.support.onSupport,
+            background: colors.support.supportContainer,
+            pressedBackground: colors.states.supportContainerPressed,
+            selectedBackground: colors.support.support
         )
         }
     }}

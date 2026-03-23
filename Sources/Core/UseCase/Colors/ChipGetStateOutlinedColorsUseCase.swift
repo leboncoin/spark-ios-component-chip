@@ -41,17 +41,6 @@ struct ChipGetStateOutlinedColorsUseCase: ChipGetStateColorsUseCaseable {
             selectedBackground: colors.feedback.alertContainer
         )
 
-        case .basic: .init(
-            border: colors.basic.basic,
-            pressedBorder: colors.basic.basic,
-            selectedBorder: colors.basic.basic,
-            content: colors.basic.basic,
-            selectedContent: colors.basic.basic,
-            background: ColorTokenDefault.clear,
-            pressedBackground: colors.basic.basic.opacity(opacity),
-            selectedBackground: colors.basic.basicContainer
-        )
-
         case .danger: .init(
             border: colors.feedback.error,
             pressedBorder: colors.feedback.error,

@@ -19,17 +19,6 @@ struct ChipGetStateTintedColorsUseCase: ChipGetStateColorsUseCaseable {
 
         return switch intent {
 
-        case .basic: .init(
-            border: colors.basic.basicContainer,
-            pressedBorder: colors.states.basicContainerPressed,
-            selectedBorder: colors.basic.basic,
-            content: colors.basic.onBasicContainer,
-            selectedContent: colors.basic.onBasic,
-            background: colors.basic.basicContainer,
-            pressedBackground: colors.states.basicContainerPressed,
-            selectedBackground: colors.basic.basic
-        )
-
         case .accent: .init(
             border: colors.accent.accentContainer,
             pressedBorder: colors.states.accentContainerPressed,

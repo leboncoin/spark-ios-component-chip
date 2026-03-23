@@ -90,35 +90,6 @@ final class ChipGetTintedIntentColorsUseCaseDeprecatedTests: XCTestCase {
             ].map(\.uiColor))
     }
 
-    func test_basic_color() {
-        // Given
-        self.setupBasicColors()
-        let colors = self.theme.colors
-
-        // When
-        let chipIntentColors = self.sut.execute(theme: self.theme, intent: .basic)
-
-        // Then
-        XCTAssertEqual(
-            [
-                chipIntentColors.border,
-                chipIntentColors.text,
-                chipIntentColors.selectedText,
-                chipIntentColors.background,
-                chipIntentColors.pressedBackground,
-                chipIntentColors.selectedBackground,
-                chipIntentColors.disabledBackground
-            ].compacted().map(\.uiColor),
-            [
-                colors.basic.basicContainer,
-                colors.basic.onBasicContainer,
-                colors.basic.onBasic,
-                colors.basic.basicContainer,
-                colors.states.basicContainerPressed,
-                colors.basic.basic
-            ].map(\.uiColor))
-    }
-
     func test_surface_color() {
         // Given
         self.setupSurfaceColors()
@@ -294,22 +265,6 @@ final class ChipGetTintedIntentColorsUseCaseDeprecatedTests: XCTestCase {
 
         let colors = ColorsGeneratedMock()
         colors.support = support
-        colors.states = states
-        self.theme.colors = colors
-    }
-
-    private func setupBasicColors() {
-        let basic = ColorsBasicGeneratedMock()
-        basic.basic = ColorTokenGeneratedMock.random()
-        basic.onBasic = ColorTokenGeneratedMock.random()
-        basic.basicContainer = ColorTokenGeneratedMock.random()
-        basic.onBasicContainer = ColorTokenGeneratedMock.random()
-
-        let states = ColorsStatesGeneratedMock()
-        states.basicContainerPressed = ColorTokenGeneratedMock.random()
-
-        let colors = ColorsGeneratedMock()
-        colors.basic = basic
         colors.states = states
         self.theme.colors = colors
     }

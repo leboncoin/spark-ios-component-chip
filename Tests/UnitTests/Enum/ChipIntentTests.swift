@@ -13,7 +13,7 @@ final class ChipIntentTests: XCTestCase {
 
     // MARK: - Tests
 
-    func test_default_intent_is_basic() {
-        XCTAssertEqual(ChipIntent.default, .basic)
+    func test_default_intent_is_support() {
+        XCTAssertEqual(ChipIntent.default, .support)
     }
 }
