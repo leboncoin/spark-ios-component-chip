@@ -90,35 +90,6 @@ final class ChipGetOutlinedIntentColorsUseCaseDeprecatedTests: XCTestCase {
             ].map(\.uiColor))
     }
 
-    func test_support_color() {
-        // Given
-        self.setupSupportColors()
-        let colors = self.theme.colors
-
-        // When
-        let chipIntentColors = self.sut.execute(theme: self.theme, intent: .support)
-
-        // Then
-        XCTAssertEqual(
-            [
-                chipIntentColors.border,
-                chipIntentColors.text,
-                chipIntentColors.selectedText,
-                chipIntentColors.background,
-                chipIntentColors.pressedBackground,
-                chipIntentColors.selectedBackground,
-                chipIntentColors.disabledBackground
-            ].compacted().map(\.uiColor),
-            [
-                colors.support.support,
-                colors.support.support,
-                colors.support.onSupportContainer,
-                ColorTokenDefault.clear,
-                colors.support.support.opacity(theme.dims.dim5),
-                colors.support.supportContainer
-            ].map(\.uiColor))
-    }
-
     func test_surface_color() {
         // Given
         self.setupSurfaceColors()
@@ -274,18 +245,6 @@ final class ChipGetOutlinedIntentColorsUseCaseDeprecatedTests: XCTestCase {
 
         let colors = ColorsGeneratedMock()
         colors.main = main
-        self.theme.colors = colors
-    }
-
-    private func setupSupportColors() {
-        let support = ColorsSupportGeneratedMock()
-        support.support = ColorTokenGeneratedMock.random()
-        support.onSupport = ColorTokenGeneratedMock.random()
-        support.supportContainer = ColorTokenGeneratedMock.random()
-        support.onSupportContainer = ColorTokenGeneratedMock.random()
-
-        let colors = ColorsGeneratedMock()
-        colors.support = support
         self.theme.colors = colors
     }
 

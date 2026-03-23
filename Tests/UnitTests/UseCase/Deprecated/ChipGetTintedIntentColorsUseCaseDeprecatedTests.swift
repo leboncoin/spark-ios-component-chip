@@ -90,35 +90,6 @@ final class ChipGetTintedIntentColorsUseCaseDeprecatedTests: XCTestCase {
             ].map(\.uiColor))
     }
 
-    func test_support_color() {
-        // Given
-        self.setupSupportColors()
-        let colors = self.theme.colors
-
-        // When
-        let chipIntentColors = self.sut.execute(theme: self.theme, intent: .support)
-
-        // Then
-        XCTAssertEqual(
-            [
-                chipIntentColors.border,
-                chipIntentColors.text,
-                chipIntentColors.selectedText,
-                chipIntentColors.background,
-                chipIntentColors.pressedBackground,
-                chipIntentColors.selectedBackground,
-                chipIntentColors.disabledBackground
-            ].compacted().map(\.uiColor),
-            [
-                colors.support.supportContainer,
-                colors.support.onSupportContainer,
-                colors.support.onSupport,
-                colors.support.supportContainer,
-                colors.states.supportContainerPressed,
-                colors.support.support
-            ].map(\.uiColor))
-    }
-
     func test_surface_color() {
         // Given
         self.setupSurfaceColors()
@@ -278,22 +249,6 @@ final class ChipGetTintedIntentColorsUseCaseDeprecatedTests: XCTestCase {
 
         let colors = ColorsGeneratedMock()
         colors.main = main
-        colors.states = states
-        self.theme.colors = colors
-    }
-
-    private func setupSupportColors() {
-        let support = ColorsSupportGeneratedMock()
-        support.support = ColorTokenGeneratedMock.random()
-        support.onSupport = ColorTokenGeneratedMock.random()
-        support.supportContainer = ColorTokenGeneratedMock.random()
-        support.onSupportContainer = ColorTokenGeneratedMock.random()
-
-        let states = ColorsStatesGeneratedMock()
-        states.supportContainerPressed = ColorTokenGeneratedMock.random()
-
-        let colors = ColorsGeneratedMock()
-        colors.support = support
         colors.states = states
         self.theme.colors = colors
     }
