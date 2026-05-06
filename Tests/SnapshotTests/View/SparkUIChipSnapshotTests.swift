@@ -32,7 +32,10 @@ final class SparkUIChipSnapshotTests: UIKitComponentSnapshotTestCase {
         for scenario in scenarios {
             let configurations = scenario.configuration()
             for configuration in configurations {
-                let view = SparkUIChip(theme: self.theme)
+                let view = SparkUIChip(
+                    theme: self.theme,
+                    removeShapeFeatureToggle: configuration.removeShapeFeatureToggle
+                )
                 view.alignment = configuration.alignment
                 view.intent = configuration.intent
                 view.variant = configuration.variant

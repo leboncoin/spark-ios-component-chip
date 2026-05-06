@@ -12,17 +12,27 @@ import SparkTheming
 // sourcery: AutoMockable, AutoMockTest
 protocol ChipGetBorderUseCaseable {
     // sourcery: theme = "Identical"
-    func execute(theme: any Theme, variant: ChipVariant) -> ChipBorder
+    func execute(
+        theme: any Theme,
+        variant: ChipVariant,
+        removeShapeFeatureToggle: Bool
+    ) -> ChipBorder
 }
 
 final class ChipGetBorderUseCase: ChipGetBorderUseCaseable {
 
     // MARK: - Methods
 
-    func execute(theme: any Theme, variant: ChipVariant) -> ChipBorder {
+    func execute(
+        theme: any Theme,
+        variant: ChipVariant,
+        removeShapeFeatureToggle: Bool
+    ) -> ChipBorder {
+        let border = theme.border
+
         return .init(
-            width: theme.border.width.small,
-            radius: theme.border.radius.medium,
+            width: border.width.small,
+            radius: removeShapeFeatureToggle ? border.radius.full : border.radius.medium,
             dash: variant == .dashed ? ChipConstants.dashLength : .zero
         )
     }

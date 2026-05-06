@@ -87,6 +87,14 @@ final internal class ChipViewModel: ObservableObject {
         }
     }
 
+    var removeShapeFeatureToggle: Bool? {
+        didSet {
+            guard oldValue != self.removeShapeFeatureToggle, self.alreadyUpdateAll else { return }
+
+            self.setBorder()
+        }
+    }
+
     // MARK: - Private Properties
 
     private var alreadyUpdateAll = false
@@ -126,7 +134,8 @@ final internal class ChipViewModel: ObservableObject {
         intent: ChipIntent,
         variant: ChipVariant,
         isSelected: Bool,
-        isEnabled: Bool
+        isEnabled: Bool,
+        removeShapeFeatureToggle: Bool
     ) {
         self.theme = theme
         self.alignment = alignment
@@ -134,6 +143,7 @@ final internal class ChipViewModel: ObservableObject {
         self.variant = variant
         self.isSelected = isSelected
         self.isEnabled = isEnabled
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
 
         self.setColors()
         self.setBorder()
@@ -165,11 +175,12 @@ final internal class ChipViewModel: ObservableObject {
     }
 
     private func setBorder() {
-        guard let theme, let variant else { return }
+        guard let theme, let variant, let removeShapeFeatureToggle else { return }
 
         self.border = getBorderUseCase.execute(
             theme: theme,
-            variant: variant
+            variant: variant,
+            removeShapeFeatureToggle: removeShapeFeatureToggle
         )
     }
 

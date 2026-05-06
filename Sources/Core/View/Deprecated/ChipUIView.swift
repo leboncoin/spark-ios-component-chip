@@ -242,13 +242,15 @@ public final class ChipUIView: UIControl {
                             intent: ChipIntent,
                             variant: ChipVariant,
                             alignment: ChipAlignment = .leadingIcon,
-                            iconImage: UIImage) {
+                            iconImage: UIImage,
+                            removeShapeFeatureToggle: Bool = false) {
         self.init(theme: theme,
                   intent: intent,
                   variant: variant,
                   alignment: alignment,
                   optionalLabel: nil,
-                  optionalIconImage: iconImage)
+                  optionalIconImage: iconImage,
+                  removeShapeFeatureToggle: removeShapeFeatureToggle)
     }
 
     /// Initializer of a chip containing only a text.
@@ -262,13 +264,15 @@ public final class ChipUIView: UIControl {
                             intent: ChipIntent,
                             variant: ChipVariant,
                             alignment: ChipAlignment = .leadingIcon,
-                            label: String) {
+                            label: String,
+                            removeShapeFeatureToggle: Bool = false) {
         self.init(theme: theme,
                   intent: intent,
                   variant: variant,
                   alignment: alignment,
                   optionalLabel: label,
-                  optionalIconImage: nil)
+                  optionalIconImage: nil,
+                  removeShapeFeatureToggle: removeShapeFeatureToggle)
     }
 
     /// Initializer of a chip containing both a text and an icon.
@@ -284,13 +288,15 @@ public final class ChipUIView: UIControl {
                             variant: ChipVariant,
                             alignment: ChipAlignment = .leadingIcon,
                             label: String,
-                            iconImage: UIImage) {
+                            iconImage: UIImage,
+                            removeShapeFeatureToggle: Bool = false) {
         self.init(theme: theme,
                   intent: intent,
                   variant: variant,
                   alignment: alignment,
                   optionalLabel: label,
-                  optionalIconImage: iconImage)
+                  optionalIconImage: iconImage,
+                  removeShapeFeatureToggle: removeShapeFeatureToggle)
     }
 
     init(theme: any Theme,
@@ -298,14 +304,16 @@ public final class ChipUIView: UIControl {
          variant: ChipVariant,
          alignment: ChipAlignment = .leadingIcon,
          optionalLabel: String?,
-         optionalIconImage: UIImage?) {
+         optionalIconImage: UIImage?,
+         removeShapeFeatureToggle: Bool = false) {
 
         self.viewModel = ChipViewModelDeprecated<Void>(
             theme: theme,
             variant: variant,
             intent: intent,
             alignment: alignment,
-            content: Void()
+            content: Void(),
+            removeShapeFeatureToggle: removeShapeFeatureToggle
         )
         self.spacing = self.viewModel.spacing
         self.padding = self.viewModel.padding

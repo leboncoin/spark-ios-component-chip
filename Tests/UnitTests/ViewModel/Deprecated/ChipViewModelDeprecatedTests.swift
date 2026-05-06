@@ -20,8 +20,10 @@ final class ChipViewModelDeprecatedTests: XCTestCase {
     // MARK: - Properties
 
     var sut: ChipViewModelDeprecated<Void>!
-    var useCase: ChipGetColorsUseCaseDeprecatedableGeneratedMock!
+    var getColorsUseCase: ChipGetColorsUseCaseDeprecatedableGeneratedMock!
+    var getBorderUseCase: ChipGetBorderUseCaseableGeneratedMock!
     var theme: ThemeGeneratedMock!
+    var radius: CGFloat = 12
     var subscriptions: Set<AnyCancellable>!
 
     // MARK: - Setup
@@ -29,13 +31,15 @@ final class ChipViewModelDeprecatedTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
 
-        self.useCase = ChipGetColorsUseCaseDeprecatedableGeneratedMock()
+        self.getColorsUseCase = ChipGetColorsUseCaseDeprecatedableGeneratedMock()
+        self.getBorderUseCase = ChipGetBorderUseCaseableGeneratedMock()
         self.theme = ThemeGeneratedMock.mocked()
         self.subscriptions = .init()
 
         let colorToken = ColorTokenGeneratedMock()
 
-        self.useCase.executeWithThemeAndVariantAndIntentAndStateReturnValue = ChipStateColorsDeprecated(background: colorToken, border: colorToken, foreground: colorToken)
+        self.getColorsUseCase.executeWithThemeAndVariantAndIntentAndStateReturnValue = ChipStateColorsDeprecated(background: colorToken, border: colorToken, foreground: colorToken)
+        self.getBorderUseCase.executeWithThemeAndVariantAndRemoveShapeFeatureToggleReturnValue = .init(radius: radius)
 
         self.sut = ChipViewModelDeprecated(
             theme: theme,
@@ -43,7 +47,8 @@ final class ChipViewModelDeprecatedTests: XCTestCase {
             intent: .main,
             alignment: .leadingIcon,
             content: Void(),
-            useCase: useCase
+            getColorsUseCase: getColorsUseCase,
+            getBorderUseCase: getBorderUseCase
         )
     }
 
@@ -179,18 +184,13 @@ final class ChipViewModelDeprecatedTests: XCTestCase {
 
         // When
         let newTheme = ThemeGeneratedMock.mocked()
-        let border = BorderGeneratedMock.mocked()
-        let radius = BorderRadiusGeneratedMock.mocked()
-        radius.medium = 11
-        border.radius = radius
-        newTheme.border = border
 
         self.sut.set(theme: newTheme)
 
         // Then
         wait(for: [updateExpectation], timeout: 0.1)
 
-        XCTAssertEqual(borderRadii, [8, 11])
+        XCTAssertEqual(borderRadii, [radius, radius])
     }
 
     func test_new_theme_with_different_font_triggers_change() throws {

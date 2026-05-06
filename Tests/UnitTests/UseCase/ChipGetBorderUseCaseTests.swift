@@ -34,7 +34,8 @@ final class ChipGetBorderUseCaseTests: XCTestCase {
         // GIVEN / WHEN
         let result = self.sut.execute(
             theme: self.theme,
-            variant: .outlined
+            variant: .outlined,
+            removeShapeFeatureToggle: false
         )
 
         // THEN
@@ -47,7 +48,8 @@ final class ChipGetBorderUseCaseTests: XCTestCase {
         // GIVEN / WHEN
         let result = self.sut.execute(
             theme: self.theme,
-            variant: .tinted
+            variant: .tinted,
+            removeShapeFeatureToggle: false
         )
 
         // THEN
@@ -60,12 +62,41 @@ final class ChipGetBorderUseCaseTests: XCTestCase {
         // GIVEN / WHEN
         let result = self.sut.execute(
             theme: self.theme,
-            variant: .dashed
+            variant: .dashed,
+            removeShapeFeatureToggle: false
         )
 
         // THEN
         XCTAssertEqual(result.width, self.theme.border.width.small)
         XCTAssertEqual(result.radius, self.theme.border.radius.medium)
         XCTAssertEqual(result.dash, ChipConstants.dashLength)
+    }
+
+    func test_execute_with_removeShapeFeatureToggle_true() {
+        // GIVEN / WHEN
+        let result = self.sut.execute(
+            theme: self.theme,
+            variant: .outlined,
+            removeShapeFeatureToggle: true
+        )
+
+        // THEN
+        XCTAssertEqual(result.width, self.theme.border.width.small)
+        XCTAssertEqual(result.radius, self.theme.border.radius.full)
+        XCTAssertEqual(result.dash, 0)
+    }
+
+    func test_execute_with_removeShapeFeatureToggle_false() {
+        // GIVEN / WHEN
+        let result = self.sut.execute(
+            theme: self.theme,
+            variant: .tinted,
+            removeShapeFeatureToggle: false
+        )
+
+        // THEN
+        XCTAssertEqual(result.width, self.theme.border.width.small)
+        XCTAssertEqual(result.radius, self.theme.border.radius.medium)
+        XCTAssertEqual(result.dash, 0)
     }
 }

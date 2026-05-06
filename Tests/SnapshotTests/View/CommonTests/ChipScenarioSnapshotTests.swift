@@ -20,6 +20,7 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
     case test3
     case test4
     case test5
+    case test6
     case documentation
 
     // MARK: - Type Alias
@@ -46,6 +47,8 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
             return self.test4()
         case .test5:
             return self.test5()
+        case .test6:
+            return self.test6()
         case .documentation:
             return self.documentation()
         }
@@ -198,6 +201,33 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
                 sizes: Constants.Sizes.all
             )
         ]
+    }
+
+    /// Test 6
+    ///
+    /// Description: To test removeShapeFeatureToggle
+    ///
+    /// Content:
+    ///  - intents: default
+    ///  - variant: default
+    ///  - alignment: default
+    ///  - content: icon + text
+    ///  - isSelected: default
+    ///  - isDisabled: default
+    ///  - removeShapeFeatureToggle: all
+    ///  - mode: all
+    ///  - size: default
+    private func test6() -> [ChipConfigurationSnapshotTests] {
+        let areRemoveShapeFeatureToggle = Bool.allCases
+
+        return areRemoveShapeFeatureToggle.map { removeShapeFeatureToggle in
+            .init(
+                scenario: self,
+                isIcon: true,
+                removeShapeFeatureToggle: removeShapeFeatureToggle,
+                modes: Constants.Modes.all
+            )
+        }
     }
 
     // MARK: - Documentation

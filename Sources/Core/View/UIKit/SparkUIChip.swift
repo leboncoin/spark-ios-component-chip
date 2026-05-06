@@ -261,6 +261,7 @@ public final class SparkUIChip: UIControl {
     // MARK: - Private Properties
 
     private let viewModel = ChipViewModel()
+    private let removeShapeFeatureToggle: Bool
 
     private var heightConstraint: NSLayoutConstraint?
     private var iconWidthConstraint: NSLayoutConstraint?
@@ -310,8 +311,12 @@ public final class SparkUIChip: UIControl {
     /// ```
     ///
     /// ![Chip rendering.](chip_with_text_and_icon_and_extra_content.png)
-    public init(theme: any Theme) {
+    public init(
+        theme: any Theme,
+        removeShapeFeatureToggle: Bool = false
+    ) {
         self.theme = theme
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
 
         self._height = .init(wrappedValue: Constants.height)
         self._iconSize = .init(wrappedValue: Constants.iconSize, relativeTo: .title2)
@@ -352,7 +357,8 @@ public final class SparkUIChip: UIControl {
             intent: self.intent,
             variant: self.variant,
             isSelected: self.isSelected,
-            isEnabled: self.isEnabled
+            isEnabled: self.isEnabled,
+            removeShapeFeatureToggle: self.removeShapeFeatureToggle
         )
     }
 
