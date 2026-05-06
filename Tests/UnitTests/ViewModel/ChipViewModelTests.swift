@@ -99,6 +99,7 @@ final class ChipViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
             givenAlignment: stub.givenAlignment,
+            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedLayout
         )
 
@@ -167,6 +168,7 @@ final class ChipViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: givenTheme,
             givenAlignment: stub.givenAlignment,
+            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedLayout
         )
 
@@ -207,6 +209,7 @@ final class ChipViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
             givenAlignment: givenAlignment,
+            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedLayout
         )
 
@@ -446,13 +449,21 @@ final class ChipViewModelTests: XCTestCase {
             expectedReturnValue: stub.expectedBorder
         )
 
+        ChipGetLayoutUseCaseableMockTest.XCTAssert(
+            stub.getLayoutUseCaseMock,
+            expectedNumberOfCalls: 1,
+            givenTheme: stub.givenTheme,
+            givenAlignment: stub.givenAlignment,
+            givenRemoveShapeFeatureToggle: givenRemoveShapeFeatureToggle,
+            expectedReturnValue: stub.expectedLayout
+        )
+
         // UseCase Calls Count
         XCTAssertNotCalled(
             on: stub,
             getColorsUseCase: true,
             getDimUseCase: true,
             getIsReversedUseCase: true,
-            getLayoutUseCase: true,
             getTitleFontUseCase: true
         )
     }
@@ -573,7 +584,7 @@ private final class Stub: ChipViewModelStub {
         getIsReversedUseCaseMock.executeWithAlignmentReturnValue = self.expectedIsReversed
 
         let getLayoutUseCaseMock = ChipGetLayoutUseCaseableGeneratedMock()
-        getLayoutUseCaseMock.executeWithThemeAndAlignmentReturnValue = self.expectedLayout
+        getLayoutUseCaseMock.executeWithThemeAndAlignmentAndRemoveShapeFeatureToggleReturnValue = self.expectedLayout
 
         let getTitleFontUseCaseMock = ChipGetTitleFontUseCaseableGeneratedMock()
         getTitleFontUseCaseMock.executeWithThemeReturnValue = self.expectedTitleFont
@@ -649,7 +660,7 @@ private func XCTAssertNotCalled(
 
     ChipGetLayoutUseCaseableMockTest.XCTCalled(
         stub.getLayoutUseCaseMock,
-        executeWithThemeAndAlignmentCalled: !getLayoutUseCaseNotCalled
+        executeWithThemeAndAlignmentAndRemoveShapeFeatureToggleCalled: !getLayoutUseCaseNotCalled
     )
 
     ChipGetTitleFontUseCaseableMockTest.XCTCalled(

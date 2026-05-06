@@ -267,4 +267,116 @@ final class ChipViewModelDeprecatedTests: XCTestCase {
             XCTAssertEqual(self.sut.isBordered, true)
         }
     }
+
+    func test_padding_with_feature_toggle_false() throws {
+        // Given
+        let sut = ChipViewModelDeprecated(
+            theme: theme,
+            variant: .outlined,
+            intent: .main,
+            alignment: .leadingIcon,
+            content: Void(),
+            removeShapeFeatureToggle: false,
+            getColorsUseCase: getColorsUseCase,
+            getBorderUseCase: getBorderUseCase
+        )
+
+        // Then
+        XCTAssertEqual(sut.padding, theme.layout.spacing.medium)
+    }
+
+    func test_padding_with_feature_toggle_true() throws {
+        // Given
+        let sut = ChipViewModelDeprecated(
+            theme: theme,
+            variant: .outlined,
+            intent: .main,
+            alignment: .leadingIcon,
+            content: Void(),
+            removeShapeFeatureToggle: true,
+            getColorsUseCase: getColorsUseCase,
+            getBorderUseCase: getBorderUseCase
+        )
+
+        // Then
+        XCTAssertEqual(sut.padding, theme.layout.spacing.large)
+    }
+
+    func test_padding_after_theme_change_with_feature_toggle_false() throws {
+        // Given
+        let sut = ChipViewModelDeprecated(
+            theme: theme,
+            variant: .outlined,
+            intent: .main,
+            alignment: .leadingIcon,
+            content: Void(),
+            removeShapeFeatureToggle: false,
+            getColorsUseCase: getColorsUseCase,
+            getBorderUseCase: getBorderUseCase
+        )
+
+        let updateExpectation = expectation(description: "Padding updated")
+        updateExpectation.expectedFulfillmentCount = 2
+
+        var paddings = [CGFloat]()
+
+        sut.$padding.sink(receiveValue: { padding in
+            updateExpectation.fulfill()
+            paddings.append(padding)
+        })
+        .store(in: &self.subscriptions)
+
+        // When
+        let newTheme = ThemeGeneratedMock.mocked()
+        let layout = LayoutGeneratedMock.mocked()
+        let spacing = LayoutSpacingGeneratedMock.mocked()
+        spacing.medium = 50
+        layout.spacing = spacing
+        newTheme.layout = layout
+
+        sut.set(theme: newTheme)
+
+        // Then
+        wait(for: [updateExpectation], timeout: 0.1)
+        XCTAssertEqual(paddings, [5, 50])
+    }
+
+    func test_padding_after_theme_change_with_feature_toggle_true() throws {
+        // Given
+        let sut = ChipViewModelDeprecated(
+            theme: theme,
+            variant: .outlined,
+            intent: .main,
+            alignment: .leadingIcon,
+            content: Void(),
+            removeShapeFeatureToggle: true,
+            getColorsUseCase: getColorsUseCase,
+            getBorderUseCase: getBorderUseCase
+        )
+
+        let updateExpectation = expectation(description: "Padding updated")
+        updateExpectation.expectedFulfillmentCount = 2
+
+        var paddings = [CGFloat]()
+
+        sut.$padding.sink(receiveValue: { padding in
+            updateExpectation.fulfill()
+            paddings.append(padding)
+        })
+        .store(in: &self.subscriptions)
+
+        // When
+        let newTheme = ThemeGeneratedMock.mocked()
+        let layout = LayoutGeneratedMock.mocked()
+        let spacing = LayoutSpacingGeneratedMock.mocked()
+        spacing.large = 100
+        layout.spacing = spacing
+        newTheme.layout = layout
+
+        sut.set(theme: newTheme)
+
+        // Then
+        wait(for: [updateExpectation], timeout: 0.1)
+        XCTAssertEqual(paddings, [7, 100])
+    }
 }

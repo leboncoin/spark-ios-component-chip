@@ -30,11 +30,12 @@ final class ChipGetLayoutUseCaseTests: XCTestCase {
 
     // MARK: - Tests
 
-    func test_execute_with_leading_icon_alignment() {
+    func test_execute_with_leading_icon_alignment_and_feature_toggle_false() {
         // GIVEN / WHEN
         let result = self.sut.execute(
             theme: self.theme,
-            alignment: .leadingIcon
+            alignment: .leadingIcon,
+            removeShapeFeatureToggle: false
         )
 
         // THEN
@@ -43,16 +44,45 @@ final class ChipGetLayoutUseCaseTests: XCTestCase {
         XCTAssertEqual(result.padding, self.theme.layout.spacing.medium)
     }
 
-    func test_execute_with_trailing_icon_alignment() {
+    func test_execute_with_leading_icon_alignment_and_feature_toggle_true() {
         // GIVEN / WHEN
         let result = self.sut.execute(
             theme: self.theme,
-            alignment: .trailingIcon
+            alignment: .leadingIcon,
+            removeShapeFeatureToggle: true
+        )
+
+        // THEN
+        XCTAssertEqual(result.spacing, self.theme.layout.spacing.small)
+        XCTAssertEqual(result.extraContentSpacing, self.theme.layout.spacing.medium)
+        XCTAssertEqual(result.padding, self.theme.layout.spacing.large)
+    }
+
+    func test_execute_with_trailing_icon_alignment_and_feature_toggle_false() {
+        // GIVEN / WHEN
+        let result = self.sut.execute(
+            theme: self.theme,
+            alignment: .trailingIcon,
+            removeShapeFeatureToggle: false
         )
 
         // THEN
         XCTAssertEqual(result.spacing, self.theme.layout.spacing.medium)
         XCTAssertEqual(result.extraContentSpacing, self.theme.layout.spacing.medium)
         XCTAssertEqual(result.padding, self.theme.layout.spacing.medium)
+    }
+
+    func test_execute_with_trailing_icon_alignment_and_feature_toggle_true() {
+        // GIVEN / WHEN
+        let result = self.sut.execute(
+            theme: self.theme,
+            alignment: .trailingIcon,
+            removeShapeFeatureToggle: true
+        )
+
+        // THEN
+        XCTAssertEqual(result.spacing, self.theme.layout.spacing.medium)
+        XCTAssertEqual(result.extraContentSpacing, self.theme.layout.spacing.medium)
+        XCTAssertEqual(result.padding, self.theme.layout.spacing.large)
     }
 }

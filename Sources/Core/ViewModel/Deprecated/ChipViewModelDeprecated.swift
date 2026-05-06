@@ -101,7 +101,7 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
         self.removeShapeFeatureToggle = removeShapeFeatureToggle
         self.colors = getColorsUseCase.execute(theme: theme, variant: variant, intent: intent, state: .default)
         self.spacing = self.theme.layout.spacing.small
-        self.padding = self.theme.layout.spacing.medium
+        self.padding = removeShapeFeatureToggle ? self.theme.layout.spacing.large : self.theme.layout.spacing.medium
         let chipBorder = getBorderUseCase.execute(
             theme: theme,
             variant: variant,
@@ -154,7 +154,7 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
         )
 
         self.spacing = self.theme.layout.spacing.small
-        self.padding = self.theme.layout.spacing.medium
+        self.padding = self.removeShapeFeatureToggle ? self.theme.layout.spacing.large : self.theme.layout.spacing.medium
         self.borderRadius = border.radius
         self.font = self.theme.bodyFont
     }

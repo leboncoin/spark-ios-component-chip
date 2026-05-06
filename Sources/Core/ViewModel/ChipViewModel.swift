@@ -92,6 +92,7 @@ final internal class ChipViewModel: ObservableObject {
             guard oldValue != self.removeShapeFeatureToggle, self.alreadyUpdateAll else { return }
 
             self.setBorder()
+            self.setSpacing()
         }
     }
 
@@ -202,11 +203,12 @@ final internal class ChipViewModel: ObservableObject {
     }
 
     private func setSpacing() {
-        guard let theme, let alignment else { return }
+        guard let theme, let alignment, let removeShapeFeatureToggle else { return }
 
         self.layout = getLayoutUseCase.execute(
             theme: theme,
-            alignment: alignment
+            alignment: alignment,
+            removeShapeFeatureToggle: removeShapeFeatureToggle
         )
     }
 
