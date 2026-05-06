@@ -64,6 +64,7 @@ final class SparkChipSnapshotTests: SwiftUIComponentSnapshotTestCase {
                 SparkChip(
                     text,
                     icon: configuration.isIcon ? .icon : nil,
+                    removeShapeFeatureToggle: configuration.removeShapeFeatureToggle,
                     action: nil,
                     extraContent: { ExtraContentView() }
                 )
@@ -72,6 +73,7 @@ final class SparkChipSnapshotTests: SwiftUIComponentSnapshotTestCase {
                 SparkChip(
                     text,
                     icon: configuration.isIcon ? .icon : nil,
+                    removeShapeFeatureToggle: configuration.removeShapeFeatureToggle,
                     action: nil
                 )
             }
@@ -81,6 +83,7 @@ final class SparkChipSnapshotTests: SwiftUIComponentSnapshotTestCase {
             if configuration.isBadge {
                 SparkChip(
                     icon: configuration.isIcon ? .icon : nil,
+                    removeShapeFeatureToggle: configuration.removeShapeFeatureToggle,
                     action: nil,
                     label: { OtherContentView() },
                     extraContent: { ExtraContentView() }
@@ -89,6 +92,7 @@ final class SparkChipSnapshotTests: SwiftUIComponentSnapshotTestCase {
             } else {
                 SparkChip(
                     icon: configuration.isIcon ? .icon : nil,
+                    removeShapeFeatureToggle: configuration.removeShapeFeatureToggle,
                     action: nil,
                     label: { OtherContentView() }
                 )
@@ -97,6 +101,7 @@ final class SparkChipSnapshotTests: SwiftUIComponentSnapshotTestCase {
         } else if configuration.isBadge {
             SparkChip(
                 icon: configuration.isIcon ? .icon : nil,
+                removeShapeFeatureToggle: configuration.removeShapeFeatureToggle,
                 action: nil,
                 extraContent: { ExtraContentView() }
             )
@@ -104,6 +109,7 @@ final class SparkChipSnapshotTests: SwiftUIComponentSnapshotTestCase {
         } else {
             SparkChip(
                 icon: .icon,
+                removeShapeFeatureToggle: configuration.removeShapeFeatureToggle,
                 action: nil
             )
         }

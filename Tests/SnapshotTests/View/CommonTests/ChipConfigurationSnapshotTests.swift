@@ -25,6 +25,7 @@ struct ChipConfigurationSnapshotTests {
     var isBadge: Bool = false
     var isSelected: Bool = false
     var isDisabled: Bool = false
+    var removeShapeFeatureToggle: Bool = false
 
     var modes: [ComponentSnapshotTestMode] = ComponentSnapshotTestConstants.Modes.default
     var sizes: [UIContentSizeCategory] = ComponentSnapshotTestConstants.Sizes.default
@@ -44,7 +45,8 @@ struct ChipConfigurationSnapshotTests {
             self.isIcon ? "withIcon" : nil,
             self.isBadge ? "withBadge" : nil,
             self.isDisabled ? "disabled" : nil,
-            self.isSelected ? "selected" : nil
+            self.isSelected ? "selected" : nil,
+            self.removeShapeFeatureToggle ? "removeShape" : nil
         ]
             .compactMap { $0 }
             .joined(separator: "-")

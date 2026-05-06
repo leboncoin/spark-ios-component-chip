@@ -47,6 +47,7 @@ public struct ChipView: View {
                 variant: ChipVariant,
                 alignment: ChipAlignment = .leadingIcon,
                 icon: Image,
+                removeShapeFeatureToggle: Bool = false,
                 action: (() -> Void)? = nil) {
         self.init(theme: theme,
                   intent: intent,
@@ -54,6 +55,7 @@ public struct ChipView: View {
                   alignment: alignment,
                   icon: icon,
                   title: nil,
+                  removeShapeFeatureToggle: removeShapeFeatureToggle,
                   action: action
         )
     }
@@ -71,6 +73,7 @@ public struct ChipView: View {
                 variant: ChipVariant,
                 alignment: ChipAlignment = .leadingIcon,
                 title: String,
+                removeShapeFeatureToggle: Bool = false,
                 action: (() -> Void)? = nil) {
         self.init(theme: theme,
                   intent: intent,
@@ -78,6 +81,7 @@ public struct ChipView: View {
                   alignment: alignment,
                   icon: nil,
                   title: title,
+                  removeShapeFeatureToggle: removeShapeFeatureToggle,
                   action: action
         )
     }
@@ -97,13 +101,15 @@ public struct ChipView: View {
                 alignment: ChipAlignment = .leadingIcon,
                 icon: Image?,
                 title: String?,
+                removeShapeFeatureToggle: Bool = false,
                 action: (() -> Void)? = nil) {
         let viewModel = ChipViewModelDeprecated<ChipContent>(
             theme: theme,
             variant: variant,
             intent: intent,
             alignment: alignment,
-            content: ChipContent(title: title, icon: icon))
+            content: ChipContent(title: title, icon: icon),
+            removeShapeFeatureToggle: removeShapeFeatureToggle)
 
         self.init(viewModel: viewModel,
                   action: action

@@ -17,7 +17,8 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
     private(set) var variant: ChipVariant
     private(set) var intent: ChipIntent
     private(set) var alignment: ChipAlignment
-    private let useCase: ChipGetColorsUseCaseDeprecatedable
+    private let getColorsUseCase: ChipGetColorsUseCaseDeprecatedable
+    private let getBorderUseCase: any ChipGetBorderUseCaseable
 
     // MARK: - State Properties
     var isEnabled: Bool = true {
@@ -61,19 +62,24 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
         return self.isBordered && !self.isBorderDashed
     }
 
+    private let removeShapeFeatureToggle: Bool
+
     // MARK: - Initializers
     convenience init(theme: any Theme,
                      variant: ChipVariant,
                      intent: ChipIntent,
                      alignment: ChipAlignment,
-                     content: Content
+                     content: Content,
+                     removeShapeFeatureToggle: Bool = false
     ) {
         self.init(theme: theme,
                   variant: variant,
                   intent: intent,
                   alignment: alignment,
                   content: content,
-                  useCase: ChipGetColorsUseCaseDeprecated())
+                  removeShapeFeatureToggle: removeShapeFeatureToggle,
+                  getColorsUseCase: ChipGetColorsUseCaseDeprecated(),
+                  getBorderUseCase: ChipGetBorderUseCase())
     }
 
     init(theme: any Theme,
@@ -81,17 +87,27 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
          intent: ChipIntent,
          alignment: ChipAlignment,
          content: Content,
-         useCase: any ChipGetColorsUseCaseDeprecatedable) {
+         removeShapeFeatureToggle: Bool = false,
+         getColorsUseCase: any ChipGetColorsUseCaseDeprecatedable,
+         getBorderUseCase: any ChipGetBorderUseCaseable
+    ) {
         self.theme = theme
         self.variant = variant
         self.intent = intent
-        self.useCase = useCase
+        self.getColorsUseCase = getColorsUseCase
+        self.getBorderUseCase = getBorderUseCase
         self.alignment = alignment
         self.content = content
-        self.colors = useCase.execute(theme: theme, variant: variant, intent: intent, state: .default)
+        self.removeShapeFeatureToggle = removeShapeFeatureToggle
+        self.colors = getColorsUseCase.execute(theme: theme, variant: variant, intent: intent, state: .default)
         self.spacing = self.theme.layout.spacing.small
         self.padding = self.theme.layout.spacing.medium
-        self.borderRadius = self.theme.border.radius.medium
+        let chipBorder = getBorderUseCase.execute(
+            theme: theme,
+            variant: variant,
+            removeShapeFeatureToggle: removeShapeFeatureToggle
+        )
+        self.borderRadius = chipBorder.radius
         self.font = self.theme.bodyFont
         self.isIconLeading = alignment.isIconLeading
     }
@@ -124,16 +140,22 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
 
     func updateColors() {
         let state = ChipState(isEnabled: self.isEnabled, isPressed: self.isPressed, isSelected: self.isSelected)
-        self.colors = self.useCase.execute(theme: self.theme, variant: self.variant, intent: self.intent, state: state)
+        self.colors = self.getColorsUseCase.execute(theme: self.theme, variant: self.variant, intent: self.intent, state: state)
     }
 
     // MARK: - Private functions
     private func themeDidUpdate() {
         self.updateColors()
 
+        let border = self.getBorderUseCase.execute(
+            theme: self.theme,
+            variant: variant,
+            removeShapeFeatureToggle: self.removeShapeFeatureToggle
+        )
+
         self.spacing = self.theme.layout.spacing.small
         self.padding = self.theme.layout.spacing.medium
-        self.borderRadius = self.theme.border.radius.medium
+        self.borderRadius = border.radius
         self.font = self.theme.bodyFont
     }
 
