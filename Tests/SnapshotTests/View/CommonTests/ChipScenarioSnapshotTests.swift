@@ -205,7 +205,7 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
 
     /// Test 6
     ///
-    /// Description: To test removeShapeFeatureToggle
+    /// Description: To test rebrandingFeatureToggle
     ///
     /// Content:
     ///  - intents: default
@@ -214,17 +214,17 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
     ///  - content: icon + text
     ///  - isSelected: default
     ///  - isDisabled: default
-    ///  - removeShapeFeatureToggle: all
+    ///  - rebrandingFeatureToggle: all
     ///  - mode: all
     ///  - size: default
     private func test6() -> [ChipConfigurationSnapshotTests] {
-        let areRemoveShapeFeatureToggle = Bool.allCases
+        let areRebrandingFeatureToggle = Bool.allCases
 
-        return areRemoveShapeFeatureToggle.map { removeShapeFeatureToggle in
+        return areRebrandingFeatureToggle.map { rebrandingFeatureToggle in
             .init(
                 scenario: self,
                 isIcon: true,
-                removeShapeFeatureToggle: removeShapeFeatureToggle,
+                rebrandingFeatureToggle: rebrandingFeatureToggle,
                 modes: Constants.Modes.all
             )
         }

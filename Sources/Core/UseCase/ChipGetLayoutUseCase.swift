@@ -7,6 +7,7 @@
 //
 
 import Foundation
+@_spi(SI_SPI) import SparkCommon
 import SparkTheming
 
 // sourcery: AutoMockable, AutoMockTest
@@ -16,6 +17,16 @@ protocol ChipGetLayoutUseCaseable {
 }
 
 final class ChipGetLayoutUseCase: ChipGetLayoutUseCaseable {
+
+    // MARK: - Properties
+
+    private let featureTogglesService: any SparkFeatureToggleServicing
+
+    // MARK: - Initialization
+
+    init(featureTogglesService: any SparkFeatureToggleServicing = SparkFeatureToggleService.shared) {
+        self.featureTogglesService = featureTogglesService
+    }
 
     // MARK: - Methods
 
@@ -27,10 +38,12 @@ final class ChipGetLayoutUseCase: ChipGetLayoutUseCaseable {
         case .trailingIcon: spacings.medium
         }
 
+        let padding = self.featureTogglesService.rebranding ? spacings.large : spacings.medium
+
         return .init(
             spacing: spacing,
             extraContentSpacing: spacings.medium,
-            padding: spacings.medium
+            padding: padding
         )
     }
 }

@@ -47,12 +47,10 @@ public extension SparkChip {
     ///
     init(
         icon: Image,
-        removeShapeFeatureToggle: Bool = false,
-        action: (() -> Void)? = nil
+                action: (() -> Void)? = nil
     ) where Label == EmptyView, ExtraContent == EmptyView {
         self.init(
             icon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             action: action,
             label: { EmptyView() },
             extraContent: { EmptyView() }
@@ -94,12 +92,10 @@ public extension SparkChip {
     init(
         _ textKey: LocalizedStringKey,
         icon: Image? = nil,
-        removeShapeFeatureToggle: Bool = false,
-        action: (() -> Void)? = nil
+                action: (() -> Void)? = nil
     ) where Label == Text, ExtraContent == EmptyView {
         self.init(
             icon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             action: action,
             label: { Text(textKey) },
             extraContent: { EmptyView() }
@@ -141,12 +137,10 @@ public extension SparkChip {
     init(
         _ text: String,
         icon: Image? = nil,
-        removeShapeFeatureToggle: Bool = false,
-        action: (() -> Void)? = nil
+                action: (() -> Void)? = nil
     ) where Label == Text, ExtraContent == EmptyView {
         self.init(
             icon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             action: action,
             label: { Text(text) },
             extraContent: { EmptyView() }
@@ -193,13 +187,11 @@ public extension SparkChip {
     ///
     init(
         icon: Image? = nil,
-        removeShapeFeatureToggle: Bool = false,
-        action: (() -> Void)? = nil,
+                action: (() -> Void)? = nil,
         @ViewBuilder label: @escaping () -> Label
     ) where ExtraContent == EmptyView {
         self.init(
             icon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             action: action,
             label: label,
             extraContent: { EmptyView() }
@@ -250,13 +242,11 @@ public extension SparkChip {
     ///
     init(
         icon: Image? = nil,
-        removeShapeFeatureToggle: Bool = false,
-        action: (() -> Void)? = nil,
+                action: (() -> Void)? = nil,
         @ViewBuilder extraContent: @escaping () -> ExtraContent
     ) where Label == EmptyView {
         self.init(
             icon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             action: action,
             label: { EmptyView() },
             extraContent: extraContent
@@ -305,13 +295,11 @@ public extension SparkChip {
     init(
         _ textKey: LocalizedStringKey,
         icon: Image? = nil,
-        removeShapeFeatureToggle: Bool = false,
-        action: (() -> Void)? = nil,
+                action: (() -> Void)? = nil,
         @ViewBuilder extraContent: @escaping () -> ExtraContent
     ) where Label == Text {
         self.init(
             icon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             action: action,
             label: { Text(textKey) },
             extraContent: extraContent
@@ -365,13 +353,11 @@ public extension SparkChip {
     init(
         _ text: String,
         icon: Image? = nil,
-        removeShapeFeatureToggle: Bool = false,
-        action: (() -> Void)? = nil,
+                action: (() -> Void)? = nil,
         @ViewBuilder extraContent: @escaping () -> ExtraContent
     ) where Label == Text {
         self.init(
             icon: icon,
-            removeShapeFeatureToggle: removeShapeFeatureToggle,
             action: action,
             label: { Text(text) },
             extraContent: extraContent

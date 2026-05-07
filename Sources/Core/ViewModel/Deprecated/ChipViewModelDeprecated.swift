@@ -8,6 +8,7 @@
 
 import Foundation
 import SparkTheming
+import SparkCommon
 
 @available(*, deprecated, message: "Not used anymore by SparkChip or SparkUIChip")
 class ChipViewModelDeprecated<Content>: ObservableObject {
@@ -19,6 +20,7 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
     private(set) var alignment: ChipAlignment
     private let getColorsUseCase: ChipGetColorsUseCaseDeprecatedable
     private let getBorderUseCase: any ChipGetBorderUseCaseable
+    private let featureTogglesService: any SparkFeatureToggleServicing
 
     // MARK: - State Properties
     var isEnabled: Bool = true {
@@ -62,24 +64,21 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
         return self.isBordered && !self.isBorderDashed
     }
 
-    private let removeShapeFeatureToggle: Bool
-
     // MARK: - Initializers
     convenience init(theme: any Theme,
                      variant: ChipVariant,
                      intent: ChipIntent,
                      alignment: ChipAlignment,
-                     content: Content,
-                     removeShapeFeatureToggle: Bool = false
+                     content: Content
     ) {
         self.init(theme: theme,
                   variant: variant,
                   intent: intent,
                   alignment: alignment,
                   content: content,
-                  removeShapeFeatureToggle: removeShapeFeatureToggle,
                   getColorsUseCase: ChipGetColorsUseCaseDeprecated(),
-                  getBorderUseCase: ChipGetBorderUseCase())
+                  getBorderUseCase: ChipGetBorderUseCase(),
+                  featureTogglesService: SparkFeatureToggleService.shared)
     }
 
     init(theme: any Theme,
@@ -87,25 +86,24 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
          intent: ChipIntent,
          alignment: ChipAlignment,
          content: Content,
-         removeShapeFeatureToggle: Bool = false,
          getColorsUseCase: any ChipGetColorsUseCaseDeprecatedable,
-         getBorderUseCase: any ChipGetBorderUseCaseable
+         getBorderUseCase: any ChipGetBorderUseCaseable,
+         featureTogglesService: any SparkFeatureToggleServicing
     ) {
         self.theme = theme
         self.variant = variant
         self.intent = intent
         self.getColorsUseCase = getColorsUseCase
         self.getBorderUseCase = getBorderUseCase
+        self.featureTogglesService = featureTogglesService
         self.alignment = alignment
         self.content = content
-        self.removeShapeFeatureToggle = removeShapeFeatureToggle
         self.colors = getColorsUseCase.execute(theme: theme, variant: variant, intent: intent, state: .default)
         self.spacing = self.theme.layout.spacing.small
-        self.padding = self.theme.layout.spacing.medium
+        self.padding = featureTogglesService.rebranding ? self.theme.layout.spacing.large : self.theme.layout.spacing.medium
         let chipBorder = getBorderUseCase.execute(
             theme: theme,
-            variant: variant,
-            removeShapeFeatureToggle: removeShapeFeatureToggle
+            variant: variant
         )
         self.borderRadius = chipBorder.radius
         self.font = self.theme.bodyFont
@@ -149,12 +147,11 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
 
         let border = self.getBorderUseCase.execute(
             theme: self.theme,
-            variant: variant,
-            removeShapeFeatureToggle: self.removeShapeFeatureToggle
+            variant: variant
         )
 
         self.spacing = self.theme.layout.spacing.small
-        self.padding = self.theme.layout.spacing.medium
+        self.padding = self.featureTogglesService.rebranding ? self.theme.layout.spacing.large : self.theme.layout.spacing.medium
         self.borderRadius = border.radius
         self.font = self.theme.bodyFont
     }

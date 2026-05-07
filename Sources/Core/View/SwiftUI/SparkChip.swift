@@ -136,7 +136,6 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
     private let label: () -> Label
     private let extraContent: () -> ExtraContent
     private var action: (() -> Void)?
-    private let removeShapeFeatureToggle: Bool
 
     @Environment(\.theme) private var theme
     @Environment(\.chipAlignment) private var alignment
@@ -201,7 +200,6 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
     ///
     public init(
         icon: Image? = nil,
-        removeShapeFeatureToggle: Bool = false,
         action: (() -> Void)? = nil,
         @ViewBuilder label: @escaping () -> Label,
         @ViewBuilder extraContent: @escaping () -> ExtraContent
@@ -210,7 +208,6 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
         self.icon = icon
         self.label = label
         self.extraContent = extraContent
-        self.removeShapeFeatureToggle = removeShapeFeatureToggle
     }
 
     // MARK: - View
@@ -276,8 +273,7 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
                 intent: self.intent,
                 variant: self.variant,
                 isSelected: self.isSelected,
-                isEnabled: self.isEnabled,
-                removeShapeFeatureToggle: self.removeShapeFeatureToggle
+                isEnabled: self.isEnabled
             )
         }
         .onChange(of: self.theme) { theme in
@@ -297,9 +293,6 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
         }
         .onChange(of: self.isEnabled) { isEnabled in
             self.viewModel.isEnabled = isEnabled
-        }
-        .onChange(of: self.removeShapeFeatureToggle) { removeShapeFeatureToggle in
-            self.viewModel.removeShapeFeatureToggle = removeShapeFeatureToggle
         }
     }
 
