@@ -75,7 +75,6 @@ final class ChipViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
             givenVariant: stub.givenVariant,
-            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedBorder
         )
 
@@ -99,7 +98,6 @@ final class ChipViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
             givenAlignment: stub.givenAlignment,
-            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedLayout
         )
 
@@ -151,7 +149,6 @@ final class ChipViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: givenTheme,
             givenVariant: stub.givenVariant,
-            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedBorder
         )
 
@@ -168,7 +165,6 @@ final class ChipViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: givenTheme,
             givenAlignment: stub.givenAlignment,
-            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedLayout
         )
 
@@ -209,7 +205,6 @@ final class ChipViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
             givenAlignment: givenAlignment,
-            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedLayout
         )
 
@@ -295,7 +290,6 @@ final class ChipViewModelTests: XCTestCase {
             expectedNumberOfCalls: 1,
             givenTheme: stub.givenTheme,
             givenVariant: givenVariant,
-            givenRemoveShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle,
             expectedReturnValue: stub.expectedBorder
         )
 
@@ -423,51 +417,6 @@ final class ChipViewModelTests: XCTestCase {
         )
     }
 
-    func test_removeShapeFeatureToggleChanged_shouldUpdateBorder() {
-        // GIVEN
-        let stub = Stub()
-        let viewModel = stub.viewModel
-
-        viewModel.setup(stub: stub)
-        stub.resetMockedData()
-
-        let givenRemoveShapeFeatureToggle = !stub.givenRemoveShapeFeatureToggle
-
-        // WHEN
-        viewModel.removeShapeFeatureToggle = givenRemoveShapeFeatureToggle
-
-        // THEN
-        XCTAssertEqualToExpected(on: stub)
-
-        // UseCase Calls Count
-        ChipGetBorderUseCaseableMockTest.XCTAssert(
-            stub.getBorderUseCaseMock,
-            expectedNumberOfCalls: 1,
-            givenTheme: stub.givenTheme,
-            givenVariant: stub.givenVariant,
-            givenRemoveShapeFeatureToggle: givenRemoveShapeFeatureToggle,
-            expectedReturnValue: stub.expectedBorder
-        )
-
-        ChipGetLayoutUseCaseableMockTest.XCTAssert(
-            stub.getLayoutUseCaseMock,
-            expectedNumberOfCalls: 1,
-            givenTheme: stub.givenTheme,
-            givenAlignment: stub.givenAlignment,
-            givenRemoveShapeFeatureToggle: givenRemoveShapeFeatureToggle,
-            expectedReturnValue: stub.expectedLayout
-        )
-
-        // UseCase Calls Count
-        XCTAssertNotCalled(
-            on: stub,
-            getColorsUseCase: true,
-            getDimUseCase: true,
-            getIsReversedUseCase: true,
-            getTitleFontUseCase: true
-        )
-    }
-
     func test_propertiesChanged_withoutSetupBefore_shouldNotCallUseCases() {
         // GIVEN
         let stub = Stub()
@@ -481,7 +430,6 @@ final class ChipViewModelTests: XCTestCase {
         viewModel.isSelected = !stub.givenIsSelected
         viewModel.isPressed = !stub.defaultIsPressed
         viewModel.isEnabled = !stub.givenIsEnabled
-        viewModel.removeShapeFeatureToggle = !stub.givenRemoveShapeFeatureToggle
 
         // THEN
         XCTAssertEqualToExpected(
@@ -522,7 +470,6 @@ final class ChipViewModelTests: XCTestCase {
         viewModel.isSelected = stub.givenIsSelected
         viewModel.isPressed = stub.defaultIsPressed
         viewModel.isEnabled = stub.givenIsEnabled
-        viewModel.removeShapeFeatureToggle = stub.givenRemoveShapeFeatureToggle
 
         // THEN
         XCTAssertEqualToExpected(on: stub)
@@ -551,7 +498,6 @@ private final class Stub: ChipViewModelStub {
     let givenVariant = ChipVariant.outlined
     var givenIsSelected: Bool = true
     var givenIsEnabled: Bool = false
-    let givenRemoveShapeFeatureToggle: Bool = false
 
     var defaultIsPressed: Bool = false
 
@@ -575,7 +521,7 @@ private final class Stub: ChipViewModelStub {
         getColorsUseCaseMock.executeWithThemeAndIntentAndVariantAndIsSelectedAndIsPressedReturnValue = self.expectedColors
 
         let getBorderUseCaseMock = ChipGetBorderUseCaseableGeneratedMock()
-        getBorderUseCaseMock.executeWithThemeAndVariantAndRemoveShapeFeatureToggleReturnValue = self.expectedBorder
+        getBorderUseCaseMock.executeWithThemeAndVariantReturnValue = self.expectedBorder
 
         let getDimUseCaseMock = ChipGetDimUseCaseableGeneratedMock()
         getDimUseCaseMock.executeWithThemeAndIsEnabledReturnValue = self.expectedDim
@@ -584,7 +530,7 @@ private final class Stub: ChipViewModelStub {
         getIsReversedUseCaseMock.executeWithAlignmentReturnValue = self.expectedIsReversed
 
         let getLayoutUseCaseMock = ChipGetLayoutUseCaseableGeneratedMock()
-        getLayoutUseCaseMock.executeWithThemeAndAlignmentAndRemoveShapeFeatureToggleReturnValue = self.expectedLayout
+        getLayoutUseCaseMock.executeWithThemeAndAlignmentReturnValue = self.expectedLayout
 
         let getTitleFontUseCaseMock = ChipGetTitleFontUseCaseableGeneratedMock()
         getTitleFontUseCaseMock.executeWithThemeReturnValue = self.expectedTitleFont
@@ -621,8 +567,7 @@ private extension ChipViewModel {
             intent: stub.givenIntent,
             variant: stub.givenVariant,
             isSelected: stub.givenIsSelected,
-            isEnabled: stub.givenIsEnabled,
-            removeShapeFeatureToggle: stub.givenRemoveShapeFeatureToggle
+            isEnabled: stub.givenIsEnabled
         )
     }
 }
@@ -640,7 +585,7 @@ private func XCTAssertNotCalled(
 ) {
     ChipGetBorderUseCaseableMockTest.XCTCalled(
         stub.getBorderUseCaseMock,
-        executeWithThemeAndVariantAndRemoveShapeFeatureToggleCalled: !getBorderUseCaseNotCalled
+        executeWithThemeAndVariantCalled: !getBorderUseCaseNotCalled
     )
 
     ChipGetColorsUseCaseableMockTest.XCTCalled(
@@ -660,7 +605,7 @@ private func XCTAssertNotCalled(
 
     ChipGetLayoutUseCaseableMockTest.XCTCalled(
         stub.getLayoutUseCaseMock,
-        executeWithThemeAndAlignmentAndRemoveShapeFeatureToggleCalled: !getLayoutUseCaseNotCalled
+        executeWithThemeAndAlignmentCalled: !getLayoutUseCaseNotCalled
     )
 
     ChipGetTitleFontUseCaseableMockTest.XCTCalled(

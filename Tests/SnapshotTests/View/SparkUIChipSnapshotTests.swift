@@ -32,9 +32,12 @@ final class SparkUIChipSnapshotTests: UIKitComponentSnapshotTestCase {
         for scenario in scenarios {
             let configurations = scenario.configuration()
             for configuration in configurations {
+                let service = SparkFeatureToggleServicingGeneratedMock()
+                service.rebranding = configuration.rebrandingFeatureToggle
+                SparkFeatureToggleService.shared = service
+
                 let view = SparkUIChip(
-                    theme: self.theme,
-                    removeShapeFeatureToggle: configuration.removeShapeFeatureToggle
+                    theme: self.theme
                 )
                 view.alignment = configuration.alignment
                 view.intent = configuration.intent

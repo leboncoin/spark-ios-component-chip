@@ -11,6 +11,7 @@ import SwiftUI
 import XCTest
 @testable import SparkComponentChip
 @_spi(SI_SPI) @testable import SparkComponentChipTesting
+@_spi(SI_SPI) import SparkCommonTesting
 @_spi(SI_SPI) import SparkThemingTesting
 import SparkTheming
 import SparkTheme
@@ -22,6 +23,7 @@ final class ChipViewModelDeprecatedTests: XCTestCase {
     var sut: ChipViewModelDeprecated<Void>!
     var getColorsUseCase: ChipGetColorsUseCaseDeprecatedableGeneratedMock!
     var getBorderUseCase: ChipGetBorderUseCaseableGeneratedMock!
+    var featureToggleService: SparkFeatureToggleServicingGeneratedMock!
     var theme: ThemeGeneratedMock!
     var radius: CGFloat = 12
     var subscriptions: Set<AnyCancellable>!
@@ -33,13 +35,14 @@ final class ChipViewModelDeprecatedTests: XCTestCase {
 
         self.getColorsUseCase = ChipGetColorsUseCaseDeprecatedableGeneratedMock()
         self.getBorderUseCase = ChipGetBorderUseCaseableGeneratedMock()
+        self.featureToggleService = SparkFeatureToggleServicingGeneratedMock()
         self.theme = ThemeGeneratedMock.mocked()
         self.subscriptions = .init()
 
         let colorToken = ColorTokenGeneratedMock()
 
         self.getColorsUseCase.executeWithThemeAndVariantAndIntentAndStateReturnValue = ChipStateColorsDeprecated(background: colorToken, border: colorToken, foreground: colorToken)
-        self.getBorderUseCase.executeWithThemeAndVariantAndRemoveShapeFeatureToggleReturnValue = .init(radius: radius)
+        self.getBorderUseCase.executeWithThemeAndVariantReturnValue = .init(radius: radius)
 
         self.sut = ChipViewModelDeprecated(
             theme: theme,
@@ -48,7 +51,8 @@ final class ChipViewModelDeprecatedTests: XCTestCase {
             alignment: .leadingIcon,
             content: Void(),
             getColorsUseCase: getColorsUseCase,
-            getBorderUseCase: getBorderUseCase
+            getBorderUseCase: getBorderUseCase,
+            featureTogglesService: featureToggleService
         )
     }
 
@@ -270,15 +274,17 @@ final class ChipViewModelDeprecatedTests: XCTestCase {
 
     func test_padding_with_feature_toggle_false() throws {
         // Given
+        featureToggleService.rebranding = false
+
         let sut = ChipViewModelDeprecated(
             theme: theme,
             variant: .outlined,
             intent: .main,
             alignment: .leadingIcon,
             content: Void(),
-            removeShapeFeatureToggle: false,
             getColorsUseCase: getColorsUseCase,
-            getBorderUseCase: getBorderUseCase
+            getBorderUseCase: getBorderUseCase,
+            featureTogglesService: featureToggleService
         )
 
         // Then
@@ -287,15 +293,17 @@ final class ChipViewModelDeprecatedTests: XCTestCase {
 
     func test_padding_with_feature_toggle_true() throws {
         // Given
+        featureToggleService.rebranding = true
+
         let sut = ChipViewModelDeprecated(
             theme: theme,
             variant: .outlined,
             intent: .main,
             alignment: .leadingIcon,
             content: Void(),
-            removeShapeFeatureToggle: true,
             getColorsUseCase: getColorsUseCase,
-            getBorderUseCase: getBorderUseCase
+            getBorderUseCase: getBorderUseCase,
+            featureTogglesService: featureToggleService
         )
 
         // Then
@@ -304,15 +312,17 @@ final class ChipViewModelDeprecatedTests: XCTestCase {
 
     func test_padding_after_theme_change_with_feature_toggle_false() throws {
         // Given
+        featureToggleService.rebranding = false
+
         let sut = ChipViewModelDeprecated(
             theme: theme,
             variant: .outlined,
             intent: .main,
             alignment: .leadingIcon,
             content: Void(),
-            removeShapeFeatureToggle: false,
             getColorsUseCase: getColorsUseCase,
-            getBorderUseCase: getBorderUseCase
+            getBorderUseCase: getBorderUseCase,
+            featureTogglesService: featureToggleService
         )
 
         let updateExpectation = expectation(description: "Padding updated")
@@ -343,15 +353,17 @@ final class ChipViewModelDeprecatedTests: XCTestCase {
 
     func test_padding_after_theme_change_with_feature_toggle_true() throws {
         // Given
+        featureToggleService.rebranding = true
+
         let sut = ChipViewModelDeprecated(
             theme: theme,
             variant: .outlined,
             intent: .main,
             alignment: .leadingIcon,
             content: Void(),
-            removeShapeFeatureToggle: true,
             getColorsUseCase: getColorsUseCase,
-            getBorderUseCase: getBorderUseCase
+            getBorderUseCase: getBorderUseCase,
+            featureTogglesService: featureToggleService
         )
 
         let updateExpectation = expectation(description: "Padding updated")
