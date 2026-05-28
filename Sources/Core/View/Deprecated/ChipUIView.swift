@@ -347,11 +347,8 @@ public final class ChipUIView: UIControl {
 
     public override func layoutSubviews() {
         super.layoutSubviews()
-        self.removeDashedBorder()
 
-        if self.viewModel.isBorderDashed {
-            self.addDashedBorder(borderColor: self.viewModel.colors.border)
-        }
+        self.updateBorder()
     }
 
     // MARK: - Control functions
@@ -367,19 +364,6 @@ public final class ChipUIView: UIControl {
         self.textLabel.textColor = chipColors.foreground.uiColor
         self.imageView.tintColor = chipColors.foreground.uiColor
         self.layer.opacity = Float(chipColors.opacity)
-
-        self.removeDashedBorder()
-
-        if self.viewModel.isBorderDashed {
-            self.removeBorder()
-            self.addDashedBorder(borderColor: chipColors.border)
-        } else if viewModel.isBordered {
-            self.stackView.layer.borderWidth = self.borderWidth
-            self.stackView.setBorderColor(from: chipColors.border)
-        } else {
-            self.stackView.layer.borderWidth = 0
-            self.stackView.layer.borderColor = nil
-        }
     }
 
     /// Update all scaled metrics
@@ -425,27 +409,18 @@ public final class ChipUIView: UIControl {
         self.invalidateIntrinsicContentSize()
     }
 
-    private func updateBorder() {
-        self.stackView.layer.cornerRadius = self.borderRadius
-        self.removeBorder()
+    private func updateBorder(colors: ChipStateColorsDeprecated? = nil) {
+        let colors = colors ?? self.viewModel.colors
 
-        if self.viewModel.isBorderDashed {
-            self.addDashedBorder(borderColor: self.viewModel.colors.border)
-        } else if self.viewModel.isBordered {
-            self.stackView.layer.borderWidth = self.borderWidth
-            self.stackView.setBorderColor(from: self.viewModel.colors.border)
-        }
-    }
+        self.layoutIfNeeded()
 
-    private func removeDashedBorder() {
-        self.dashBorder?.removeFromSuperlayer()
-        self.dashBorder = nil
-    }
-
-    private func removeBorder() {
-        self.stackView.layer.borderWidth = 0
-        self.stackView.layer.borderColor = nil
-        self.removeDashedBorder()
+        self.stackView.sparkBorderRadius(
+            width: self.borderWidth,
+            radius: self.borderRadius,
+            dash: self.viewModel.isBorderDashed ? self.dashLength : .zero,
+            colorToken: self.viewModel.colors.border,
+            masksToBounds: false
+        )
     }
 
     private func updateFont() {
@@ -486,6 +461,7 @@ public final class ChipUIView: UIControl {
     private func setupSubscriptions() {
         self.viewModel.$colors.subscribe(in: &self.subscriptions) { [weak self] colors in
             self?.setChipColors(colors)
+            self?.updateBorder(colors: colors)
         }
 
         self.viewModel.$spacing.subscribe(in: &self.subscriptions) { [weak self] spacing in
@@ -513,24 +489,6 @@ public final class ChipUIView: UIControl {
         self.viewModel.$isIconLeading.subscribe(in: &self.subscriptions) { [weak self] isLeading in
             self?.updateImagePosition(isIconLeading: isLeading)
         }
-    }
-
-    private func addDashedBorder(borderColor: any ColorToken) {
-        let dashBorder = CAShapeLayer()
-        let bounds = self.stackView.bounds
-        dashBorder.lineWidth = self.borderWidth
-        dashBorder.strokeColor = borderColor.uiColor.resolvedColor(with: self.traitCollection).cgColor
-        dashBorder.lineDashPattern = [self.dashLength, self.dashLength] as [NSNumber]
-        dashBorder.frame = bounds
-        dashBorder.fillColor = nil
-
-        if borderRadius > 0 {
-            dashBorder.path = UIBezierPath(roundedRect: bounds, cornerRadius: self.borderRadius).cgPath
-        } else {
-            dashBorder.path = UIBezierPath(rect: bounds).cgPath
-        }
-        self.stackView.layer.addSublayer(dashBorder)
-        self.dashBorder = dashBorder
     }
 
     private func updateImagePosition(isIconLeading: Bool) {
