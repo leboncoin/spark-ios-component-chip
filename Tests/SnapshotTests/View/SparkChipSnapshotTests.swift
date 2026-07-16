@@ -31,10 +31,6 @@ final class SparkChipSnapshotTests: SwiftUIComponentSnapshotTestCase {
             let configurations = scenario.configuration()
 
             for configuration in configurations {
-                let service = SparkFeatureToggleServicingGeneratedMock()
-                service.rebranding = configuration.rebrandingFeatureToggle
-                SparkFeatureToggleService.shared = service
-
                 let view = self.components(configuration: configuration)
                     .sparkTheme(self.theme)
                     .sparkChipAlignment(configuration.alignment)
@@ -42,7 +38,7 @@ final class SparkChipSnapshotTests: SwiftUIComponentSnapshotTestCase {
                     .sparkChipVariant(configuration.variant)
                     .sparkIsSelected(configuration.isSelected)
                     .disabled(configuration.isDisabled)
-                    .padding(.horizontal, scenario.isDocumentation ? 14 : 20)
+                    .padding(.horizontal, 20)
                     .padding(.vertical, scenario.isDocumentation ? 4 : 20)
                     .background(.background)
                     .fixedSize()

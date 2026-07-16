@@ -20,40 +20,19 @@ final class ChipGetLayoutUseCaseTests: XCTestCase {
 
     private var sut: ChipGetLayoutUseCase!
     private var theme: ThemeGeneratedMock!
-    private var featureToggleService: SparkFeatureToggleServicingGeneratedMock!
 
     // MARK: - Setup
 
     override func setUp() {
         super.setUp()
 
-        self.featureToggleService = SparkFeatureToggleServicingGeneratedMock()
-        self.sut = ChipGetLayoutUseCase(featureTogglesService: self.featureToggleService)
+        self.sut = ChipGetLayoutUseCase()
         self.theme = ThemeGeneratedMock.mocked()
     }
 
     // MARK: - Tests
 
-    func test_execute_with_leading_icon_alignment_and_rebranding_false() {
-        // GIVEN
-        self.featureToggleService.rebranding = false
-
-        // WHEN
-        let result = self.sut.execute(
-            theme: self.theme,
-            alignment: .leadingIcon
-        )
-
-        // THEN
-        XCTAssertEqual(result.spacing, self.theme.layout.spacing.small)
-        XCTAssertEqual(result.extraContentSpacing, self.theme.layout.spacing.medium)
-        XCTAssertEqual(result.padding, self.theme.layout.spacing.medium)
-    }
-
-    func test_execute_with_leading_icon_alignment_and_rebranding_true() {
-        // GIVEN
-        self.featureToggleService.rebranding = true
-
+    func test_execute_with_leading_icon_alignment() {
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
@@ -66,26 +45,7 @@ final class ChipGetLayoutUseCaseTests: XCTestCase {
         XCTAssertEqual(result.padding, self.theme.layout.spacing.large)
     }
 
-    func test_execute_with_trailing_icon_alignment_and_rebranding_false() {
-        // GIVEN
-        self.featureToggleService.rebranding = false
-
-        // WHEN
-        let result = self.sut.execute(
-            theme: self.theme,
-            alignment: .trailingIcon
-        )
-
-        // THEN
-        XCTAssertEqual(result.spacing, self.theme.layout.spacing.medium)
-        XCTAssertEqual(result.extraContentSpacing, self.theme.layout.spacing.medium)
-        XCTAssertEqual(result.padding, self.theme.layout.spacing.medium)
-    }
-
-    func test_execute_with_trailing_icon_alignment_and_rebranding_true() {
-        // GIVEN
-        self.featureToggleService.rebranding = true
-
+    func test_execute_with_trailing_icon_alignment() {
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,

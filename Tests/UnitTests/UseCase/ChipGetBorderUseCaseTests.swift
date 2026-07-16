@@ -20,72 +20,19 @@ final class ChipGetBorderUseCaseTests: XCTestCase {
 
     private var sut: ChipGetBorderUseCase!
     private var theme: ThemeGeneratedMock!
-    private var featureToggleService: SparkFeatureToggleServicingGeneratedMock!
 
     // MARK: - Setup
 
     override func setUp() {
         super.setUp()
 
-        self.featureToggleService = SparkFeatureToggleServicingGeneratedMock()
-        self.sut = ChipGetBorderUseCase(featureTogglesService: self.featureToggleService)
+        self.sut = ChipGetBorderUseCase()
         self.theme = ThemeGeneratedMock.mocked()
     }
 
     // MARK: - Tests
 
     func test_execute_with_outlined_variant() {
-        // GIVEN
-        self.featureToggleService.rebranding = false
-
-        // WHEN
-        let result = self.sut.execute(
-            theme: self.theme,
-            variant: .outlined
-        )
-
-        // THEN
-        XCTAssertEqual(result.width, self.theme.border.width.small)
-        XCTAssertEqual(result.radius, self.theme.border.radius.medium)
-        XCTAssertEqual(result.dash, 0)
-    }
-
-    func test_execute_with_tinted_variant() {
-        // GIVEN
-        self.featureToggleService.rebranding = false
-
-        // WHEN
-        let result = self.sut.execute(
-            theme: self.theme,
-            variant: .tinted
-        )
-
-        // THEN
-        XCTAssertEqual(result.width, self.theme.border.width.small)
-        XCTAssertEqual(result.radius, self.theme.border.radius.medium)
-        XCTAssertEqual(result.dash, 0)
-    }
-
-    func test_execute_with_dashed_variant() {
-        // GIVEN
-        self.featureToggleService.rebranding = false
-
-        // WHEN
-        let result = self.sut.execute(
-            theme: self.theme,
-            variant: .dashed
-        )
-
-        // THEN
-        XCTAssertEqual(result.width, self.theme.border.width.small)
-        XCTAssertEqual(result.radius, self.theme.border.radius.medium)
-        XCTAssertEqual(result.dash, ChipConstants.dashLength)
-    }
-
-    func test_execute_with_rebranding_true() {
-        // GIVEN
-        self.featureToggleService.rebranding = true
-
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
@@ -98,10 +45,7 @@ final class ChipGetBorderUseCaseTests: XCTestCase {
         XCTAssertEqual(result.dash, 0)
     }
 
-    func test_execute_with_rebranding_false() {
-        // GIVEN
-        self.featureToggleService.rebranding = false
-
+    func test_execute_with_tinted_variant() {
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
@@ -110,7 +54,20 @@ final class ChipGetBorderUseCaseTests: XCTestCase {
 
         // THEN
         XCTAssertEqual(result.width, self.theme.border.width.small)
-        XCTAssertEqual(result.radius, self.theme.border.radius.medium)
+        XCTAssertEqual(result.radius, self.theme.border.radius.full)
         XCTAssertEqual(result.dash, 0)
+    }
+
+    func test_execute_with_dashed_variant() {
+        // WHEN
+        let result = self.sut.execute(
+            theme: self.theme,
+            variant: .dashed
+        )
+
+        // THEN
+        XCTAssertEqual(result.width, self.theme.border.width.small)
+        XCTAssertEqual(result.radius, self.theme.border.radius.full)
+        XCTAssertEqual(result.dash, ChipConstants.dashLength)
     }
 }
