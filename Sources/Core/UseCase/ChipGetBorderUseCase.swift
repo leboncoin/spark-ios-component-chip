@@ -21,16 +21,6 @@ protocol ChipGetBorderUseCaseable {
 
 final class ChipGetBorderUseCase: ChipGetBorderUseCaseable {
 
-    // MARK: - Properties
-
-    private let featureTogglesService: any SparkFeatureToggleServicing
-
-    // MARK: - Initialization
-
-    init(featureTogglesService: any SparkFeatureToggleServicing = SparkFeatureToggleService.shared) {
-        self.featureTogglesService = featureTogglesService
-    }
-
     // MARK: - Methods
 
     func execute(
@@ -41,7 +31,7 @@ final class ChipGetBorderUseCase: ChipGetBorderUseCaseable {
 
         return .init(
             width: border.width.small,
-            radius: self.featureTogglesService.rebranding ? border.radius.full : border.radius.medium,
+            radius: border.radius.full,
             dash: variant == .dashed ? ChipConstants.dashLength : .zero
         )
     }

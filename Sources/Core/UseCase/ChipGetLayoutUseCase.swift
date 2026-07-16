@@ -18,16 +18,6 @@ protocol ChipGetLayoutUseCaseable {
 
 final class ChipGetLayoutUseCase: ChipGetLayoutUseCaseable {
 
-    // MARK: - Properties
-
-    private let featureTogglesService: any SparkFeatureToggleServicing
-
-    // MARK: - Initialization
-
-    init(featureTogglesService: any SparkFeatureToggleServicing = SparkFeatureToggleService.shared) {
-        self.featureTogglesService = featureTogglesService
-    }
-
     // MARK: - Methods
 
     func execute(theme: any Theme, alignment: ChipAlignment) -> ChipLayout {
@@ -38,12 +28,10 @@ final class ChipGetLayoutUseCase: ChipGetLayoutUseCaseable {
         case .trailingIcon: spacings.medium
         }
 
-        let padding = self.featureTogglesService.rebranding ? spacings.large : spacings.medium
-
         return .init(
             spacing: spacing,
             extraContentSpacing: spacings.medium,
-            padding: padding
+            padding: spacings.large
         )
     }
 }

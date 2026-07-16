@@ -20,7 +20,6 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
     private(set) var alignment: ChipAlignment
     private let getColorsUseCase: ChipGetColorsUseCaseDeprecatedable
     private let getBorderUseCase: any ChipGetBorderUseCaseable
-    private let featureTogglesService: any SparkFeatureToggleServicing
 
     // MARK: - State Properties
     var isEnabled: Bool = true {
@@ -77,8 +76,7 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
                   alignment: alignment,
                   content: content,
                   getColorsUseCase: ChipGetColorsUseCaseDeprecated(),
-                  getBorderUseCase: ChipGetBorderUseCase(),
-                  featureTogglesService: SparkFeatureToggleService.shared)
+                  getBorderUseCase: ChipGetBorderUseCase())
     }
 
     init(theme: any Theme,
@@ -87,20 +85,18 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
          alignment: ChipAlignment,
          content: Content,
          getColorsUseCase: any ChipGetColorsUseCaseDeprecatedable,
-         getBorderUseCase: any ChipGetBorderUseCaseable,
-         featureTogglesService: any SparkFeatureToggleServicing
+         getBorderUseCase: any ChipGetBorderUseCaseable
     ) {
         self.theme = theme
         self.variant = variant
         self.intent = intent
         self.getColorsUseCase = getColorsUseCase
         self.getBorderUseCase = getBorderUseCase
-        self.featureTogglesService = featureTogglesService
         self.alignment = alignment
         self.content = content
         self.colors = getColorsUseCase.execute(theme: theme, variant: variant, intent: intent, state: .default)
         self.spacing = self.theme.layout.spacing.small
-        self.padding = featureTogglesService.rebranding ? self.theme.layout.spacing.large : self.theme.layout.spacing.medium
+        self.padding = self.theme.layout.spacing.large
         let chipBorder = getBorderUseCase.execute(
             theme: theme,
             variant: variant
@@ -151,7 +147,7 @@ class ChipViewModelDeprecated<Content>: ObservableObject {
         )
 
         self.spacing = self.theme.layout.spacing.small
-        self.padding = self.featureTogglesService.rebranding ? self.theme.layout.spacing.large : self.theme.layout.spacing.medium
+        self.padding = self.theme.layout.spacing.large
         self.borderRadius = border.radius
         self.font = self.theme.bodyFont
     }
