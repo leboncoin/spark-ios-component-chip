@@ -47,7 +47,7 @@ public extension SparkChip {
     ///
     init(
         icon: Image,
-                action: (() -> Void)? = nil
+        action: (() -> Void)? = nil
     ) where Label == EmptyView, ExtraContent == EmptyView {
         self.init(
             icon: icon,
@@ -92,7 +92,7 @@ public extension SparkChip {
     init(
         _ textKey: LocalizedStringKey,
         icon: Image? = nil,
-                action: (() -> Void)? = nil
+        action: (() -> Void)? = nil
     ) where Label == Text, ExtraContent == EmptyView {
         self.init(
             icon: icon,
@@ -137,7 +137,7 @@ public extension SparkChip {
     init(
         _ text: String,
         icon: Image? = nil,
-                action: (() -> Void)? = nil
+        action: (() -> Void)? = nil
     ) where Label == Text, ExtraContent == EmptyView {
         self.init(
             icon: icon,
@@ -187,7 +187,7 @@ public extension SparkChip {
     ///
     init(
         icon: Image? = nil,
-                action: (() -> Void)? = nil,
+        action: (() -> Void)? = nil,
         @ViewBuilder label: @escaping () -> Label
     ) where ExtraContent == EmptyView {
         self.init(
@@ -242,7 +242,7 @@ public extension SparkChip {
     ///
     init(
         icon: Image? = nil,
-                action: (() -> Void)? = nil,
+        action: (() -> Void)? = nil,
         @ViewBuilder extraContent: @escaping () -> ExtraContent
     ) where Label == EmptyView {
         self.init(
@@ -295,7 +295,7 @@ public extension SparkChip {
     init(
         _ textKey: LocalizedStringKey,
         icon: Image? = nil,
-                action: (() -> Void)? = nil,
+        action: (() -> Void)? = nil,
         @ViewBuilder extraContent: @escaping () -> ExtraContent
     ) where Label == Text {
         self.init(
@@ -353,7 +353,7 @@ public extension SparkChip {
     init(
         _ text: String,
         icon: Image? = nil,
-                action: (() -> Void)? = nil,
+        action: (() -> Void)? = nil,
         @ViewBuilder extraContent: @escaping () -> ExtraContent
     ) where Label == Text {
         self.init(

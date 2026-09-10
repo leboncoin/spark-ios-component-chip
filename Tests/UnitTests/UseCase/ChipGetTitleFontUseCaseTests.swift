@@ -19,12 +19,13 @@ final class ChipGetTitleFontUseCaseTests: XCTestCase {
     func test_execute_returns_correct_font() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
+        let token = ChipToken.Typography(theme: theme)
         let useCase = ChipGetTitleFontUseCase()
 
         // WHEN
         let result = useCase.execute(theme: theme)
 
         // THEN
-        XCTAssertTrue(result.equals(theme.typography.body1))
+        XCTAssertTrue(result.equals(token.titleFont))
     }
 }

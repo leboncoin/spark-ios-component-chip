@@ -33,6 +33,9 @@ final class ChipGetLayoutUseCaseTests: XCTestCase {
     // MARK: - Tests
 
     func test_execute_with_leading_icon_alignment() {
+        // GIVEN
+        let token = ChipToken.Layout(theme: self.theme)
+
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
@@ -40,12 +43,15 @@ final class ChipGetLayoutUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(result.spacing, self.theme.layout.spacing.small)
-        XCTAssertEqual(result.extraContentSpacing, self.theme.layout.spacing.medium)
-        XCTAssertEqual(result.padding, self.theme.layout.spacing.large)
+        XCTAssertEqual(result.spacing, token.spacingWhenLeadingIcon)
+        XCTAssertEqual(result.extraContentSpacing, token.extraContentSpacing)
+        XCTAssertEqual(result.padding, token.horizontalPadding)
     }
 
     func test_execute_with_trailing_icon_alignment() {
+        // GIVEN
+        let token = ChipToken.Layout(theme: self.theme)
+
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
@@ -53,8 +59,8 @@ final class ChipGetLayoutUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(result.spacing, self.theme.layout.spacing.medium)
-        XCTAssertEqual(result.extraContentSpacing, self.theme.layout.spacing.medium)
-        XCTAssertEqual(result.padding, self.theme.layout.spacing.large)
+        XCTAssertEqual(result.spacing, token.spacingWhenTrailingIcon)
+        XCTAssertEqual(result.extraContentSpacing, token.extraContentSpacing)
+        XCTAssertEqual(result.padding, token.horizontalPadding)
     }
 }

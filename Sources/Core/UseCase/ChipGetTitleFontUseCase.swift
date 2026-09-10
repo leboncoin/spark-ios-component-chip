@@ -21,6 +21,7 @@ final class ChipGetTitleFontUseCase: ChipGetTitleFontUseCaseable {
     // MARK: - Methods
 
     func execute(theme: any Theme) -> any TypographyFontToken {
-        return theme.typography.body1
+        let token = ChipToken.Typography(theme: theme)
+        return token.titleFont
     }
 }

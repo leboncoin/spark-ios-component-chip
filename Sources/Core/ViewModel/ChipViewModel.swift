@@ -21,6 +21,7 @@ final internal class ChipViewModel: ObservableObject {
     @Published private(set) var dim: CGFloat = 0
     @Published private(set) var isReversed: Bool = false
     @Published private(set) var layout = ChipLayout()
+    @Published private(set) var sizes = ChipSizes()
     @Published private(set) var titleFont: any TypographyFontToken = TypographyFontTokenClear()
 
     // MARK: - Properties
@@ -33,6 +34,7 @@ final internal class ChipViewModel: ObservableObject {
             self.setBorder()
             self.setDim()
             self.setSpacing()
+            self.setSizes()
             self.setTitleFont()
         }
     }
@@ -60,6 +62,14 @@ final internal class ChipViewModel: ObservableObject {
 
             self.setColors()
             self.setBorder()
+        }
+    }
+
+    var size: ChipSize? {
+        didSet {
+            guard oldValue != self.size, self.alreadyUpdateAll else { return }
+
+            self.setSizes()
         }
     }
 
@@ -98,6 +108,7 @@ final internal class ChipViewModel: ObservableObject {
     private let getDimUseCase: any ChipGetDimUseCaseable
     private let getIsReversedUseCase: any ChipGetIsReversedUseCaseable
     private let getLayoutUseCase: any ChipGetLayoutUseCaseable
+    private let getSizesUseCase: any ChipGetSizesUseCaseable
     private let getTitleFontUseCase: any ChipGetTitleFontUseCaseable
 
     // MARK: - Initialization
@@ -108,6 +119,7 @@ final internal class ChipViewModel: ObservableObject {
         getDimUseCase: any ChipGetDimUseCaseable = ChipGetDimUseCase(),
         getIsReversedUseCase: any ChipGetIsReversedUseCaseable = ChipGetIsReversedUseCase(),
         getLayoutUseCase: any ChipGetLayoutUseCaseable = ChipGetLayoutUseCase(),
+        getSizesUseCase: any ChipGetSizesUseCaseable = ChipGetSizesUseCase(),
         getTitleFontUseCase: any ChipGetTitleFontUseCaseable = ChipGetTitleFontUseCase()
     ) {
         self.getColorsUseCase = getColorsUseCase
@@ -115,6 +127,7 @@ final internal class ChipViewModel: ObservableObject {
         self.getDimUseCase = getDimUseCase
         self.getIsReversedUseCase = getIsReversedUseCase
         self.getLayoutUseCase = getLayoutUseCase
+        self.getSizesUseCase = getSizesUseCase
         self.getTitleFontUseCase = getTitleFontUseCase
     }
 
@@ -125,6 +138,7 @@ final internal class ChipViewModel: ObservableObject {
         alignment: ChipAlignment,
         intent: ChipIntent,
         variant: ChipVariant,
+        size: ChipSize,
         isSelected: Bool,
         isEnabled: Bool
     ) {
@@ -132,6 +146,7 @@ final internal class ChipViewModel: ObservableObject {
         self.alignment = alignment
         self.intent = intent
         self.variant = variant
+        self.size = size
         self.isSelected = isSelected
         self.isEnabled = isEnabled
 
@@ -140,6 +155,7 @@ final internal class ChipViewModel: ObservableObject {
         self.setDim()
         self.setIsReversed()
         self.setSpacing()
+        self.setSizes()
         self.setTitleFont()
 
         self.alreadyUpdateAll = true
@@ -196,6 +212,15 @@ final internal class ChipViewModel: ObservableObject {
         self.layout = getLayoutUseCase.execute(
             theme: theme,
             alignment: alignment
+        )
+    }
+
+    private func setSizes() {
+        guard let theme, let size else { return }
+
+        self.sizes = getSizesUseCase.execute(
+            theme: theme,
+            size: size
         )
     }
 

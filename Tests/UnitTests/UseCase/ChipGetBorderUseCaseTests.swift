@@ -33,6 +33,9 @@ final class ChipGetBorderUseCaseTests: XCTestCase {
     // MARK: - Tests
 
     func test_execute_with_outlined_variant() {
+        // GIVEN
+        let token = ChipToken.Border(theme: self.theme)
+
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
@@ -40,12 +43,15 @@ final class ChipGetBorderUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(result.width, self.theme.border.width.small)
-        XCTAssertEqual(result.radius, self.theme.border.radius.full)
+        XCTAssertEqual(result.width, token.width)
+        XCTAssertEqual(result.radius, token.radius)
         XCTAssertEqual(result.dash, 0)
     }
 
     func test_execute_with_tinted_variant() {
+        // GIVEN
+        let token = ChipToken.Border(theme: self.theme)
+
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
@@ -53,12 +59,15 @@ final class ChipGetBorderUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(result.width, self.theme.border.width.small)
-        XCTAssertEqual(result.radius, self.theme.border.radius.full)
+        XCTAssertEqual(result.width, token.width)
+        XCTAssertEqual(result.radius, token.radius)
         XCTAssertEqual(result.dash, 0)
     }
 
     func test_execute_with_dashed_variant() {
+        // GIVEN
+        let token = ChipToken.Border(theme: self.theme)
+
         // WHEN
         let result = self.sut.execute(
             theme: self.theme,
@@ -66,8 +75,8 @@ final class ChipGetBorderUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(result.width, self.theme.border.width.small)
-        XCTAssertEqual(result.radius, self.theme.border.radius.full)
-        XCTAssertEqual(result.dash, ChipConstants.dashLength)
+        XCTAssertEqual(result.width, token.width)
+        XCTAssertEqual(result.radius, token.radius)
+        XCTAssertEqual(result.dash, token.dashLength)
     }
 }

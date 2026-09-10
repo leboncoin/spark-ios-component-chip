@@ -26,6 +26,7 @@ final class ChipGetDimUseCase: ChipGetDimUseCaseable {
         theme: any Theme,
         isEnabled: Bool
     ) -> CGFloat {
-        return isEnabled ? theme.dims.none : theme.dims.dim3
+        let token = ChipToken.Opacity(theme: theme)
+        return isEnabled ? token.whenEnabled : token.whenDisabled
     }
 }

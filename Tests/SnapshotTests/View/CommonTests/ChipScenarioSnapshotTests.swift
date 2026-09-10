@@ -20,6 +20,7 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
     case test3
     case test4
     case test5
+    case test6
     case documentation
 
     // MARK: - Type Alias
@@ -46,6 +47,8 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
             return self.test4()
         case .test5:
             return self.test5()
+        case .test6:
+            return self.test6()
         case .documentation:
             return self.documentation()
         }
@@ -57,15 +60,6 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
     ///
     /// Description: To test all intents & variants & isSelected
     ///
-    /// Content:
-    ///  - intents: all
-    ///  - variant: all
-    ///  - alignment: default
-    ///  - content: icon + text
-    ///  - isSelected: all
-    ///  - isDisabled: default
-    ///  - mode: all
-    ///  - size: default
     private func test1() -> [ChipConfigurationSnapshotTests] {
         let intents = ChipIntent.allCases
         let variants = ChipVariant.allCases
@@ -89,17 +83,8 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
 
     /// Test 2
     ///
-    /// Description: To test all alignments
+    /// Description: To test all alignments & badge
     ///
-    /// Content:
-    ///  - intents: default
-    ///  - variant: default
-    ///  - alignment: default
-    ///  - content: icon + text + badge
-    ///  - isSelected: default
-    ///  - isDisabled: default
-    ///  - mode: default
-    ///  - size: default
     private func test2() -> [ChipConfigurationSnapshotTests] {
         let alignments = ChipAlignment.allCases
         let areBadge = Bool.allCases
@@ -120,15 +105,6 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
     ///
     /// Description: To test content
     ///
-    /// Content:
-    ///  - intents: default
-    ///  - variant: default
-    ///  - alignment: default
-    ///  - content: all
-    ///  - isSelected: all
-    ///  - isDisabled: false
-    ///  - mode: default
-    ///  - size: default
     private func test3() -> [ChipConfigurationSnapshotTests] {
         let labels = ChipLabel.allCases
         let areIcon = Bool.allCases
@@ -157,15 +133,6 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
     ///
     /// Description: To test is disabled
     ///
-    /// Content:
-    ///  - intents: default
-    ///  - variant: default
-    ///  - alignment: default
-    ///  - content: icon + text + badge
-    ///  - isSelected: default
-    ///  - isDisabled: true
-    ///  - mode: default
-    ///  - size: default
     private func test4() -> [ChipConfigurationSnapshotTests] {
         return [
             .init(
@@ -181,15 +148,6 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
     ///
     /// Description: To test a11y sizes
     ///
-    /// Content:
-    ///  - intents: default
-    ///  - variant: default
-    ///  - alignment: default
-    ///  - content: icon + text
-    ///  - isSelected: default
-    ///  - isDisabled: default
-    ///  - mode: default
-    ///  - size: all
     private func test5() -> [ChipConfigurationSnapshotTests] {
         return [
             .init(
@@ -198,6 +156,22 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
                 sizes: Constants.Sizes.all
             )
         ]
+    }
+
+    /// Test 6
+    ///
+    /// Description: To test all chip sizes
+    ///
+    private func test6() -> [ChipConfigurationSnapshotTests] {
+        let sizes = ChipSize.allCases
+
+        return sizes.map { size in
+            .init(
+                scenario: self,
+                size: size,
+                isIcon: true
+            )
+        }
     }
 
     // MARK: - Documentation
@@ -266,6 +240,17 @@ enum ChipScenarioSnapshotTests: String, CaseIterable {
             isDisabled: true,
             documentationName: "disabled"
         ))
+
+        // Sizes
+        let sizes = ChipSize.allCases
+        items.append(contentsOf: sizes.map { size in
+            ChipConfigurationSnapshotTests(
+                scenario: self,
+                size: size,
+                isIcon: true,
+                documentationName: "with_size_\(size)"
+            )
+        })
 
         return items
     }

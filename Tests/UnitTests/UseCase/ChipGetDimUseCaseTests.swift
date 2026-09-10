@@ -19,6 +19,7 @@ final class ChipGetDimUseCaseTests: XCTestCase {
     func test_execute_when_isEnabled() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
+        let token = ChipToken.Opacity(theme: theme)
         let useCase = ChipGetDimUseCase()
 
         // WHEN
@@ -28,12 +29,13 @@ final class ChipGetDimUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(result, theme.dims.none)
+        XCTAssertEqual(result, token.whenEnabled)
     }
 
     func test_execute_when_isDisabled() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
+        let token = ChipToken.Opacity(theme: theme)
         let useCase = ChipGetDimUseCase()
 
         // WHEN
@@ -43,6 +45,6 @@ final class ChipGetDimUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertEqual(result, theme.dims.dim3)
+        XCTAssertEqual(result, token.whenDisabled)
     }
 }

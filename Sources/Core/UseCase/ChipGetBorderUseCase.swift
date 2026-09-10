@@ -27,12 +27,12 @@ final class ChipGetBorderUseCase: ChipGetBorderUseCaseable {
         theme: any Theme,
         variant: ChipVariant
     ) -> ChipBorder {
-        let border = theme.border
+        let token = ChipToken.Border(theme: theme)
 
         return .init(
-            width: border.width.small,
-            radius: border.radius.full,
-            dash: variant == .dashed ? ChipConstants.dashLength : .zero
+            width: token.width,
+            radius: token.radius,
+            dash: variant == .dashed ? token.dashLength : .zero
         )
     }
 }

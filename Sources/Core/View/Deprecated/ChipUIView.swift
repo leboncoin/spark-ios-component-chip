@@ -418,7 +418,7 @@ public final class ChipUIView: UIControl {
             width: self.borderWidth,
             radius: self.borderRadius,
             dash: self.viewModel.isBorderDashed ? self.dashLength : .zero,
-            colorToken: self.viewModel.colors.border,
+            colorToken: colors.border,
             masksToBounds: false
         )
     }

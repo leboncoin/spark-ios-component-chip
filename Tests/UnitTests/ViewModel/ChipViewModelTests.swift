@@ -30,6 +30,7 @@ final class ChipViewModelTests: XCTestCase {
             otherDim: 0,
             otherIsReversed: false,
             otherLayout: ChipLayout(),
+            otherSizes: ChipSizes(),
             otherTitleFont: TypographyFontTokenClear()
         )
 
@@ -41,6 +42,7 @@ final class ChipViewModelTests: XCTestCase {
             getDimUseCase: true,
             getIsReversedUseCase: true,
             getLayoutUseCase: true,
+            getSizesUseCase: true,
             getTitleFontUseCase: true
         )
     }
@@ -99,6 +101,14 @@ final class ChipViewModelTests: XCTestCase {
             givenTheme: stub.givenTheme,
             givenAlignment: stub.givenAlignment,
             expectedReturnValue: stub.expectedLayout
+        )
+
+        ChipGetSizesUseCaseableMockTest.XCTAssert(
+            stub.getSizesUseCaseMock,
+            expectedNumberOfCalls: 1,
+            givenTheme: stub.givenTheme,
+            givenSize: stub.givenSize,
+            expectedReturnValue: stub.expectedSizes
         )
 
         ChipGetTitleFontUseCaseableMockTest.XCTAssert(
@@ -168,6 +178,14 @@ final class ChipViewModelTests: XCTestCase {
             expectedReturnValue: stub.expectedLayout
         )
 
+        ChipGetSizesUseCaseableMockTest.XCTAssert(
+            stub.getSizesUseCaseMock,
+            expectedNumberOfCalls: 1,
+            givenTheme: givenTheme,
+            givenSize: stub.givenSize,
+            expectedReturnValue: stub.expectedSizes
+        )
+
         ChipGetTitleFontUseCaseableMockTest.XCTAssert(
             stub.getTitleFontUseCaseMock,
             expectedNumberOfCalls: 1,
@@ -214,6 +232,7 @@ final class ChipViewModelTests: XCTestCase {
             getBorderUseCase: true,
             getColorsUseCase: true,
             getDimUseCase: true,
+            getSizesUseCase: true,
             getTitleFontUseCase: true
         )
     }
@@ -253,6 +272,7 @@ final class ChipViewModelTests: XCTestCase {
             getDimUseCase: true,
             getIsReversedUseCase: true,
             getLayoutUseCase: true,
+            getSizesUseCase: true,
             getTitleFontUseCase: true
         )
     }
@@ -299,6 +319,44 @@ final class ChipViewModelTests: XCTestCase {
             getDimUseCase: true,
             getIsReversedUseCase: true,
             getLayoutUseCase: true,
+            getSizesUseCase: true,
+            getTitleFontUseCase: true
+        )
+    }
+
+    func test_sizeChanged_shouldUpdateHeight() {
+        // GIVEN
+        let stub = Stub()
+        let viewModel = stub.viewModel
+
+        viewModel.setup(stub: stub)
+        stub.resetMockedData()
+
+        let givenSize = ChipSize.medium
+
+        // WHEN
+        viewModel.size = givenSize
+
+        // THEN
+        XCTAssertEqualToExpected(on: stub)
+
+        // UseCase Calls Count
+        ChipGetSizesUseCaseableMockTest.XCTAssert(
+            stub.getSizesUseCaseMock,
+            expectedNumberOfCalls: 1,
+            givenTheme: stub.givenTheme,
+            givenSize: givenSize,
+            expectedReturnValue: stub.expectedSizes
+        )
+
+        // UseCase Calls Count
+        XCTAssertNotCalled(
+            on: stub,
+            getBorderUseCase: true,
+            getColorsUseCase: true,
+            getDimUseCase: true,
+            getIsReversedUseCase: true,
+            getLayoutUseCase: true,
             getTitleFontUseCase: true
         )
     }
@@ -338,6 +396,7 @@ final class ChipViewModelTests: XCTestCase {
             getDimUseCase: true,
             getIsReversedUseCase: true,
             getLayoutUseCase: true,
+            getSizesUseCase: true,
             getTitleFontUseCase: true
         )
     }
@@ -377,6 +436,7 @@ final class ChipViewModelTests: XCTestCase {
             getDimUseCase: true,
             getIsReversedUseCase: true,
             getLayoutUseCase: true,
+            getSizesUseCase: true,
             getTitleFontUseCase: true
         )
     }
@@ -413,6 +473,7 @@ final class ChipViewModelTests: XCTestCase {
             getColorsUseCase: true,
             getIsReversedUseCase: true,
             getLayoutUseCase: true,
+            getSizesUseCase: true,
             getTitleFontUseCase: true
         )
     }
@@ -427,6 +488,7 @@ final class ChipViewModelTests: XCTestCase {
         viewModel.alignment = .trailingIcon
         viewModel.intent = .danger
         viewModel.variant = .dashed
+        viewModel.size = .medium
         viewModel.isSelected = !stub.givenIsSelected
         viewModel.isPressed = !stub.defaultIsPressed
         viewModel.isEnabled = !stub.givenIsEnabled
@@ -439,6 +501,7 @@ final class ChipViewModelTests: XCTestCase {
             otherDim: 0,
             otherIsReversed: false,
             otherLayout: ChipLayout(),
+            otherSizes: ChipSizes(),
             otherTitleFont: TypographyFontTokenClear()
         )
 
@@ -450,6 +513,7 @@ final class ChipViewModelTests: XCTestCase {
             getDimUseCase: true,
             getIsReversedUseCase: true,
             getLayoutUseCase: true,
+            getSizesUseCase: true,
             getTitleFontUseCase: true
         )
     }
@@ -467,6 +531,7 @@ final class ChipViewModelTests: XCTestCase {
         viewModel.alignment = stub.givenAlignment
         viewModel.intent = stub.givenIntent
         viewModel.variant = stub.givenVariant
+        viewModel.size = stub.givenSize
         viewModel.isSelected = stub.givenIsSelected
         viewModel.isPressed = stub.defaultIsPressed
         viewModel.isEnabled = stub.givenIsEnabled
@@ -481,6 +546,7 @@ final class ChipViewModelTests: XCTestCase {
             getDimUseCase: true,
             getIsReversedUseCase: true,
             getLayoutUseCase: true,
+            getSizesUseCase: true,
             getTitleFontUseCase: true
         )
     }
@@ -496,6 +562,7 @@ private final class Stub: ChipViewModelStub {
     let givenAlignment = ChipAlignment.trailingIcon
     let givenIntent = ChipIntent.neutral
     let givenVariant = ChipVariant.outlined
+    let givenSize = ChipSize.large
     var givenIsSelected: Bool = true
     var givenIsEnabled: Bool = false
 
@@ -512,6 +579,7 @@ private final class Stub: ChipViewModelStub {
     let expectedDim: CGFloat = 0.5
     let expectedIsReversed = true
     let expectedLayout = ChipLayout(spacing: 10, padding: 11)
+    let expectedSizes = ChipSizes(height: 32, iconSize: 16)
     let expectedTitleFont = TypographyFontTokenGeneratedMock.mocked(.body)
 
     // MARK: - Initialization
@@ -532,6 +600,9 @@ private final class Stub: ChipViewModelStub {
         let getLayoutUseCaseMock = ChipGetLayoutUseCaseableGeneratedMock()
         getLayoutUseCaseMock.executeWithThemeAndAlignmentReturnValue = self.expectedLayout
 
+        let getSizesUseCaseMock = ChipGetSizesUseCaseableGeneratedMock()
+        getSizesUseCaseMock.executeWithThemeAndSizeReturnValue = self.expectedSizes
+
         let getTitleFontUseCaseMock = ChipGetTitleFontUseCaseableGeneratedMock()
         getTitleFontUseCaseMock.executeWithThemeReturnValue = self.expectedTitleFont
 
@@ -541,6 +612,7 @@ private final class Stub: ChipViewModelStub {
             getDimUseCase: getDimUseCaseMock,
             getIsReversedUseCase: getIsReversedUseCaseMock,
             getLayoutUseCase: getLayoutUseCaseMock,
+            getSizesUseCase: getSizesUseCaseMock,
             getTitleFontUseCase: getTitleFontUseCaseMock
         )
 
@@ -551,6 +623,7 @@ private final class Stub: ChipViewModelStub {
             getDimUseCaseMock: getDimUseCaseMock,
             getIsReversedUseCaseMock: getIsReversedUseCaseMock,
             getLayoutUseCaseMock: getLayoutUseCaseMock,
+            getSizesUseCaseMock: getSizesUseCaseMock,
             getTitleFontUseCaseMock: getTitleFontUseCaseMock
         )
     }
@@ -566,6 +639,7 @@ private extension ChipViewModel {
             alignment: stub.givenAlignment,
             intent: stub.givenIntent,
             variant: stub.givenVariant,
+            size: stub.givenSize,
             isSelected: stub.givenIsSelected,
             isEnabled: stub.givenIsEnabled
         )
@@ -581,6 +655,7 @@ private func XCTAssertNotCalled(
     getDimUseCase getDimUseCaseNotCalled: Bool = false,
     getIsReversedUseCase getIsReversedUseCaseNotCalled: Bool = false,
     getLayoutUseCase getLayoutUseCaseNotCalled: Bool = false,
+    getSizesUseCase getSizesUseCaseNotCalled: Bool = false,
     getTitleFontUseCase getTitleFontUseCaseNotCalled: Bool = false
 ) {
     ChipGetBorderUseCaseableMockTest.XCTCalled(
@@ -608,6 +683,11 @@ private func XCTAssertNotCalled(
         executeWithThemeAndAlignmentCalled: !getLayoutUseCaseNotCalled
     )
 
+    ChipGetSizesUseCaseableMockTest.XCTCalled(
+        stub.getSizesUseCaseMock,
+        executeWithThemeAndSizeCalled: !getSizesUseCaseNotCalled
+    )
+
     ChipGetTitleFontUseCaseableMockTest.XCTCalled(
         stub.getTitleFontUseCaseMock,
         executeWithThemeCalled: !getTitleFontUseCaseNotCalled
@@ -621,6 +701,7 @@ private func XCTAssertEqualToExpected(
     otherDim: CGFloat? = nil,
     otherIsReversed: Bool? = nil,
     otherLayout: ChipLayout? = nil,
+    otherSizes: ChipSizes? = nil,
     otherTitleFont: (any TypographyFontToken)? = nil
 ) {
     let viewModel = stub.viewModel
@@ -649,6 +730,11 @@ private func XCTAssertEqualToExpected(
         viewModel.layout,
         otherLayout ?? stub.expectedLayout,
         "Wrong layout value"
+    )
+    XCTAssertEqual(
+        viewModel.sizes,
+        otherSizes ?? stub.expectedSizes,
+        "Wrong sizes value"
     )
     XCTAssertTrue(
         viewModel.titleFont.equals(otherTitleFont ?? stub.expectedTitleFont),
