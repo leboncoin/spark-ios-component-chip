@@ -51,33 +51,33 @@ import SparkTheming
 ///
 /// ## Rendering
 ///
-/// With a icon
-/// ![Component rendering.](chip_with_icon.png)
+/// ### By Content Type
 ///
-/// With a text
-/// ![Component rendering.](chip_with_text.png)
+/// | Icon Only | Text Only | Text & Icon |
+/// |:---:|:---:|:---:|
+/// | ![Chip with icon.](chip_with_icon.png) | ![Chip with text.](chip_with_text.png) | ![Chip with text and icon.](chip_with_text_and_icon.png) |
 ///
-/// With a text and an icon
-/// ![Component rendering.](chip_with_text_and_icon.png)
+/// | Text & Icon & Extra | Icon & Extra |
+/// |:---:|:---:|
+/// | ![Chip with text, icon and extra content.](chip_with_text_and_icon_and_extra_content.png) | ![Chip with icon and extra content.](chip_with_icon_and_extra_content.png) |
 ///
-/// With a text and an extra content
-/// ![Component rendering.](chip_with_text_and_icon_and_extra_content.png)
+/// ### By Size
 ///
-/// With a icon and an extra content
-/// ![Component rendering.](chip_with_icon_and_extra_content.png)
+/// | Medium | Large |
+/// |:---:|:---:|
+/// | ![Chip medium size.](chip_with_size_medium.png) | ![Chip large size.](chip_with_size_large.png) |
 ///
-/// When selected is true
-/// ![Component rendering.](chip_selected.png)
+/// ### By State
 ///
-/// With disabled is true
-/// ![Component rendering.](chip_disabled.png)
+/// | Not Selected | Selected | Disabled |
+/// |:---:|:---:|:---:|
+/// | ![Chip not selected.](chip_with_text.png) | ![Chip selected.](chip_selected.png) | ![Chip disabled.](chip_disabled.png) |
 ///
 public final class SparkUIChip: UIControl {
 
     // MARK: - Type alias
 
     private typealias AccessibilityIdentifier = ChipAccessibilityIdentifier
-    private typealias Constants = ChipConstants
 
     // MARK: - Components
 
@@ -187,6 +187,13 @@ public final class SparkUIChip: UIControl {
         }
     }
 
+    /// The size of the chip.
+    public var size: ChipSize = .default {
+        didSet {
+            self.viewModel.size = self.size
+        }
+    }
+
     /// The content alignment of the chip. (leading or trailing icon)
     public var alignment: ChipAlignment = .default {
         didSet {
@@ -273,8 +280,8 @@ public final class SparkUIChip: UIControl {
     @LimitedScaledUIMetric private var borderWidth: CGFloat = 0
     @LimitedScaledUIMetric private var cornerRadius: CGFloat = 0
 
-    @ScaledUIFrame private var height: CGFloat
-    @LimitedScaledUIMetric private var iconSize: CGFloat
+    @ScaledUIFrame private var height: CGFloat = 0
+    @LimitedScaledUIMetric private var iconSize: CGFloat = 0
 
     private var hasAction: Bool {
         self.allControlEvents == .touchUpInside
@@ -310,13 +317,8 @@ public final class SparkUIChip: UIControl {
     /// ```
     ///
     /// ![Chip rendering.](chip_with_text_and_icon_and_extra_content.png)
-    public init(
-        theme: any Theme
-    ) {
+    public init(theme: any Theme) {
         self.theme = theme
-
-        self._height = .init(wrappedValue: Constants.height)
-        self._iconSize = .init(wrappedValue: Constants.iconSize, relativeTo: .title2)
 
         super.init(frame: .zero)
 
@@ -342,8 +344,7 @@ public final class SparkUIChip: UIControl {
         self.setupAccessibility()
 
         // Updates
-        self.updateHeight()
-        self.updateIconSize()
+        self.updateSizes()
         self.updateLayout()
         self.updateReversibleArrangedSubviews()
 
@@ -353,6 +354,7 @@ public final class SparkUIChip: UIControl {
             alignment: self.alignment,
             intent: self.intent,
             variant: self.variant,
+            size: self.size,
             isSelected: self.isSelected,
             isEnabled: self.isEnabled
         )
@@ -371,8 +373,7 @@ public final class SparkUIChip: UIControl {
     private func setupConstraints() {
         // Global
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.heightConstraint = self.heightAnchor.constraint(equalToConstant: self.height)
-        self.heightConstraint?.isActive = true
+        self.heightConstraint = self.heightAnchor.constraint(equalToConstant: .zero)
 
         self.setupContentStackViewConstraints()
 
@@ -389,8 +390,7 @@ public final class SparkUIChip: UIControl {
     private func setupIconImageViewConstraints() {
         self.iconImageView.translatesAutoresizingMaskIntoConstraints = false
 
-        self.iconWidthConstraint = self.iconImageView.widthAnchor.constraint(equalToConstant: self.iconSize)
-        self.iconWidthConstraint?.isActive = true
+        self.iconWidthConstraint = self.iconImageView.widthAnchor.constraint(equalToConstant: .zero)
 
         self.iconImageView.heightAnchor.constraint(equalTo: self.iconImageView.widthAnchor).isActive = true
     }
@@ -417,22 +417,6 @@ public final class SparkUIChip: UIControl {
         )
     }
 
-    private func updateHeight() {
-        if self.height != self.heightConstraint?.constant {
-            self.heightConstraint?.constant = self.height
-            self.heightConstraint?.isActive = true
-            self.updateConstraintsIfNeeded()
-        }
-    }
-
-    private func updateIconSize() {
-        if self.iconSize != self.iconWidthConstraint?.constant {
-            self.iconWidthConstraint?.constant = self.iconSize
-            self.iconWidthConstraint?.isActive = true
-            self.iconImageView.updateConstraintsIfNeeded()
-        }
-    }
-
     private func updateLayout() {
         self.contentStackView.spacing = self.spacing
         self.labelContentStackView.spacing = self.extraContentSpacing
@@ -454,6 +438,20 @@ public final class SparkUIChip: UIControl {
         }
 
         self.contentStackView.addArrangedSubviews(subviews)
+    }
+
+    private func updateSizes() {
+        // Height
+        self.heightConstraint?.constant = self.height
+        self.heightConstraint?.isActive = true
+
+        // Icon Width
+        self.iconWidthConstraint?.constant = self.iconSize
+        self.iconWidthConstraint?.isActive = true
+        self.iconImageView.updateConstraintsIfNeeded()
+
+        self.updateConstraintsIfNeeded()
+        self.setNeedsUpdateConstraints()
     }
 
     // MARK: - Accessibility
@@ -518,7 +516,7 @@ public final class SparkUIChip: UIControl {
 
     private func setupSubscriptions() {
         // **
-        // Static colors
+        // Colors
         self.viewModel.$colors.subscribe(in: &self.subscriptions) { [weak self] colors in
             guard let self else { return }
 
@@ -593,6 +591,26 @@ public final class SparkUIChip: UIControl {
         // **
 
         // **
+        // Sizes
+        self.viewModel.$sizes.subscribe(in: &self.subscriptions) { [weak self] sizes in
+            guard let self else { return }
+
+            self._height = .init(
+                wrappedValue: sizes.height,
+                traitCollection: self.traitCollection
+            )
+
+            self._iconSize = .init(
+                wrappedValue: sizes.iconSize,
+                relativeTo: .title2,
+                traitCollection: self.traitCollection
+            )
+
+            self.updateSizes()
+        }
+        // **
+
+        // **
         // Title style
         self.viewModel.$titleFont.subscribe(in: &self.subscriptions) { [weak self] titleFont in
             guard let self else { return }
@@ -635,9 +653,7 @@ public final class SparkUIChip: UIControl {
         self.updateBorderRadius()
 
         self._height.update(traitCollection: self.traitCollection)
-        self.updateHeight()
-
         self._iconSize.update(traitCollection: self.traitCollection)
-        self.updateIconSize()
+        self.updateSizes()
     }
 }

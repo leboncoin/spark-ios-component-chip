@@ -20,6 +20,7 @@ struct ChipConfigurationSnapshotTests {
     var alignment: ChipAlignment = .default
     var intent: ChipIntent = .default
     var variant: ChipVariant = .default
+    var size: ChipSize = .default
     var label: ChipLabel = .default
     var isIcon: Bool = false
     var isBadge: Bool = false
@@ -40,6 +41,7 @@ struct ChipConfigurationSnapshotTests {
             "\(self.alignment)" + "Alignment",
             "\(self.intent)" + "Intent",
             "\(self.variant)" + "Variant",
+            "\(self.size)" + "Size",
             "\(self.label)" + "Content",
             self.isIcon ? "withIcon" : nil,
             self.isBadge ? "withBadge" : nil,

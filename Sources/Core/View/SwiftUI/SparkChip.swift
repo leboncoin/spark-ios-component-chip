@@ -44,6 +44,7 @@ import SparkTheming
 /// - **chipAlignment** : ``sparkChipAlignment(_:)`` (View extension)
 /// - **chipIntent** : ``sparkChipIntent(_:)`` (View extension)
 /// - **chipVariant** : ``sparkChipVariant(_:)`` (View extension)
+/// - **chipSize** : ``sparkChipSize(_:)`` (View extension)
 /// - **isSelected** : ``sparkIsSelected(_:)`` (View extension)
 /// - **isEnabled** : ``sparkChipAlignment(_:)`` (View extension)
 ///
@@ -104,29 +105,27 @@ import SparkTheming
 ///
 /// ## Rendering
 ///
-/// With a icon
-/// ![Component rendering.](chip_with_icon.png)
+/// ### By Content Type
 ///
-/// With a text
-/// ![Component rendering.](chip_with_text.png)
+/// | Icon Only | Text Only | Text & Icon |
+/// |:---:|:---:|:---:|
+/// | ![Chip with icon.](chip_with_icon.png) | ![Chip with text.](chip_with_text.png) | ![Chip with text and icon.](chip_with_text_and_icon.png) |
 ///
-/// With a label
-/// ![Component rendering.](chip_with_label.png)
+/// | Text & Icon & Extra | Icon & Extra |
+/// |:---:|:---:|
+/// | ![Chip with text, icon and extra content.](chip_with_text_and_icon_and_extra_content.png) | ![Chip with icon and extra content.](chip_with_icon_and_extra_content.png) |
 ///
-/// With a text and an icon
-/// ![Component rendering.](chip_with_text_and_icon.png)
+/// ### By Size
 ///
-/// With a text and an extra content
-/// ![Component rendering.](chip_with_text_and_icon_and_extra_content.png)
+/// | Medium | Large |
+/// |:---:|:---:|
+/// | ![Chip medium size.](chip_with_size_medium.png) | ![Chip large size.](chip_with_size_large.png) |
 ///
-/// With a icon and an extra content
-/// ![Component rendering.](chip_with_icon_and_extra_content.png)
+/// ### By State
 ///
-/// When selected is true
-/// ![Component rendering.](chip_selected.png)
-///
-/// With disabled is true
-/// ![Component rendering.](chip_disabled.png)
+/// | Not Selected | Selected | Disabled |
+/// |:---:|:---:|:---:|
+/// | ![Chip not selected.](chip_with_text.png) | ![Chip selected.](chip_selected.png) | ![Chip disabled.](chip_disabled.png) |
 ///
 public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraContent: View {
 
@@ -141,6 +140,7 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
     @Environment(\.chipAlignment) private var alignment
     @Environment(\.chipIntent) private var intent
     @Environment(\.chipVariant) private var variant
+    @Environment(\.chipSize) private var size
     @Environment(\.isSelected) private var isSelected
     @Environment(\.isEnabled) private var isEnabled
 
@@ -236,8 +236,7 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
                     .aspectRatio(contentMode: .fit)
                     .accessibilityIdentifier(ChipAccessibilityIdentifier.icon)
                     .sparkFrame(
-                        width: ChipConstants.iconSize,
-                        height: ChipConstants.iconSize,
+                        size: self.viewModel.sizes.iconSize,
                         relativeTo: .title2
                     )
                     .foregroundStyle(self.viewModel.colors.content)
@@ -246,7 +245,7 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
         )
         .isReversed(self.viewModel.isReversed)
         .sparkPadding(.horizontal, self.viewModel.layout.padding)
-        .sparkFrame(height: ChipConstants.height)
+        .sparkFrame(height: self.viewModel.sizes.height)
         .background(self.viewModel.colors.background)
         .sparkBorder(
             width: self.viewModel.border.width,
@@ -272,6 +271,7 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
                 alignment: self.alignment,
                 intent: self.intent,
                 variant: self.variant,
+                size: self.size,
                 isSelected: self.isSelected,
                 isEnabled: self.isEnabled
             )
@@ -287,6 +287,9 @@ public struct SparkChip<Label, ExtraContent>: View where Label: View, ExtraConte
         }
         .onChange(of: self.variant) { variant in
             self.viewModel.variant = variant
+        }
+        .onChange(of: self.size) { size in
+            self.viewModel.size = size
         }
         .onChange(of: self.isSelected) { isSelected in
             self.viewModel.isSelected = isSelected

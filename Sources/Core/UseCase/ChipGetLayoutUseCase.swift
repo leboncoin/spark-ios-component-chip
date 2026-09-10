@@ -21,17 +21,17 @@ final class ChipGetLayoutUseCase: ChipGetLayoutUseCaseable {
     // MARK: - Methods
 
     func execute(theme: any Theme, alignment: ChipAlignment) -> ChipLayout {
-        let spacings = theme.layout.spacing
+        let token = ChipToken.Layout(theme: theme)
 
         let spacing = switch alignment {
-        case .leadingIcon: spacings.small
-        case .trailingIcon: spacings.medium
+        case .leadingIcon: token.spacingWhenLeadingIcon
+        case .trailingIcon: token.spacingWhenTrailingIcon
         }
 
         return .init(
             spacing: spacing,
-            extraContentSpacing: spacings.medium,
-            padding: spacings.large
+            extraContentSpacing: token.extraContentSpacing,
+            padding: token.horizontalPadding
         )
     }
 }

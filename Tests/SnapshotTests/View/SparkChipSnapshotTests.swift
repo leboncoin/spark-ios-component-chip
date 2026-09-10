@@ -36,10 +36,11 @@ final class SparkChipSnapshotTests: SwiftUIComponentSnapshotTestCase {
                     .sparkChipAlignment(configuration.alignment)
                     .sparkChipIntent(configuration.intent)
                     .sparkChipVariant(configuration.variant)
+                    .sparkChipSize(configuration.size)
                     .sparkIsSelected(configuration.isSelected)
                     .disabled(configuration.isDisabled)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, scenario.isDocumentation ? 4 : 20)
+                    .padding(.horizontal, 30)
+                    .padding(.vertical, 30)
                     .background(.background)
                     .fixedSize()
 

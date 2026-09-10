@@ -38,6 +38,7 @@ final class SparkUIChipSnapshotTests: UIKitComponentSnapshotTestCase {
                 view.alignment = configuration.alignment
                 view.intent = configuration.intent
                 view.variant = configuration.variant
+                view.size = configuration.size
                 view.isSelected = configuration.isSelected
                 view.isEnabled = !configuration.isDisabled
 
